@@ -11,6 +11,13 @@ contract MasterPOC {
       bool confirmed;
     }
 
+    event AssignmentExecuted (
+      address assignor,
+      address assignee,
+      uint priceInEth,
+      uint numTransferred
+    );
+
     address[] public contracts;
     // @notice ERC20 address -> Assignment number -> Assignment
     mapping (address => mapping(uint => Assignment)) public assignmentHistory;
@@ -80,8 +87,21 @@ contract MasterPOC {
       assignmentHistory[_contract][currAssignment[_contract]++] = _assignment;
     }
 
-    function executeAssignment(address _contract, uint assignmentNum) {
+    function executeAssignment(address _contract, uint _assignmentNum) {
       // require ERC20 balance of Assignee to be > than _numtransferred 
+      uint assignorTokens = ProofClaim(_contract).balanceOf(msg.sender);
+      Assignment memory _assignment = assignmentHistory[_contract][msg.sender];
+      require (msg.sender == _assignment.assignor);
+      require (assignoreTokens >= assignment.numTransferred);
+
+      ProofClaim(_contract).transfer(_assignment.assignee, _assignment.numTransferred);
+
+      emit AssignmentExecuted(
+      _assignment.assignor,
+      _assignment.assignee,
+      _assignment.priceInEth,
+      _assignment.numTransferred
+      );      
     }
 }
 
