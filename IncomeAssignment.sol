@@ -1,16 +1,16 @@
 pragma solidity ^0.5.0;
 
-contract BillOfSale {
-  address payable public seller;
-  address public buyer;
-  string public descr;
+contract IncomeAssignment {
+  address payable public assignor;
+  address public assignee;
+  address public tokenizedIncomeAddr;
   uint public price;
   bool public confirmed;
 
-  function recordContract(string memory _descr, uint _price,
-    address payable _seller, address _buyer
+  function recordAssignment(address _tokenizedIncomeAddr, uint _price,
+    address payable _assignor, address _assignee
   ) public {
-    descr = _descr;
+    tokenizedIncomeAddr = _tokenizedIncomeAddr;
     price = _price;
     seller = _seller; 
     buyer = _buyer;
@@ -23,5 +23,6 @@ contract BillOfSale {
     require(address(this).balance == price, "purchase price must be funded");
     address(seller).transfer(address(this).balance);
     confirmed = true;
+    // function calling ProofClaim contract updating registry
   }
 }
