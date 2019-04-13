@@ -2,126 +2,77 @@ pragma solidity ^0.4.25;
 
 contract MasterPOC {
 
-    // @notice Assignment defines details of an assignment
-    struct Assignment {
-      address assignor;
-      address assignee;
-      uint priceInEth;
-      uint numTransferred;
-      bool confirmed;
-    }
+  event AssignmentExecuted (
+    address assignor,
+    address assignee,
+    uint priceInEth,
+    uint numTransferred
+  );
 
-    event AssignmentExecuted (
-      address assignor,
-      address assignee,
-      uint priceInEth,
-      uint numTransferred
-    );
+  // @notice ERC20 address -> user address -> # tokens owned
+  // currently unused, but would be nice for tracking  
+  mapping (address => mapping(address => uint)) public tokensByOwner;
 
-    address[] public contracts;
-    // @notice ERC20 address -> Assignment number -> Assignment
-    mapping (address => mapping(uint => Assignment)) public assignmentHistory;
+  address[] public contracts;
+  address public lastContractAddress;
+  
+  event newProofClaimContract (
+      address contractAddress
+  );
 
-    // @notice ERC20 address -> user address -> # tokens owned
-    mapping (address => mapping(address => tokensOwned)) public tokensByOwner;
+  constructor()
+      public
+  {
+  }
 
-    // @notice ERC20 address -> Assignment index (defaults to 0)
-    mapping (address => uint) public currAssignment; 
+  function getContractCount()
+      public
+      constant
+      returns(uint contractCount)
+  {
+    return contracts.length;
+  }
 
-    address public lastContractAddress;
-    address private owner;
-    
-    event newProofClaimContract (
-       address contractAddress
-    );
+  function newProofClaim(string symbol, string name, address owner)
+      public
+      returns(address newContract)
+  {
+    uint supply = 100000000000000000000;
+    ProofClaim c = new ProofClaim(symbol, name, owner, supply);
+    contracts.push(address(c));
+    lastContractAddress = address(c);
 
-    constructor()
-        public
-    {
-        owner = msg.sender;
-    }
+    tokensByOwner[address(c)][owner] = supply;
+    emit newProofClaimContract(c);
+    return c;
+  }
 
-    modifier onlyOwner(address _owner) {
-      require (msg.sender == _owner);
-    }
-
-    function getContractCount()
-        public
-        constant
-        returns(uint contractCount)
-    {
-        return contracts.length;
-    }
-
-    function newProofClaim(string symbol, string name, address owner)
-        public
-        returns(address newContract)
-    {
-        uint supply = 100000000000000000000;
-        ProofClaim c = new ProofClaim(symbol, name, owner, supply);
-        contracts.push(address(c));
-        lastContractAddress = address(c);
-
-        tokensByOwner[address(c)][owner] = supply;
-        emit newProofClaimContract(c);
-        return c;
-    }
-
-    function seeProofClaim(uint pos)
-        public
-        constant
-        returns(address contractAddress)
-    {
-        return address(contracts[pos]);
-    }
-
-    function recordAssignment(address _contract, address _assignor, address _assignee, uint _priceInEth, uint _numTransferred) public onlyOwner (msg.sender) {
-      Assignment memory _assignment = Assignment({
-        assignor: _assignor,
-        assignee: _assignee,
-        priceInEth: _priceInEth,
-        numTransferred: _numTransferred,
-        confirmed: false
-      });
-      
-      assignmentHistory[_contract][currAssignment[_contract]++] = _assignment;
-    }
-
-    function executeAssignment(address _contract, uint _assignmentNum) {
-      // require ERC20 balance of Assignee to be > than _numtransferred 
-      uint assignorTokens = ProofClaim(_contract).balanceOf(msg.sender);
-      Assignment memory _assignment = assignmentHistory[_contract][msg.sender];
-      require (msg.sender == _assignment.assignor);
-      require (assignoreTokens >= assignment.numTransferred);
-
-      ProofClaim(_contract).transfer(_assignment.assignee, _assignment.numTransferred);
-
-      emit AssignmentExecuted(
-      _assignment.assignor,
-      _assignment.assignee,
-      _assignment.priceInEth,
-      _assignment.numTransferred
-      );      
-    }
+  function seeProofClaim(uint pos)
+      public
+      constant
+      returns(address contractAddress)
+  {
+    return address(contracts[pos]);
+  }
 }
 
 contract SafeMath {
-	function safeAdd(uint a, uint b) public pure returns (uint c) {
-    	c = a + b;
-    	require(c >= a);
-	}
-	function safeSub(uint a, uint b) public pure returns (uint c) {
-    	require(b <= a);
-    	c = a - b;
-	}
-	function safeMul(uint a, uint b) public pure returns (uint c) {
-    	c = a * b;
-    	require(a == 0 || c / a == b);
-	}
-	function safeDiv(uint a, uint b) public pure returns (uint c) {
-    	require(b > 0);
-    	c = a / b;
-	}
+function safeAdd(uint a, uint b) public pure returns (uint c) {
+    c = a + b;
+    require(c >= a);
+}
+function safeSub(uint a, uint b) public pure returns (uint c) {
+    require(b <= a);
+    c = a - b;
+}
+function safeMul(uint a, uint b) public pure returns (uint c) {
+    c = a * b;
+    require(a == 0 || c / a == b);
+}
+function safeDiv(uint a, uint b) public pure returns (uint c) {
+    require(b > 0);
+    c = a / b;
+}
 }
 
 contract ERC20Interface {
