@@ -2,6 +2,8 @@ pragma solidity ^0.5.0;
 
 contract IncomeAssignment {
 
+  ProofClaim pcToken;
+
   // @notice Assignment defines details of an assignment
   struct Assignment {
     address assignor;
@@ -19,8 +21,9 @@ contract IncomeAssignment {
   // @notice ERC20 address -> Assignment index (defaults to 0)
   mapping (address => uint) public currAssignment; 
 
-  constructor() public {
+  constructor(address _pcTokenAddr) public {
     owner = msg.sender;
+    pcToken = ProofClaim(_pcTokenAddr);
   }
   
   modifier onlyOwner(address _owner) {
@@ -28,7 +31,12 @@ contract IncomeAssignment {
     _;
   }
 
-  function recordAssignment(address _contract, address _assignor, address _assignee, uint _priceInEth, uint _numTransferred) public onlyOwner (msg.sender) {
+  function recordAssignment(
+    address _contract, 
+    address _assignor, 
+    address _assignee, 
+    uint _priceInEth, 
+    uint _numTransferred) public onlyOwner (msg.sender) {
     Assignment memory _assignment = Assignment({
       assignor: _assignor,
       assignee: _assignee,
@@ -44,15 +52,21 @@ contract IncomeAssignment {
 
   function executeAssignment(address _contract, uint _assignmentNum) public {
 
-    // Need to import ProofClaim for this to work
-    ProofClaim PCToken = ProofClaim(_contract);
-    uint assignorTokens = PCToken.balanceOf(msg.sender);
+    uint assignorTokens = pcToken.balanceOf(msg.sender);
     Assignment memory _assignment = assignmentHistory[_contract][_assignmentNum];
-    require (msg.sender == _assignment.assignor);
-    require (assignorTokens >= _assignment.numTransferred);
-    assignorTokens = PCToken.transfer(_assignment.assignee, _assignment.numTransferred);
+    require (msg.sender == _assignment.assignor, "only assignor can confirm");
+    require (assignorTokens >= _assignment.numTransferred, "assignor does not have enough tokens to assign");
+    require(pcToken.transfer(_assignment.assignee, _assignment.numTransferred), "transfer unsuccessful");
     _assignment.confirmed = true;   
-    
+
+    // Save the record of the assignment
     assignmentHistory[_contract][_assignmentNum] = _assignment; 
   }
+}
+
+contract ProofClaim {
+  
+  function balanceOf(address tokenOwner) public constant returns (uint balance) {}
+    	
+  function transfer(address to, uint tokens) public returns (bool success) {}
 }
