@@ -62,11 +62,15 @@ contract IncomeAssignment {
     // Save the record of the assignment
     assignmentHistory[_contract][_assignmentNum] = _assignment; 
   }
+
+  function getNumAssignments(address _addr) public returns (uint) {
+    return currAssignment[_addr];
+  }
 }
 
 contract ProofClaim {
   
-  function balanceOf(address tokenOwner) public constant returns (uint balance) {}
+  function balanceOf(address tokenOwner) public view returns (uint balance) {}
     	
   function transfer(address to, uint tokens) public returns (bool success) {}
 }
