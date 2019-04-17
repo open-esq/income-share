@@ -1,6 +1,8 @@
-pragma solidity ^0.4.25;
+pragma solidity ^0.5.0;
 
 contract MasterPOC {
+
+	address owner;
 
   event AssignmentExecuted (
     address assignor,
@@ -23,17 +25,18 @@ contract MasterPOC {
   constructor()
       public
   {
+		owner = msg.sender;
   }
 
   function getContractCount()
       public
-      constant
+      view
       returns(uint contractCount)
   {
     return contracts.length;
   }
 
-  function newProofClaim(string symbol, string name, address owner)
+  function newProofClaim(string memory symbol, string memory name)
       public
       returns(address newContract)
   {
@@ -43,13 +46,13 @@ contract MasterPOC {
     lastContractAddress = address(c);
 
     tokensByOwner[address(c)][owner] = supply;
-    emit newProofClaimContract(c);
-    return c;
+    emit newProofClaimContract(address(c));
+    return address(c);
   }
 
   function seeProofClaim(uint pos)
       public
-      constant
+      view
       returns(address contractAddress)
   {
     return address(contracts[pos]);
@@ -76,9 +79,9 @@ function safeDiv(uint a, uint b) public pure returns (uint c) {
 }
 
 contract ERC20Interface {
-	function totalSupply() public constant returns (uint);
-	function balanceOf(address tokenOwner) public constant returns (uint balance);
-	function allowance(address tokenOwner, address spender) public constant returns (uint remaining);
+	function totalSupply() public view returns (uint);
+	function balanceOf(address tokenOwner) public view returns (uint balance);
+	function allowance(address tokenOwner, address spender) public view returns (uint remaining);
 	function transfer(address to, uint tokens) public returns (bool success);
 	function approve(address spender, uint tokens) public returns (bool success);
 	function transferFrom(address from, address to, uint tokens) public returns (bool success);
@@ -88,7 +91,7 @@ contract ERC20Interface {
 }
 
 contract ApproveAndCallFallBack {
-	function receiveApproval(address from, uint256 tokens, address token, bytes data) public;
+	function receiveApproval(address from, uint256 tokens, address token, bytes memory data) public;
 }
 
 contract Owned {
@@ -126,7 +129,7 @@ contract ProofClaim is ERC20Interface, Owned, SafeMath {
 	mapping(address => uint) balances;
 	mapping(address => mapping(address => uint)) allowed;
     
-constructor(string _symbol, string _name, address _owner, _supply) public {
+constructor(string memory _symbol, string memory _name, address _owner, uint _supply) public {
     	symbol = _symbol;
     	name = _name;
     	decimals = 18;
@@ -136,11 +139,11 @@ constructor(string _symbol, string _name, address _owner, _supply) public {
 }
 
 
-function totalSupply() public constant returns (uint) {
+function totalSupply() public view returns (uint) {
     	return _totalSupply  - balances[address(0)];
 }
 
-function balanceOf(address tokenOwner) public constant returns (uint balance) {
+function balanceOf(address tokenOwner) public view returns (uint balance) {
     	return balances[tokenOwner];
 }
 
@@ -165,18 +168,18 @@ function transferFrom(address from, address to, uint tokens) public returns (boo
     	return true;
 }
 
-function allowance(address tokenOwner, address spender) public constant returns (uint remaining) {
+function allowance(address tokenOwner, address spender) public view returns (uint remaining) {
     	return allowed[tokenOwner][spender];
 }
 
-function approveAndCall(address spender, uint tokens, bytes data) public returns (bool success) {
+function approveAndCall(address spender, uint tokens, bytes memory data) public returns (bool success) {
     	allowed[msg.sender][spender] = tokens;
     	emit Approval(msg.sender, spender, tokens);
-    	ApproveAndCallFallBack(spender).receiveApproval(msg.sender, tokens, this, data);
+    	ApproveAndCallFallBack(spender).receiveApproval(msg.sender, tokens, address(this), data);
     	return true;
 }
 
-function () public payable {
+function () external payable {
     	revert();
 }
 
