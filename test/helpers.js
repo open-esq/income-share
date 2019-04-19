@@ -9,7 +9,6 @@ const getWeb3 = () => {
 // assumes passed-in web3 is v1.0 and creates a function to receive contract name
 const getContractInstance = (web3) => (contractName) => {
   const artifact = artifacts.require(contractName) // globally injected artifacts helper
-  console.log(artifact.networks) 
   const deployedAddress = artifact.networks[artifact.network_id].address
   const instance = new web3.eth.Contract(artifact.abi, deployedAddress)
   return instance

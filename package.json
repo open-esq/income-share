@@ -20,6 +20,6 @@
   },
   "homepage": "https://github.com/joshma91/income-share#readme",
   "dependencies": {
-    "web3": "^1.0.0-beta.52"
+    "web3": "^1.0.0-beta.35"
   }
 }

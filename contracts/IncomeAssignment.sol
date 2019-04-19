@@ -8,7 +8,7 @@ contract IncomeAssignment {
   struct Assignment {
     address assignor;
     address assignee;
-    uint priceInEth;
+    uint price;
     uint numTransferred;
     bool confirmed;
   }
@@ -35,12 +35,12 @@ contract IncomeAssignment {
     address _contract, 
     address _assignor, 
     address _assignee, 
-    uint _priceInEth, 
+    uint _price, 
     uint _numTransferred) public onlyOwner (msg.sender) {
     Assignment memory _assignment = Assignment({
       assignor: _assignor,
       assignee: _assignee,
-      priceInEth: _priceInEth,
+      price: _price,
       numTransferred: _numTransferred,
       confirmed: false
     });

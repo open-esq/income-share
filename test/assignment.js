@@ -4,7 +4,7 @@ const getInstance = getContractInstance(web3);
 const assignmentContract = getInstance("IncomeAssignment");
 const pcTokenAddr = getInstance("ProofClaim").address;
 
-contract("Testing MiraiCore contract", function(accounts) {
+contract("Testing IncomeAssignment contract", function(accounts) {
   const assignment1 = {
     contractAddress: pcTokenAddr,
     assignor: accounts[0],
@@ -22,9 +22,13 @@ contract("Testing MiraiCore contract", function(accounts) {
   };
 
 
-  it("should retrieve the product information", async () => {
+  it("should retrieve the proper assignment count", async () => {
+    
+    console.log(assignment1.contractAddress)
+    console.log(assignmentContract.address)
+ 
     await assignmentContract.methods
-      .recordAssignment(assignment1.contractAddress, assignment1.assignor, assignment1.assignee, assignment1.price, assignment1.numTransferred)
+      .recordAssignment(assignment1.contractAddress, assignment1.assignor, assignment1.assignee, assignment1.price.toString(), assignment1.numTransferred)
       .send({ from: accounts[0], gas: 3000000 });
 
     const numAssignments = await assignmentContract.methods.getNumAssignments(pcTokenAddr).call({ from: accounts[0], gas: 3000000 });
