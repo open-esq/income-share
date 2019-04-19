@@ -21,7 +21,6 @@ contract("Testing IncomeAssignment contract", function(accounts) {
     numTransferred: 25
   };
 
-
   it("should retrieve the proper assignment count", async () => {
     
     console.log(assignment1.contractAddress)

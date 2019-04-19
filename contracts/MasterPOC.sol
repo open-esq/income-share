@@ -2,19 +2,6 @@ pragma solidity ^0.5.0;
 
 contract MasterPOC {
 
-	address owner;
-
-  event AssignmentExecuted (
-    address assignor,
-    address assignee,
-    uint priceInEth,
-    uint numTransferred
-  );
-
-  // @notice ERC20 address -> user address -> # tokens owned
-  // currently unused, but would be nice for tracking  
-  mapping (address => mapping(address => uint)) public tokensByOwner;
-
   address[] public contracts;
   address public lastContractAddress;
   
@@ -25,7 +12,6 @@ contract MasterPOC {
   constructor()
       public
   {
-		owner = msg.sender;
   }
 
   function getContractCount()

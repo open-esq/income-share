@@ -13,7 +13,16 @@ contract IncomeAssignment {
     bool confirmed;
   }
 
-  address owner;
+  event AssignmentExecuted (
+    address _contract,
+    address assignor,
+    address assignee,
+    uint priceInEth,
+    uint numTransferred
+  );
+
+  // Would be nice to have OL address passed into constructor for modifier use
+  address openLaw;
 
   // @notice ERC20 address -> Assignment number -> Assignment
   mapping (address => mapping(uint => Assignment)) public assignmentHistory;
@@ -22,13 +31,7 @@ contract IncomeAssignment {
   mapping (address => uint) public currAssignment; 
 
   constructor(address _pcTokenAddr) public {
-    owner = msg.sender;
     pcToken = ProofClaim(_pcTokenAddr);
-  }
-  
-  modifier onlyOwner(address _owner) {
-    require (msg.sender == _owner);
-    _;
   }
 
   function recordAssignment(
@@ -36,7 +39,7 @@ contract IncomeAssignment {
     address _assignor, 
     address _assignee, 
     uint _price, 
-    uint _numTransferred) public onlyOwner (msg.sender) {
+    uint _numTransferred) public {
     Assignment memory _assignment = Assignment({
       assignor: _assignor,
       assignee: _assignee,
@@ -46,6 +49,8 @@ contract IncomeAssignment {
     });
     
     assignmentHistory[_contract][currAssignment[_contract]++] = _assignment;
+
+    emit AssignmentExecuted(_contract, _assignor, _assignee, _price, _numTransferred);
   }
 
   function () external payable { }
