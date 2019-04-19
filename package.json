@@ -18,5 +18,8 @@
   "bugs": {
     "url": "https://github.com/joshma91/income-share/issues"
   },
-  "homepage": "https://github.com/joshma91/income-share#readme"
+  "homepage": "https://github.com/joshma91/income-share#readme",
+  "dependencies": {
+    "web3": "^1.0.0-beta.52"
+  }
 }
