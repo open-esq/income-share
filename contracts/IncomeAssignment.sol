@@ -15,6 +15,7 @@ contract IncomeAssignment {
 
   event AssignmentExecuted (
     address _contract,
+    uint contractNo,
     address assignor,
     address assignee,
     uint priceInEth,
@@ -47,10 +48,12 @@ contract IncomeAssignment {
       numTransferred: _numTransferred,
       confirmed: false
     });
-    
-    assignmentHistory[_contract][currAssignment[_contract]++] = _assignment;
 
-    emit AssignmentExecuted(_contract, _assignor, _assignee, _price, _numTransferred);
+    uint _assignmentNo = currAssignment[_contract]++;
+    
+    assignmentHistory[_contract][_assignmentNo] = _assignment;
+
+    emit AssignmentExecuted(_contract, _assignmentNo, _assignor, _assignee, _price, _numTransferred);
   }
 
   function () external payable { }

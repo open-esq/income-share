@@ -1,6 +1,12 @@
 pragma solidity ^0.5.0;
 
 contract MasterPOC {
+  event AssignmentExecuted (
+    address assignor,
+    address assignee,
+    uint priceInEth,
+    uint numTransferred
+  );
 
   address[] public contracts;
   address public lastContractAddress;
@@ -22,18 +28,17 @@ contract MasterPOC {
     return contracts.length;
   }
 
-  function newProofClaim(string memory symbol, string memory name)
+  function newProofClaim(string memory symbol, string memory name, address owner)
       public
-      returns(address newContract)
+      returns(bool)
   {
-    uint supply = 100000000000000000000;
+    uint supply = 100;
     ProofClaim c = new ProofClaim(symbol, name, owner, supply);
     contracts.push(address(c));
     lastContractAddress = address(c);
 
-    tokensByOwner[address(c)][owner] = supply;
     emit newProofClaimContract(address(c));
-    return address(c);
+    return true;
   }
 
   function seeProofClaim(uint pos)
