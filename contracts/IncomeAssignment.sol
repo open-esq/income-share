@@ -2,8 +2,6 @@ pragma solidity ^0.5.0;
 
 contract IncomeAssignment {
 
-  ProofClaim pcToken;
-
   // @notice Assignment defines details of an assignment
   struct Assignment {
     address assignor;
@@ -31,8 +29,7 @@ contract IncomeAssignment {
   // @notice ERC20 address -> Assignment index (defaults to 0)
   mapping (address => uint) public currAssignment; 
 
-  constructor(address _pcTokenAddr) public {
-    pcToken = ProofClaim(_pcTokenAddr);
+  constructor() public {
   }
 
   function recordAssignment(
@@ -60,11 +57,15 @@ contract IncomeAssignment {
 
   function executeAssignment(address _contract, uint _assignmentNum) public {
 
+    ProofClaim pcToken = ProofClaim(_contract);
+
     uint assignorTokens = pcToken.balanceOf(msg.sender);
     Assignment memory _assignment = assignmentHistory[_contract][_assignmentNum];
     require (msg.sender == _assignment.assignor, "only assignor can confirm");
     require (assignorTokens >= _assignment.numTransferred, "assignor does not have enough tokens to assign");
-    require(pcToken.transfer(_assignment.assignee, _assignment.numTransferred), "transfer unsuccessful");
+
+    require(pcToken.transferFrom(_assignment.assignor, _assignment.assignee, _assignment.numTransferred), "transfer unsuccessful");
+
     _assignment.confirmed = true;
 
     // Save the record of the assignment
@@ -95,7 +96,13 @@ contract IncomeAssignment {
 
 contract ProofClaim {
   
-  function balanceOf(address tokenOwner) public view returns (uint balance) {}
-    	
-  function transfer(address to, uint tokens) public returns (bool success) {}
+  function totalSupply() public view returns (uint);
+  function balanceOf(address tokenOwner) public view returns (uint balance);
+  function allowance(address tokenOwner, address spender) public view returns (uint remaining);
+  function transfer(address to, uint tokens) public returns (bool success);
+  function approve(address spender, uint tokens) public returns (bool success);
+  function transferFrom(address from, address to, uint tokens) public returns (bool success);
+
+  event Transfer(address indexed from, address indexed to, uint tokens);
+  event Approval(address indexed tokenOwner, address indexed spender, uint tokens);
 }
