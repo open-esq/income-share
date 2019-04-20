@@ -1,8 +1,12 @@
 pragma solidity ^0.5.0;
 
+/**
+ * @title IncomeAssignment
+ * @notice IncomeAssignment controls the assignment of income share tokens
+ **/
 contract IncomeAssignment {
 
-  // @notice Assignment defines details of an assignment
+  // @notice Assignment defines the details of an assignment
   struct Assignment {
     address assignor;
     address assignee;
@@ -11,6 +15,7 @@ contract IncomeAssignment {
     bool confirmed;
   }
 
+  // @notice Event emitting Assignment details upon execution 
   event AssignmentExecuted (
     address _contract,
     uint contractNo,
@@ -32,6 +37,14 @@ contract IncomeAssignment {
   constructor() public {
   }
 
+   /**
+   * @notice recordAssignment creates a new assignment 
+   * @param _contract - the address of the tokenized ERC20 income shares 
+   * @param _assignor - address assigning tokens
+   * @param _assignee - address receiving tokens
+   * @param _price - price the assignee pays in Wei
+   * @param _numTransferred - number of transferred shares
+   */
   function recordAssignment(
     address _contract, 
     address _assignor, 
@@ -55,27 +68,44 @@ contract IncomeAssignment {
 
   function () external payable { }
 
+/**
+   * @notice executeAssignment is called by an assignor to effect token transfer after receiving payment 
+   * @param _contract - the address of the tokenized ERC20 income shares 
+   * @param _assignmentNum - the particular Assignment's index for retrieval 
+   */
   function executeAssignment(address _contract, uint _assignmentNum) public {
 
     ProofClaim pcToken = ProofClaim(_contract);
 
     uint assignorTokens = pcToken.balanceOf(msg.sender);
+    
     Assignment memory _assignment = assignmentHistory[_contract][_assignmentNum];
+
     require (msg.sender == _assignment.assignor, "only assignor can confirm");
     require (assignorTokens >= _assignment.numTransferred, "assignor does not have enough tokens to assign");
 
+    // transfer pre-approved token balance from assignor to assignee by calling Token smart contract
     require(pcToken.transferFrom(_assignment.assignor, _assignment.assignee, _assignment.numTransferred), "transfer unsuccessful");
 
     _assignment.confirmed = true;
 
-    // Save the record of the assignment
+    // update the Assignment w/ confirmed = true
     assignmentHistory[_contract][_assignmentNum] = _assignment; 
   }
 
+/**
+   * @notice getNumAssignments returns the number of assignments made for a token  
+   * @param _contract - the address of the tokenized ERC20 income shares 
+   */
   function getNumAssignments(address _addr) public returns (uint) {
     return currAssignment[_addr];
   }
 
+/**
+   * @notice getAssignment returns the details of an Assignment 
+   * @param _contract - the address of the tokenized ERC20 income shares 
+   * @param _assignmentNum - the particular Assignment's index for retrieval 
+   */
   function getAssignment(address _contract, uint _assignmentNum) public returns (  
     address assignor,
     address assignee,
@@ -89,11 +119,13 @@ contract IncomeAssignment {
     price = _assignment.price;
     numTransferred = _assignment.numTransferred;
     confirmed = _assignment.confirmed;
-  }
-
-    
+  }    
 }
 
+/**
+ * @title ProofClaim
+ * @notice Interface of ProofClaim ERC20 token to call its functions 
+ **/
 contract ProofClaim {
   
   function totalSupply() public view returns (uint);
