@@ -2,12 +2,10 @@ const MasterPOC = artifacts.require("MasterPOC");
 const ProofClaim = artifacts.require("ProofClaim");
 const IncomeAssignment = artifacts.require("IncomeAssignment");
 
-module.exports = async deployer => {
-  const accounts = await web3.eth.getAccounts();
+module.exports = deployer => {
+  
   deployer.deploy(MasterPOC);
-  await deployer
-    .deploy(ProofClaim, "PCT", "Proof of Claim Token", accounts[0], 100)
-  await deployer.deploy(IncomeAssignment, ProofClaim.address)
+  deployer.deploy(IncomeAssignment);
 };
 
 const deployAssignment = (deployer, pctAddress) =>
