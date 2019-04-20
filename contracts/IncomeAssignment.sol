@@ -97,8 +97,8 @@ contract IncomeAssignment {
    * @notice getNumAssignments returns the number of assignments made for a token  
    * @param _contract - the address of the tokenized ERC20 income shares 
    */
-  function getNumAssignments(address _addr) public returns (uint) {
-    return currAssignment[_addr];
+  function getNumAssignments(address _contract) public view returns (uint) {
+    return currAssignment[_contract];
   }
 
 /**
@@ -106,7 +106,7 @@ contract IncomeAssignment {
    * @param _contract - the address of the tokenized ERC20 income shares 
    * @param _assignmentNum - the particular Assignment's index for retrieval 
    */
-  function getAssignment(address _contract, uint _assignmentNum) public returns (  
+  function getAssignment(address _contract, uint _assignmentNum) public view returns (  
     address assignor,
     address assignee,
     uint price,
