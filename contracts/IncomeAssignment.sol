@@ -65,7 +65,7 @@ contract IncomeAssignment {
     require (msg.sender == _assignment.assignor, "only assignor can confirm");
     require (assignorTokens >= _assignment.numTransferred, "assignor does not have enough tokens to assign");
     require(pcToken.transfer(_assignment.assignee, _assignment.numTransferred), "transfer unsuccessful");
-    _assignment.confirmed = true;   
+    _assignment.confirmed = true;
 
     // Save the record of the assignment
     assignmentHistory[_contract][_assignmentNum] = _assignment; 
@@ -74,6 +74,23 @@ contract IncomeAssignment {
   function getNumAssignments(address _addr) public returns (uint) {
     return currAssignment[_addr];
   }
+
+  function getAssignment(address _contract, uint _assignmentNum) public returns (  
+    address assignor,
+    address assignee,
+    uint price,
+    uint numTransferred,
+    bool confirmed) {
+    
+    Assignment memory _assignment = assignmentHistory[_contract][_assignmentNum];
+    assignor = _assignment.assignor;
+    assignee = _assignment.assignee;
+    price = _assignment.price;
+    numTransferred = _assignment.numTransferred;
+    confirmed = _assignment.confirmed;
+  }
+
+    
 }
 
 contract ProofClaim {
