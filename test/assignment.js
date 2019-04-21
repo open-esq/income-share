@@ -98,22 +98,22 @@ contract("Testing contracts", function(accounts) {
       // Approve first token transfer
       await pcTokenInstance.methods
         .approve(assignmentContract._address, assignment1.numTransferred)
-        .send({ from: accounts[0], gas: 3000000 });
+        .send({ from: assignment1.seller, gas: 3000000 });
 
       // Execute first assignment
       await assignmentContract.methods
         .executeAssignment(assignment1.contractAddress, 0)
-        .send({ from: accounts[0], gas: 3000000 });
+        .send({ from: assignment1.seller, gas: 3000000 });
 
       // Approve second token transfer
       await pcTokenInstance.methods
         .approve(assignmentContract._address, assignment2.numTransferred)
-        .send({ from: accounts[1], gas: 3000000 });
+        .send({ from: assignment2.seller, gas: 3000000 });
 
       // Execute second assignment
       await assignmentContract.methods
         .executeAssignment(assignment2.contractAddress, 1)
-        .send({ from: accounts[1], gas: 3000000 });
+        .send({ from: assignment2.seller, gas: 3000000 });
 
       // Get first assignment details
       const retrievedAssignment1 = await assignmentContract.methods
