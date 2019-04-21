@@ -1,12 +1,6 @@
 pragma solidity ^0.5.0;
 
 contract MasterPOC {
-  event AssignmentExecuted (
-    address assignor,
-    address assignee,
-    uint priceInEth,
-    uint numTransferred
-  );
 
   address[] public contracts;
   address public lastContractAddress;

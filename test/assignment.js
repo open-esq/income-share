@@ -9,15 +9,15 @@ contract("Testing contracts", function(accounts) {
   let pcTokenInstance;
   let pcTokenAddr;
   let assignment1 = {
-    assignor: accounts[0],
-    assignee: accounts[1],
+    seller: accounts[0],
+    buyer: accounts[1],
     price: 1 * 10 ** 18,
     numTransferred: 50
   };
 
   let assignment2 = {
-    assignor: accounts[1],
-    assignee: accounts[2],
+    seller: accounts[1],
+    buyer: accounts[2],
     price: 0.5 * 10 ** 18,
     numTransferred: 25
   };
@@ -61,8 +61,8 @@ contract("Testing contracts", function(accounts) {
       await assignmentContract.methods
         .recordAssignment(
           assignment1.contractAddress,
-          assignment1.assignor,
-          assignment1.assignee,
+          assignment1.seller,
+          assignment1.buyer,
           assignment1.price.toString(),
           assignment1.numTransferred
         )
@@ -72,8 +72,8 @@ contract("Testing contracts", function(accounts) {
       await assignmentContract.methods
         .recordAssignment(
           assignment2.contractAddress,
-          assignment2.assignor,
-          assignment2.assignee,
+          assignment2.seller,
+          assignment2.buyer,
           assignment2.price.toString(),
           assignment2.numTransferred
         )

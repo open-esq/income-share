@@ -8,8 +8,8 @@ contract IncomeAssignment {
 
   // @notice Assignment defines the details of an assignment
   struct Assignment {
-    address assignor;
-    address assignee;
+    address seller;
+    address buyer;
     uint price;
     uint numTransferred;
     bool confirmed;
@@ -19,8 +19,8 @@ contract IncomeAssignment {
   event AssignmentExecuted (
     address _contract,
     uint contractNo,
-    address assignor,
-    address assignee,
+    address seller,
+    address buyer,
     uint priceInEth,
     uint numTransferred
   );
@@ -40,20 +40,20 @@ contract IncomeAssignment {
    /**
    * @notice recordAssignment creates a new assignment 
    * @param _contract - the address of the tokenized ERC20 income shares 
-   * @param _assignor - address assigning tokens
-   * @param _assignee - address receiving tokens
-   * @param _price - price the assignee pays in Wei
+   * @param _seller - address assigning tokens
+   * @param _buyer - address receiving tokens
+   * @param _price - price the buyer pays in Wei
    * @param _numTransferred - number of transferred shares
    */
   function recordAssignment(
     address _contract, 
-    address _assignor, 
-    address _assignee, 
+    address _seller, 
+    address _buyer, 
     uint _price, 
     uint _numTransferred) public {
     Assignment memory _assignment = Assignment({
-      assignor: _assignor,
-      assignee: _assignee,
+      seller: _seller,
+      buyer: _buyer,
       price: _price,
       numTransferred: _numTransferred,
       confirmed: false
@@ -63,13 +63,13 @@ contract IncomeAssignment {
     
     assignmentHistory[_contract][_assignmentNo] = _assignment;
 
-    emit AssignmentExecuted(_contract, _assignmentNo, _assignor, _assignee, _price, _numTransferred);
+    emit AssignmentExecuted(_contract, _assignmentNo, _seller, _buyer, _price, _numTransferred);
   }
 
   function () external payable { }
 
 /**
-   * @notice executeAssignment is called by an assignor to effect token transfer after receiving payment 
+   * @notice executeAssignment is called by an seller to effect token transfer after receiving payment 
    * @param _contract - the address of the tokenized ERC20 income shares 
    * @param _assignmentNum - the particular Assignment's index for retrieval 
    */
@@ -77,15 +77,15 @@ contract IncomeAssignment {
 
     ProofClaim pcToken = ProofClaim(_contract);
 
-    uint assignorTokens = pcToken.balanceOf(msg.sender);
+    uint sellerTokens = pcToken.balanceOf(msg.sender);
     
     Assignment memory _assignment = assignmentHistory[_contract][_assignmentNum];
 
-    require (msg.sender == _assignment.assignor, "only assignor can confirm");
-    require (assignorTokens >= _assignment.numTransferred, "assignor does not have enough tokens to assign");
+    require (msg.sender == _assignment.seller, "only seller can confirm");
+    require (sellerTokens >= _assignment.numTransferred, "seller does not have enough tokens to assign");
 
-    // transfer pre-approved token balance from assignor to assignee by calling Token smart contract
-    require(pcToken.transferFrom(_assignment.assignor, _assignment.assignee, _assignment.numTransferred), "transfer unsuccessful");
+    // transfer pre-approved token balance from seller to buyer by calling Token smart contract
+    require(pcToken.transferFrom(_assignment.seller, _assignment.buyer, _assignment.numTransferred), "transfer unsuccessful");
 
     _assignment.confirmed = true;
 
@@ -107,15 +107,15 @@ contract IncomeAssignment {
    * @param _assignmentNum - the particular Assignment's index for retrieval 
    */
   function getAssignment(address _contract, uint _assignmentNum) public view returns (  
-    address assignor,
-    address assignee,
+    address seller,
+    address buyer,
     uint price,
     uint numTransferred,
     bool confirmed) {
     
     Assignment memory _assignment = assignmentHistory[_contract][_assignmentNum];
-    assignor = _assignment.assignor;
-    assignee = _assignment.assignee;
+    seller = _assignment.seller;
+    buyer = _assignment.buyer;
     price = _assignment.price;
     numTransferred = _assignment.numTransferred;
     confirmed = _assignment.confirmed;
