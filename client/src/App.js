@@ -1,7 +1,10 @@
 import React from "react";
 import { APIClient, Openlaw } from 'openlaw';
-import getWeb3 from "./utils/getWeb3";
-import IncomeAssignmentContract from "./contracts/IncomeAssignmentContract.json"
+import {Container} from "semantic-ui-react";
+import "semantic-ui-css/semantic.min.css";
+import Web3Container from "./utils/Web3Container";
+import IncomeAssignmentContract from "./contracts/IncomeAssignment.json"
+import FixedMenu from "./components/FixedMenu"
 require('dotenv').config()
 
 //create config
@@ -15,7 +18,7 @@ const openLawConfig = {
 //create an instance of the API client with url as parameter
 const apiClient = new APIClient(URL);
 
-export default class extends React.Component {
+class App extends React.Component {
 
   //initial state of variables for Assignment Template, and web3,etc
   state = { 
@@ -42,31 +45,26 @@ export default class extends React.Component {
     draftId:''  
 };
 
-  componentDidMount = async () => {
-    try {
-      const web3 = await getWeb3();
-      const accounts = web3.eth.getAccounts();
-      
-      const networkId = await web3.eth.net.getId();
-
-      const deployedNetwork = IncomeAssignmentContract.networks[networkId]
-      const instance = new web3.eth.Contract(
-        IncomeAssignmentContract.abi,
-        deployedNetwork && deployedNetwork.address
-      )
-
-      this.setState({ web3, accounts, contract: instance })
-    } catch {
-      throw error
-    }
-  }
-
   render() {
     return (
-      <>
+      <div>
+        <FixedMenu/>
+        <Container text style={{ marginTop: "7em" }}>
         <h1>Welcome to React Parcel Micro App!</h1>
         <p>Hard to get more minimal than this React app.</p>
-      </>
+        </Container>
+      </div>
     );
   }
 }
+
+export default () => (
+  <Web3Container
+    contractJSON={IncomeAssignmentContract}
+    renderLoading={() => <div>Loading</div>}
+    render={({ web3, accounts, contract }) => (
+      <App web3={web3} accounts={accounts} contract={contract} />
+    )}
+  />
+);
+
