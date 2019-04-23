@@ -9,6 +9,23 @@ import IncomeAssignmentContract from "../contracts/IncomeAssignment.json";
 import AgreementPreview from "./AgreementPreview";
 require("dotenv").config();
 
+const ISA_DATE = "ISA Date"
+const COMPANY_NAME = "Company Name"
+const STUDENT_NAME = "Student Name"
+const TOKENIZED_INCOME_SHARE_ADDRESS = "Tokenized Income Share Address"
+const NUMBER_OF_SHARES = "Number of Shares"
+const EFFECTIVE_DATE = "Effective Date"
+const NUMBER_OF_ASSIGNED_SHARES = "Number of Assigned Shares"
+const PURCHASE_PRICE = "Purchase Price"
+const SELLER_NAME = "Seller Name"
+const SELLER_ADDRESS = "Seller Address"
+const SELLER_ETHEREUM_ADDRESS = "Seller Ethereum Address"
+const SELLER_SIGNATORY_EMAIL = "Seller Signatory Email"
+const BUYER_NAME = "Buyer Name"
+const BUYER_ADDRESS = "Buyer Address"
+const BUYER_ETHEREUM_ADDRESS = "Buyer Ethereum Address"
+const BUYER_SIGNATORY_EMAIL = "Buyer Signatory Email"
+
 //create config
 const openLawConfig = {
   server: process.env.URL,
@@ -49,7 +66,10 @@ class AssignmentAgreement extends React.Component {
     parameters: {},
     executionResult: null,
     variables: null,
-    draftId: ""
+    draftId: "",
+    
+    // State variables for preview component
+    previewHTML: null
   };
 
   componentDidMount = async () => {
@@ -119,61 +139,92 @@ class AssignmentAgreement extends React.Component {
 
   onChange = (key, value) => {
     switch(key){
-      case "ISA Date":
+      case ISA_DATE:
         this.setState({isaDate: value})
         break;
-      case "Company Name":
+      case COMPANY_NAME:
         this.setState({companyName: value})
         break;
-      case "Student Name":
+      case STUDENT_NAME:
         this.setState({studentName: value})
         break;
-      case "Tokenized Income Share Address":
+      case TOKENIZED_INCOME_SHARE_ADDRESS:
         this.setState({tokenAddr: value})
         break;
-      case "Number of Shares":
+      case NUMBER_OF_SHARES:
         this.setState({numShares: value})
         break;
-      case "Effective Date":
+      case EFFECTIVE_DATE:
         this.setState({effectiveDate: value})
         break;
-      case "Number of Assigned Shares":
+      case NUMBER_OF_ASSIGNED_SHARES:
         this.setState({numAssignedShares: value})
         break;
-      case "Purchase Price":
+      case PURCHASE_PRICE:
         this.setState({purchasePrice: value})
         break;
-      case "Seller Name":
+      case SELLER_NAME:
         this.setState({sellerName: value})
         break;
-      case "Seller Address":
+      case SELLER_ADDRESS:
         this.setState({sellerAddr: value})
         break;
-      case "Seller Ethereum Address":
+      case SELLER_ETHEREUM_ADDRESS:
         this.setState({sellerEthAddr: value})
         break;
-      case "Seller Signatory Email":
+      case SELLER_SIGNATORY_EMAIL:
         this.setState({sellerEmail: value})
         break;
-        case "Buyer Name":
+        case BUYER_NAME:
         this.setState({buyerName: value})
         break;
-      case "Buyer Address":
+      case BUYER_ADDRESS:
         this.setState({buyerAddr: value})
         break;
-      case "Buyer Ethereum Address":
+      case BUYER_ETHEREUM_ADDRESS:
         this.setState({buyerEthAddr: value})
         break;
-      case "Buyer Signatory Email":
+      case BUYER_SIGNATORY_EMAIL:
         this.setState({buyerEmail: value})
         break;
     }
     console.log("KEY:", key, "VALUE:", value);
   };
-  setTemplatePreview = async event => {};
+  setTemplatePreview = async () => {
+    const {isaDate, companyName, studentName, tokenAddr, numShares, effectiveDate, numAssignedShares, purchasePrice, sellerName, sellerAddr, sellerEthAddr, sellerEmail, buyerName, buyerAddr, buyerEthAddr, buyerEmail, compiledTemplate} = this.state
+    try {
+      const params = {
+        [ISA_DATE]: isaDate,
+        [COMPANY_NAME]: companyName,
+        [STUDENT_NAME]: studentName,
+        [TOKENIZED_INCOME_SHARE_ADDRESS]: tokenAddr,
+        [NUMBER_OF_SHARES]: numShares,
+        [EFFECTIVE_DATE]: effectiveDate,
+        [NUMBER_OF_ASSIGNED_SHARES]: numAssignedShares,
+        [PURCHASE_PRICE]: purchasePrice,
+        [SELLER_NAME]: sellerName,
+        [SELLER_ADDRESS]: sellerAddr,
+        [SELLER_ETHEREUM_ADDRESS]: sellerEthAddr,
+        [SELLER_SIGNATORY_EMAIL]: sellerEmail,
+        [BUYER_NAME]: buyerName,
+        [BUYER_ADDRESS]: buyerAddr,
+        [BUYER_ETHEREUM_ADDRESS]: buyerEthAddr,
+        [BUYER_SIGNATORY_EMAIL]: buyerEmail
+      }
+      console.log(params)
+
+      const executionResult = await Openlaw.execute(compiledTemplate.compiledTemplate, {}, params)
+      const agreements = await Openlaw.getAgreements(executionResult.executionResult)
+      const previewHTML = await Openlaw.renderForReview(agreements[0].agreement,{});
+
+      this.setState({previewHTML})
+    } catch (error) {
+      throw error;
+    }
+  };
 
   render() {
-    const { variables, parameters, executionResult } = this.state;
+    const { variables, parameters, executionResult, previewHTML} = this.state;
     if (!executionResult) return <Loader active />;
     return (
       <Container text style={{ marginTop: "7em" }}>
@@ -187,7 +238,7 @@ class AssignmentAgreement extends React.Component {
           variables={variables}
         />
         <Button onClick={this.setTemplatePreview}>Preview</Button>
-        <AgreementPreview />
+        <AgreementPreview previewHTML={previewHTML}/>
       </Container>
     );
   }
