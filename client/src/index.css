@@ -7,6 +7,8 @@ html {
 }
 
 
+
+
 .ui.container.overlay {
   position:absolute;
   top:10%;
@@ -15,9 +17,13 @@ html {
   margin-left:-100px !important;
 }
 
+button.ui.button {
+  color: rgba(41, 52, 61, 0.8) !important
+}
+
 button.ui.button.primaryBtn {
   color: white !important;
-  background-color:rgba(57, 78, 98, 0.83);
+  background-color:rgba(41, 52, 61, 0.8);
 }
 
 .metaBtn {

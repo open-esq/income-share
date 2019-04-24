@@ -14,12 +14,12 @@ import "../index.css";
 
 export const FixedMenu = ({ contract, accounts }) => (
   <Menu
-    style={{ height: "85px", background: "rgba(57, 78, 98, 0.30)", paddingLeft:"15%", paddingRight:"15%" }}
+    style={{ height: "85px", background: "rgba(41, 52, 61, 0.8)", paddingLeft:"15%", paddingRight:"15%" }}
     fixed="top"
     inverted
   >
       
-      <Menu.Item as="h2" header>
+      <Menu.Item as={Link} to="/" header style={{fontSize:"25px"}}>
         OpenLaw Income Share Assignment
       </Menu.Item>
       <Menu.Item as={Link} to="/agreement" header>
