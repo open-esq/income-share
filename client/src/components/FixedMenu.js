@@ -8,14 +8,25 @@ import {
   Image,
   Header
 } from "semantic-ui-react";
+import { Link } from "react-router-dom";
 import metamask from "../static/metamask.png";
-import "../index.css"
+import "../index.css";
 
 export const FixedMenu = ({ contract, accounts }) => (
-  <Menu style={{ height: "80px" }} fixed="top" inverted>
-    <Container>
+  <Menu
+    style={{ height: "85px", background: "rgba(57, 78, 98, 0.30)", paddingLeft:"15%", paddingRight:"15%" }}
+    fixed="top"
+    inverted
+  >
+      
       <Menu.Item as="h2" header>
         OpenLaw Income Share Assignment
+      </Menu.Item>
+      <Menu.Item as={Link} to="/agreement" header>
+        Agreement
+      </Menu.Item>
+      <Menu.Item as={Link} to="/agreement" header>
+        Manage
       </Menu.Item>
 
       <Menu.Item position="right">
@@ -27,13 +38,12 @@ export const FixedMenu = ({ contract, accounts }) => (
         href="https://github.com/joshma91"
         position=""
       >
-        <div style={{textAlign:"center"}}>
-          <p style={{margin:0}}>By Josh Ma </p>
-          <p style={{margin:0}}>&</p> 
-          <p style={{margin:0}}>Ross Campbell</p>
-      </div>
-        </Menu.Item>
-    </Container>
+        <div style={{ textAlign: "center" }}>
+          <p style={{ margin: 0 }}>By Josh Ma </p>
+          <p style={{ margin: 0 }}>&</p>
+          <p style={{ margin: 0 }}>Ross Campbell</p>
+        </div>
+      </Menu.Item>
   </Menu>
 );
 

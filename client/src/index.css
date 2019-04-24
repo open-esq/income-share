@@ -1,7 +1,27 @@
+*{
+  color: #cdd4db !important
+}
+
 html {
   scroll-behavior: smooth;
 }
 
-.metaBtn {
-  height: 45px
+
+.ui.container.overlay {
+  position:absolute;
+  top:10%;
+  left:60%;
+  z-index:1;
+  margin-left:-100px !important;
 }
+
+button.ui.button.primaryBtn {
+  color: white !important;
+  background-color:rgba(57, 78, 98, 0.83);
+}
+
+.metaBtn {
+  height: 45px;
+  color: darkslategrey !important
+}
+
