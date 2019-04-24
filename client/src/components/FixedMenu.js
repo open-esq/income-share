@@ -9,9 +9,10 @@ import {
   Header
 } from "semantic-ui-react";
 import metamask from "../static/metamask.png";
+import "../index.css"
 
 export const FixedMenu = ({ contract, accounts }) => (
-  <Menu style={{ height: "90px" }} fixed="top" inverted>
+  <Menu style={{ height: "80px" }} fixed="top" inverted>
     <Container>
       <Menu.Item as="h2" header>
         OpenLaw Income Share Assignment
@@ -59,7 +60,7 @@ const renderWelcome = (contract, accounts) => {
 const MetaMaskModal = () => (
   <div>
     <div
-      style={{ marginTop: "-10px", paddingBottom: "5px", fontWeight: "bold" }}
+      style={{ marginTop: "-5px", paddingBottom: "5px", fontWeight: "bold" }}
     >
       Running on Rinkeby Testnet
     </div>
