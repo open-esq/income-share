@@ -25,7 +25,7 @@ export const FixedMenu = ({ contract, accounts }) => (
       <Menu.Item as={Link} to="/agreement" header>
         Agreement
       </Menu.Item>
-      <Menu.Item as={Link} to="/agreement" header>
+      <Menu.Item as={Link} to="/manage" header>
         Manage
       </Menu.Item>
 
