@@ -28,6 +28,9 @@ export const FixedMenu = ({ contract, accounts }) => (
       <Menu.Item as={Link} to="/manage" header>
         Manage
       </Menu.Item>
+      <Menu.Item as={Link} to="/student" header>
+        Student
+      </Menu.Item>
 
       <Menu.Item position="right">
         {renderWelcome(contract, accounts)}
