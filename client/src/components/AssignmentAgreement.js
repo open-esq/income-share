@@ -29,7 +29,7 @@ const BUYER_SIGNATORY_EMAIL = "Buyer Signatory Email"
 //create config
 const openLawConfig = {
   server: process.env.URL,
-  templateName: process.env.TEMPLATE_NAME,
+  templateName: process.env.ASSIGNMENT_TEMPLATE_NAME,
   userName: process.env.OPENLAW_USER,
   password: process.env.OPENLAW_PASSWORD
 };
@@ -75,13 +75,13 @@ class AssignmentAgreement extends React.Component {
   componentDidMount = async () => {
     const { web3, accounts, contract } = this.props;
     //create an instance of the API client with url as parameter
-
     apiClient
       .login(openLawConfig.userName, openLawConfig.password)
       .then(console.log);
 
     //Retrieve your OpenLaw template by name, use async/await
     const template = await apiClient.getTemplate(openLawConfig.templateName);
+    console.log(template)
 
     //pull properties off of JSON and make into variables
     const title = template.title;
