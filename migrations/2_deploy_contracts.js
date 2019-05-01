@@ -1,5 +1,4 @@
 const MasterPOC = artifacts.require("MasterPOC");
-const ProofClaim = artifacts.require("ProofClaim");
 const IncomeAssignment = artifacts.require("IncomeAssignment");
 
 module.exports = deployer => {

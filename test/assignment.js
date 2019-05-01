@@ -146,5 +146,25 @@ contract("Testing contracts", function(accounts) {
       expect(parseInt(acct1Balance)).to.equal(25);
       expect(parseInt(acct2Balance)).to.equal(25);
     });
+    it("should get the addresses of all of the past holders of the token", async () => {
+      const transferEvents = await pcTokenInstance.getPastEvents("Transfer", {
+        fromBlock: 0,
+        toBlock: "latest"
+      });
+
+      const addresses = transferEvents
+        .map(curr => {
+          return [curr.returnValues.from, curr.returnValues.to];
+        })
+        .reduce((acc, curr) => acc.concat(curr), [])
+        .reduce((acc, curr) => {
+          if (web3.utils.toBN(curr).isZero()) return acc;
+          if (acc.indexOf(curr) < 0) acc.push(curr);
+          return acc;
+        }, []);
+
+        console.log("unique addresses:", addresses)
+        expect(addresses).to.eql([accounts[0],accounts[1],accounts[2]])
+    });
   });
 });

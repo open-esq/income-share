@@ -3,13 +3,13 @@ require('babel-register')({
 })
 require('babel-polyfill')
 const HDWalletProvider = require("truffle-hdwallet-provider");
-require('dotenv').config()
+// require('dotenv').config()
 const path = require("path");
 
 // See <http://truffleframework.com/docs/advanced/configuration>
 // to customize your Truffle configuration!
 module.exports = {
-  contracts_build_directory: path.join(__dirname, "client/src/contracts"),
+  // contracts_build_directory: path.join(__dirname, "client/src/contracts"),
   networks: {
     development: {
       host: 'localhost',
