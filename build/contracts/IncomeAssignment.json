@@ -18,8 +18,7 @@
       ],
       "payable": false,
       "stateMutability": "view",
-      "type": "function",
-      "signature": "0xad7f761c"
+      "type": "function"
     },
     {
       "constant": true,
@@ -58,15 +57,13 @@
       ],
       "payable": false,
       "stateMutability": "view",
-      "type": "function",
-      "signature": "0xea6556b8"
+      "type": "function"
     },
     {
       "inputs": [],
       "payable": false,
       "stateMutability": "nonpayable",
-      "type": "constructor",
-      "signature": "constructor"
+      "type": "constructor"
     },
     {
       "payable": true,
@@ -108,8 +105,7 @@
         }
       ],
       "name": "AssignmentExecuted",
-      "type": "event",
-      "signature": "0x54faa0d042c6c21fadd1baddec5312dff997e4bae12785e028fca2b983143601"
+      "type": "event"
     },
     {
       "constant": false,
@@ -139,8 +135,7 @@
       "outputs": [],
       "payable": false,
       "stateMutability": "nonpayable",
-      "type": "function",
-      "signature": "0x7eafd4cd"
+      "type": "function"
     },
     {
       "constant": false,
@@ -158,8 +153,7 @@
       "outputs": [],
       "payable": false,
       "stateMutability": "nonpayable",
-      "type": "function",
-      "signature": "0xcc69c2e6"
+      "type": "function"
     },
     {
       "constant": true,
@@ -178,8 +172,7 @@
       ],
       "payable": false,
       "stateMutability": "view",
-      "type": "function",
-      "signature": "0xe4b29c90"
+      "type": "function"
     },
     {
       "constant": true,
@@ -218,8 +211,7 @@
       ],
       "payable": false,
       "stateMutability": "view",
-      "type": "function",
-      "signature": "0x91c2dae8"
+      "type": "function"
     }
   ],
   "metadata": "{\"compiler\":{\"version\":\"0.5.0+commit.1d4f565a\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"constant\":false,\"inputs\":[{\"name\":\"_contract\",\"type\":\"address\"},{\"name\":\"_seller\",\"type\":\"address\"},{\"name\":\"_buyer\",\"type\":\"address\"},{\"name\":\"_price\",\"type\":\"uint256\"},{\"name\":\"_numTransferred\",\"type\":\"uint256\"}],\"name\":\"recordAssignment\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"_contract\",\"type\":\"address\"},{\"name\":\"_assignmentNum\",\"type\":\"uint256\"}],\"name\":\"getAssignment\",\"outputs\":[{\"name\":\"seller\",\"type\":\"address\"},{\"name\":\"buyer\",\"type\":\"address\"},{\"name\":\"price\",\"type\":\"uint256\"},{\"name\":\"numTransferred\",\"type\":\"uint256\"},{\"name\":\"confirmed\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"\",\"type\":\"address\"}],\"name\":\"currAssignment\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_contract\",\"type\":\"address\"},{\"name\":\"_assignmentNum\",\"type\":\"uint256\"}],\"name\":\"executeAssignment\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"_contract\",\"type\":\"address\"}],\"name\":\"getNumAssignments\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"\",\"type\":\"address\"},{\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"assignmentHistory\",\"outputs\":[{\"name\":\"seller\",\"type\":\"address\"},{\"name\":\"buyer\",\"type\":\"address\"},{\"name\":\"price\",\"type\":\"uint256\"},{\"name\":\"numTransferred\",\"type\":\"uint256\"},{\"name\":\"confirmed\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"},{\"payable\":true,\"stateMutability\":\"payable\",\"type\":\"fallback\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"name\":\"_contract\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"contractNo\",\"type\":\"uint256\"},{\"indexed\":false,\"name\":\"seller\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"buyer\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"priceInEth\",\"type\":\"uint256\"},{\"indexed\":false,\"name\":\"numTransferred\",\"type\":\"uint256\"}],\"name\":\"AssignmentExecuted\",\"type\":\"event\"}],\"devdoc\":{\"methods\":{\"executeAssignment(address,uint256)\":{\"params\":{\"_assignmentNum\":\"- the particular Assignment's index for retrieval \",\"_contract\":\"- the address of the tokenized ERC20 income shares \"}},\"getAssignment(address,uint256)\":{\"params\":{\"_assignmentNum\":\"- the particular Assignment's index for retrieval \",\"_contract\":\"- the address of the tokenized ERC20 income shares \"}},\"getNumAssignments(address)\":{\"params\":{\"_contract\":\"- the address of the tokenized ERC20 income shares \"}},\"recordAssignment(address,address,address,uint256,uint256)\":{\"params\":{\"_buyer\":\"- address receiving tokens\",\"_contract\":\"- the address of the tokenized ERC20 income shares \",\"_numTransferred\":\"- number of transferred shares\",\"_price\":\"- price the buyer pays in Wei\",\"_seller\":\"- address assigning tokens\"}}},\"title\":\"IncomeAssignment\"},\"userdoc\":{\"methods\":{\"executeAssignment(address,uint256)\":{\"notice\":\"executeAssignment is called by an seller to effect token transfer after receiving payment \"},\"getAssignment(address,uint256)\":{\"notice\":\"getAssignment returns the details of an Assignment \"},\"getNumAssignments(address)\":{\"notice\":\"getNumAssignments returns the number of assignments made for a token  \"},\"recordAssignment(address,address,address,uint256,uint256)\":{\"notice\":\"recordAssignment creates a new assignment \"}},\"notice\":\"IncomeAssignment controls the assignment of income share tokens*\"}},\"settings\":{\"compilationTarget\":{\"/home/josh/dev/income-share/contracts/IncomeAssignment.sol\":\"IncomeAssignment\"},\"evmVersion\":\"byzantium\",\"libraries\":{},\"optimizer\":{\"enabled\":true,\"runs\":200},\"remappings\":[]},\"sources\":{\"/home/josh/dev/income-share/contracts/IncomeAssignment.sol\":{\"keccak256\":\"0x4f58ca9a64fbabc1eae5b08d1c5cf9d120c6c3444d9d056f7acbc116384f0635\",\"urls\":[\"bzzr://8015f1ed55ba52e0717d15e8cb91577a0559f8863abe97f5eba428c4b04eba29\"]}},\"version\":1}",
@@ -1571,7 +1563,7 @@
                           "name": "msg",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 1010,
+                          "referencedDeclaration": 1059,
                           "src": "2339:3:0",
                           "typeDescriptions": {
                             "typeIdentifier": "t_magic_message",
@@ -1772,7 +1764,7 @@
                             "name": "msg",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
-                            "referencedDeclaration": 1010,
+                            "referencedDeclaration": 1059,
                             "src": "2453:3:0",
                             "typeDescriptions": {
                               "typeIdentifier": "t_magic_message",
@@ -1864,10 +1856,10 @@
                       "name": "require",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [
-                        1013,
-                        1014
+                        1062,
+                        1063
                       ],
-                      "referencedDeclaration": 1014,
+                      "referencedDeclaration": 1063,
                       "src": "2444:7:0",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_require_pure$_t_bool_$_t_string_memory_ptr_$returns$__$",
@@ -1991,10 +1983,10 @@
                       "name": "require",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [
-                        1013,
-                        1014
+                        1062,
+                        1063
                       ],
-                      "referencedDeclaration": 1014,
+                      "referencedDeclaration": 1063,
                       "src": "2519:7:0",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_require_pure$_t_bool_$_t_string_memory_ptr_$returns$__$",
@@ -2204,10 +2196,10 @@
                       "name": "require",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [
-                        1013,
-                        1014
+                        1062,
+                        1063
                       ],
-                      "referencedDeclaration": 1014,
+                      "referencedDeclaration": 1063,
                       "src": "2722:7:0",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_require_pure$_t_bool_$_t_string_memory_ptr_$returns$__$",
@@ -5407,7 +5399,7 @@
                           "name": "msg",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 1010,
+                          "referencedDeclaration": 1059,
                           "src": "2339:3:0",
                           "typeDescriptions": {
                             "typeIdentifier": "t_magic_message",
@@ -5608,7 +5600,7 @@
                             "name": "msg",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
-                            "referencedDeclaration": 1010,
+                            "referencedDeclaration": 1059,
                             "src": "2453:3:0",
                             "typeDescriptions": {
                               "typeIdentifier": "t_magic_message",
@@ -5700,10 +5692,10 @@
                       "name": "require",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [
-                        1013,
-                        1014
+                        1062,
+                        1063
                       ],
-                      "referencedDeclaration": 1014,
+                      "referencedDeclaration": 1063,
                       "src": "2444:7:0",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_require_pure$_t_bool_$_t_string_memory_ptr_$returns$__$",
@@ -5827,10 +5819,10 @@
                       "name": "require",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [
-                        1013,
-                        1014
+                        1062,
+                        1063
                       ],
-                      "referencedDeclaration": 1014,
+                      "referencedDeclaration": 1063,
                       "src": "2519:7:0",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_require_pure$_t_bool_$_t_string_memory_ptr_$returns$__$",
@@ -6040,10 +6032,10 @@
                       "name": "require",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [
-                        1013,
-                        1014
+                        1062,
+                        1063
                       ],
-                      "referencedDeclaration": 1014,
+                      "referencedDeclaration": 1063,
                       "src": "2722:7:0",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_require_pure$_t_bool_$_t_string_memory_ptr_$returns$__$",
@@ -7905,16 +7897,9 @@
     "name": "solc",
     "version": "0.5.0+commit.1d4f565a.Emscripten.clang"
   },
-  "networks": {
-    "5777": {
-      "events": {},
-      "links": {},
-      "address": "0x18D39b4AFCdA03f6593DBdb5Fe948FDa1Bc3C0F4",
-      "transactionHash": "0x642d7a9058c570518321cb2f31385b468265c2689ec7cd6ff7805e58671bb6da"
-    }
-  },
+  "networks": {},
   "schemaVersion": "3.0.8",
-  "updatedAt": "2019-04-30T07:29:20.885Z",
+  "updatedAt": "2019-05-02T04:00:47.383Z",
   "devdoc": {
     "methods": {
       "executeAssignment(address,uint256)": {

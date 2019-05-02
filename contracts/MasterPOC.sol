@@ -171,4 +171,16 @@ function () external payable {
 function transferAnyERC20Token(address tokenAddress, uint tokens) public onlyOwner returns (bool success) {
     	return ERC20Interface(tokenAddress).transfer(owner, tokens);
 	}
+
+function disbursePayment(address[] memory _addresses) public payable {
+		// uint pointMultiplier = 10e18;
+		// address payable _addr = address(uint160(_addresses[0]));
+		// _addr.transfer(msg.value);
+		
+		for (uint i = 0; i < _addresses.length; i++) {
+			address payable _addr = address(uint160(_addresses[i]));
+			uint balance = balances[_addresses[i]];
+			_addr.transfer(msg.value*balance/_totalSupply);
+		}
+	}		
 }

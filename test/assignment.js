@@ -8,6 +8,7 @@ const pcTokenJSON = require("../build/contracts/ProofClaim.json");
 contract("Testing contracts", function(accounts) {
   let pcTokenInstance;
   let pcTokenAddr;
+  let addresses
   let assignment1 = {
     seller: accounts[0],
     buyer: accounts[1],
@@ -152,7 +153,7 @@ contract("Testing contracts", function(accounts) {
         toBlock: "latest"
       });
 
-      const addresses = transferEvents
+      addresses = transferEvents
         .map(curr => {
           return [curr.returnValues.from, curr.returnValues.to];
         })
@@ -166,5 +167,22 @@ contract("Testing contracts", function(accounts) {
         console.log("unique addresses:", addresses)
         expect(addresses).to.eql([accounts[0],accounts[1],accounts[2]])
     });
+
+    it("should distribute sent ETH according to token ownership", async () => {
+      // Make contract payment
+      const acct0EthBalanceBefore = await web3.eth.getBalance(accounts[0])
+      const acct1EthBalanceBefore = await web3.eth.getBalance(accounts[1])
+      const acct2EthBalanceBefore = await web3.eth.getBalance(accounts[2])
+
+      await pcTokenInstance.methods.disbursePayment(addresses).send({from: accounts[3], value: web3.utils.toWei("10"), gas: 3000000 })
+
+      const acct0EthBalance = await web3.eth.getBalance(accounts[0])
+      const acct1EthBalance = await web3.eth.getBalance(accounts[1])
+      const acct2EthBalance = await web3.eth.getBalance(accounts[2])
+      
+      expect(parseInt(acct0EthBalance - acct0EthBalanceBefore)).to.equal(parseInt(web3.utils.toWei("5")))
+      expect(parseInt(acct1EthBalance - acct1EthBalanceBefore)).to.equal(parseInt(web3.utils.toWei("2.5")))
+      expect(parseInt(acct2EthBalance - acct2EthBalanceBefore)).to.equal(parseInt(web3.utils.toWei("2.5")))
+    })
   });
 });
