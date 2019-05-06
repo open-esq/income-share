@@ -8,7 +8,7 @@ const pcTokenJSON = require("../build/contracts/ProofClaim.json");
 contract("Testing contracts", function(accounts) {
   let pcTokenInstance;
   let pcTokenAddr;
-  let addresses
+  let addresses;
   let assignment1 = {
     seller: accounts[0],
     buyer: accounts[1],
@@ -164,25 +164,93 @@ contract("Testing contracts", function(accounts) {
           return acc;
         }, []);
 
-        console.log("unique addresses:", addresses)
-        expect(addresses).to.eql([accounts[0],accounts[1],accounts[2]])
+      console.log("unique addresses:", addresses);
+      expect(addresses).to.eql([accounts[0], accounts[1], accounts[2]]);
     });
 
     it("should distribute sent ETH according to token ownership", async () => {
       // Make contract payment
-      const acct0EthBalanceBefore = await web3.eth.getBalance(accounts[0])
-      const acct1EthBalanceBefore = await web3.eth.getBalance(accounts[1])
-      const acct2EthBalanceBefore = await web3.eth.getBalance(accounts[2])
+      const acct0EthBalanceBefore = await web3.eth.getBalance(accounts[0]);
+      const acct1EthBalanceBefore = await web3.eth.getBalance(accounts[1]);
+      const acct2EthBalanceBefore = await web3.eth.getBalance(accounts[2]);
 
-      await pcTokenInstance.methods.disbursePayment(addresses).send({from: accounts[3], value: web3.utils.toWei("10"), gas: 3000000 })
+      await pcTokenInstance.methods.disbursePayment(addresses).send({
+        from: accounts[3],
+        value: web3.utils.toWei("10"),
+        gas: 3000000
+      });
 
-      const acct0EthBalance = await web3.eth.getBalance(accounts[0])
-      const acct1EthBalance = await web3.eth.getBalance(accounts[1])
-      const acct2EthBalance = await web3.eth.getBalance(accounts[2])
+      const acct0EthBalance = await web3.eth.getBalance(accounts[0]);
+      const acct1EthBalance = await web3.eth.getBalance(accounts[1]);
+      const acct2EthBalance = await web3.eth.getBalance(accounts[2]);
+
+      expect(parseInt(acct0EthBalance - acct0EthBalanceBefore)).to.equal(
+        parseInt(web3.utils.toWei("5"))
+      );
+      expect(parseInt(acct1EthBalance - acct1EthBalanceBefore)).to.equal(
+        parseInt(web3.utils.toWei("2.5"))
+      );
+      expect(parseInt(acct2EthBalance - acct2EthBalanceBefore)).to.equal(
+        parseInt(web3.utils.toWei("2.5"))
+      );
+    });
+
+    it("should show which tokens a certain address holds", async () => {
+      const numTokens = await proofClaim.methods
+        .getContractCount()
+        .call({ from: accounts[0], gas: 300000 });
+
+      const tokenContractPromise = [Array(numTokens)]
+        .map((_x, i) => {
+          return i;
+        })
+        .map(index =>
+          proofClaim.methods
+            .contracts(index)
+            .call({ from: accounts[0], gas: 300000 })
+        );
+
+      // Gets all the token addresses created through MasterPOC
+      const tokenContracts = await Promise.all(tokenContractPromise);
+      console.log(tokenContracts)
+      // Object which shows all the owners for each token: {address => address[]}
+      const ownershipByTokenPromises = tokenContracts.map(async curr => {
+        const uniqueAddresses = await getAddresesByToken(curr);
+        
+        return { [curr]: uniqueAddresses };
+      });
+
+      const ownershipByToken = await Promise.all(ownershipByTokenPromises)
+      console.log(ownershipByToken);
       
-      expect(parseInt(acct0EthBalance - acct0EthBalanceBefore)).to.equal(parseInt(web3.utils.toWei("5")))
-      expect(parseInt(acct1EthBalance - acct1EthBalanceBefore)).to.equal(parseInt(web3.utils.toWei("2.5")))
-      expect(parseInt(acct2EthBalance - acct2EthBalanceBefore)).to.equal(parseInt(web3.utils.toWei("2.5")))
-    })
+      const ownedTokens = ownershipByToken.map(tokenOwnership => {
+        const token = Object.keys(tokenOwnership)
+        console.log(token)
+        return tokenOwnership[token].includes(accounts[0]) ? token[0] : null
+      })
+      // Array of tokens owned by account[0]
+      console.log("acct0 owned tokens:", ownedTokens)
+    });
   });
 });
+
+getAddresesByToken = async tokenContractAddr => {
+  instance = new web3.eth.Contract(pcTokenJSON.abi, tokenContractAddr);
+  const transferEvents = await instance.getPastEvents("Transfer", {
+    fromBlock: 0,
+    toBlock: "latest"
+  });
+
+  addresses = transferEvents
+    .map(curr => {
+      return [curr.returnValues.from, curr.returnValues.to];
+    })
+    .reduce((acc, curr) => acc.concat(curr), [])
+    .reduce((acc, curr) => {
+      if (web3.utils.toBN(curr).isZero()) return acc;
+      if (acc.indexOf(curr) < 0) acc.push(curr);
+      return acc;
+    }, []);
+
+  return addresses;
+};
