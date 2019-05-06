@@ -3,13 +3,14 @@ require('babel-register')({
 })
 require('babel-polyfill')
 const HDWalletProvider = require("truffle-hdwallet-provider");
-// require('dotenv').config()
+require('dotenv').config()
 const path = require("path");
 
 // See <http://truffleframework.com/docs/advanced/configuration>
 // to customize your Truffle configuration!
+console.log(process.env.INFURA_API_KEY)
 module.exports = {
-  // contracts_build_directory: path.join(__dirname, "client/src/contracts"),
+  contracts_build_directory: path.join(__dirname, "client/src/contracts"),
   networks: {
     development: {
       host: 'localhost',
@@ -17,26 +18,26 @@ module.exports = {
       network_id: '*' // Match any network id
     }, 
     ropsten: {
-      provider: () => new HDWalletProvider(process.env.MNENOMIC, "https://ropsten.infura.io/v3/" + process.env.INFURA_API_KEY),
+      provider: () => new HDWalletProvider(process.env.MNEMONIC, "https://ropsten.infura.io/v3/" + process.env.INFURA_API_KEY),
       network_id: 3,
       gas: 3000000,
       gasPrice: 21
     },
     kovan: {
-      provider: () => new HDWalletProvider(process.env.MNENOMIC, "https://kovan.infura.io/v3/" + process.env.INFURA_API_KEY),
+      provider: () => new HDWalletProvider(process.env.MNEMONIC, "https://kovan.infura.io/v3/" + process.env.INFURA_API_KEY),
       network_id: 42,
       gas: 3000000,
       gasPrice: 21
     },
     rinkeby: {
-      provider: () => new HDWalletProvider(process.env.MNENOMIC, "https://rinkeby.infura.io/v3/" + process.env.INFURA_API_KEY),
+      provider: () => new HDWalletProvider(process.env.MNEMONIC, "https://rinkeby.infura.io/v3/" + process.env.INFURA_API_KEY),
       network_id: 4,
       gas: 3000000,
       gasPrice: 21
     },
     // main ethereum network(mainnet)
     main: {
-      provider: () => new HDWalletProvider(process.env.MNENOMIC, "https://mainnet.infura.io/v3/" + process.env.INFURA_API_KEY),
+      provider: () => new HDWalletProvider(process.env.MNEMONIC, "https://mainnet.infura.io/v3/" + process.env.INFURA_API_KEY),
       network_id: 1,
       gas: 3000000,
       gasPrice: 21

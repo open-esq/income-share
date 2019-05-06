@@ -18,7 +18,8 @@
       ],
       "payable": false,
       "stateMutability": "view",
-      "type": "function"
+      "type": "function",
+      "signature": "0xad7f761c"
     },
     {
       "constant": true,
@@ -57,13 +58,15 @@
       ],
       "payable": false,
       "stateMutability": "view",
-      "type": "function"
+      "type": "function",
+      "signature": "0xea6556b8"
     },
     {
       "inputs": [],
       "payable": false,
       "stateMutability": "nonpayable",
-      "type": "constructor"
+      "type": "constructor",
+      "signature": "constructor"
     },
     {
       "payable": true,
@@ -105,7 +108,8 @@
         }
       ],
       "name": "AssignmentExecuted",
-      "type": "event"
+      "type": "event",
+      "signature": "0x54faa0d042c6c21fadd1baddec5312dff997e4bae12785e028fca2b983143601"
     },
     {
       "constant": false,
@@ -135,7 +139,8 @@
       "outputs": [],
       "payable": false,
       "stateMutability": "nonpayable",
-      "type": "function"
+      "type": "function",
+      "signature": "0x7eafd4cd"
     },
     {
       "constant": false,
@@ -153,7 +158,8 @@
       "outputs": [],
       "payable": false,
       "stateMutability": "nonpayable",
-      "type": "function"
+      "type": "function",
+      "signature": "0xcc69c2e6"
     },
     {
       "constant": true,
@@ -172,7 +178,8 @@
       ],
       "payable": false,
       "stateMutability": "view",
-      "type": "function"
+      "type": "function",
+      "signature": "0xe4b29c90"
     },
     {
       "constant": true,
@@ -211,7 +218,8 @@
       ],
       "payable": false,
       "stateMutability": "view",
-      "type": "function"
+      "type": "function",
+      "signature": "0x91c2dae8"
     }
   ],
   "metadata": "{\"compiler\":{\"version\":\"0.5.0+commit.1d4f565a\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"constant\":false,\"inputs\":[{\"name\":\"_contract\",\"type\":\"address\"},{\"name\":\"_seller\",\"type\":\"address\"},{\"name\":\"_buyer\",\"type\":\"address\"},{\"name\":\"_price\",\"type\":\"uint256\"},{\"name\":\"_numTransferred\",\"type\":\"uint256\"}],\"name\":\"recordAssignment\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"_contract\",\"type\":\"address\"},{\"name\":\"_assignmentNum\",\"type\":\"uint256\"}],\"name\":\"getAssignment\",\"outputs\":[{\"name\":\"seller\",\"type\":\"address\"},{\"name\":\"buyer\",\"type\":\"address\"},{\"name\":\"price\",\"type\":\"uint256\"},{\"name\":\"numTransferred\",\"type\":\"uint256\"},{\"name\":\"confirmed\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"\",\"type\":\"address\"}],\"name\":\"currAssignment\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_contract\",\"type\":\"address\"},{\"name\":\"_assignmentNum\",\"type\":\"uint256\"}],\"name\":\"executeAssignment\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"_contract\",\"type\":\"address\"}],\"name\":\"getNumAssignments\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"\",\"type\":\"address\"},{\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"assignmentHistory\",\"outputs\":[{\"name\":\"seller\",\"type\":\"address\"},{\"name\":\"buyer\",\"type\":\"address\"},{\"name\":\"price\",\"type\":\"uint256\"},{\"name\":\"numTransferred\",\"type\":\"uint256\"},{\"name\":\"confirmed\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"},{\"payable\":true,\"stateMutability\":\"payable\",\"type\":\"fallback\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"name\":\"_contract\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"contractNo\",\"type\":\"uint256\"},{\"indexed\":false,\"name\":\"seller\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"buyer\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"priceInEth\",\"type\":\"uint256\"},{\"indexed\":false,\"name\":\"numTransferred\",\"type\":\"uint256\"}],\"name\":\"AssignmentExecuted\",\"type\":\"event\"}],\"devdoc\":{\"methods\":{\"executeAssignment(address,uint256)\":{\"params\":{\"_assignmentNum\":\"- the particular Assignment's index for retrieval \",\"_contract\":\"- the address of the tokenized ERC20 income shares \"}},\"getAssignment(address,uint256)\":{\"params\":{\"_assignmentNum\":\"- the particular Assignment's index for retrieval \",\"_contract\":\"- the address of the tokenized ERC20 income shares \"}},\"getNumAssignments(address)\":{\"params\":{\"_contract\":\"- the address of the tokenized ERC20 income shares \"}},\"recordAssignment(address,address,address,uint256,uint256)\":{\"params\":{\"_buyer\":\"- address receiving tokens\",\"_contract\":\"- the address of the tokenized ERC20 income shares \",\"_numTransferred\":\"- number of transferred shares\",\"_price\":\"- price the buyer pays in Wei\",\"_seller\":\"- address assigning tokens\"}}},\"title\":\"IncomeAssignment\"},\"userdoc\":{\"methods\":{\"executeAssignment(address,uint256)\":{\"notice\":\"executeAssignment is called by an seller to effect token transfer after receiving payment \"},\"getAssignment(address,uint256)\":{\"notice\":\"getAssignment returns the details of an Assignment \"},\"getNumAssignments(address)\":{\"notice\":\"getNumAssignments returns the number of assignments made for a token  \"},\"recordAssignment(address,address,address,uint256,uint256)\":{\"notice\":\"recordAssignment creates a new assignment \"}},\"notice\":\"IncomeAssignment controls the assignment of income share tokens*\"}},\"settings\":{\"compilationTarget\":{\"/home/josh/dev/income-share/contracts/IncomeAssignment.sol\":\"IncomeAssignment\"},\"evmVersion\":\"byzantium\",\"libraries\":{},\"optimizer\":{\"enabled\":true,\"runs\":200},\"remappings\":[]},\"sources\":{\"/home/josh/dev/income-share/contracts/IncomeAssignment.sol\":{\"keccak256\":\"0x4f58ca9a64fbabc1eae5b08d1c5cf9d120c6c3444d9d056f7acbc116384f0635\",\"urls\":[\"bzzr://8015f1ed55ba52e0717d15e8cb91577a0559f8863abe97f5eba428c4b04eba29\"]}},\"version\":1}",
@@ -7897,9 +7905,16 @@
     "name": "solc",
     "version": "0.5.0+commit.1d4f565a.Emscripten.clang"
   },
-  "networks": {},
+  "networks": {
+    "5777": {
+      "events": {},
+      "links": {},
+      "address": "0x039036bCd25eA8bC63A81b10B99A0E5CA758c44E",
+      "transactionHash": "0xbb9f5489ba889dc5d211e4118be1b8ae53282eb549f90235742542a24c99439b"
+    }
+  },
   "schemaVersion": "3.0.8",
-  "updatedAt": "2019-05-02T04:00:47.383Z",
+  "updatedAt": "2019-05-02T05:16:57.179Z",
   "devdoc": {
     "methods": {
       "executeAssignment(address,uint256)": {

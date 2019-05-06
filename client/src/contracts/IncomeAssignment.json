@@ -1571,7 +1571,7 @@
                           "name": "msg",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 1010,
+                          "referencedDeclaration": 1059,
                           "src": "2339:3:0",
                           "typeDescriptions": {
                             "typeIdentifier": "t_magic_message",
@@ -1772,7 +1772,7 @@
                             "name": "msg",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
-                            "referencedDeclaration": 1010,
+                            "referencedDeclaration": 1059,
                             "src": "2453:3:0",
                             "typeDescriptions": {
                               "typeIdentifier": "t_magic_message",
@@ -1864,10 +1864,10 @@
                       "name": "require",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [
-                        1013,
-                        1014
+                        1062,
+                        1063
                       ],
-                      "referencedDeclaration": 1014,
+                      "referencedDeclaration": 1063,
                       "src": "2444:7:0",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_require_pure$_t_bool_$_t_string_memory_ptr_$returns$__$",
@@ -1991,10 +1991,10 @@
                       "name": "require",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [
-                        1013,
-                        1014
+                        1062,
+                        1063
                       ],
-                      "referencedDeclaration": 1014,
+                      "referencedDeclaration": 1063,
                       "src": "2519:7:0",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_require_pure$_t_bool_$_t_string_memory_ptr_$returns$__$",
@@ -2204,10 +2204,10 @@
                       "name": "require",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [
-                        1013,
-                        1014
+                        1062,
+                        1063
                       ],
-                      "referencedDeclaration": 1014,
+                      "referencedDeclaration": 1063,
                       "src": "2722:7:0",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_require_pure$_t_bool_$_t_string_memory_ptr_$returns$__$",
@@ -5407,7 +5407,7 @@
                           "name": "msg",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 1010,
+                          "referencedDeclaration": 1059,
                           "src": "2339:3:0",
                           "typeDescriptions": {
                             "typeIdentifier": "t_magic_message",
@@ -5608,7 +5608,7 @@
                             "name": "msg",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
-                            "referencedDeclaration": 1010,
+                            "referencedDeclaration": 1059,
                             "src": "2453:3:0",
                             "typeDescriptions": {
                               "typeIdentifier": "t_magic_message",
@@ -5700,10 +5700,10 @@
                       "name": "require",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [
-                        1013,
-                        1014
+                        1062,
+                        1063
                       ],
-                      "referencedDeclaration": 1014,
+                      "referencedDeclaration": 1063,
                       "src": "2444:7:0",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_require_pure$_t_bool_$_t_string_memory_ptr_$returns$__$",
@@ -5827,10 +5827,10 @@
                       "name": "require",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [
-                        1013,
-                        1014
+                        1062,
+                        1063
                       ],
-                      "referencedDeclaration": 1014,
+                      "referencedDeclaration": 1063,
                       "src": "2519:7:0",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_require_pure$_t_bool_$_t_string_memory_ptr_$returns$__$",
@@ -6040,10 +6040,10 @@
                       "name": "require",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [
-                        1013,
-                        1014
+                        1062,
+                        1063
                       ],
-                      "referencedDeclaration": 1014,
+                      "referencedDeclaration": 1063,
                       "src": "2722:7:0",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_require_pure$_t_bool_$_t_string_memory_ptr_$returns$__$",
@@ -7909,12 +7909,12 @@
     "5777": {
       "events": {},
       "links": {},
-      "address": "0xCbdfBCDE81989dB27Fb17dCCa5E97EdaeFCf3AeC",
-      "transactionHash": "0x88095671c50a535253b4d8e3faa4c97181c6762e457e17a7851788b0a31c9ec4"
+      "address": "0x321e7356445FcdEeCc869ecaA2741D3f0b7948ed",
+      "transactionHash": "0x2c316e188544bb27c30c64b35275e7e05d630ccccff823b39da010c42df7e937"
     }
   },
   "schemaVersion": "3.0.8",
-  "updatedAt": "2019-04-30T07:33:27.305Z",
+  "updatedAt": "2019-05-02T05:46:29.428Z",
   "devdoc": {
     "methods": {
       "executeAssignment(address,uint256)": {
