@@ -11,11 +11,11 @@ export default class Web3Container extends React.Component {
       const web3 = await getWeb3()
       const drizzleUtils = await createDrizzleUtils({ web3 })
       const accounts = await drizzleUtils.getAccounts()
-      const contractInstance = await getContractInstance({
+      const contract = await getContractInstance({
         web3,
         artifact: this.props.contractJSON
       })
-      this.setState({ web3, accounts, contractInstance })
+      this.setState({ web3, accounts, contract })
     } catch (error) {
       alert(
         `Failed to load web3, accounts, or contract. Check console for details.`
