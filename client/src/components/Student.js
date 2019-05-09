@@ -32,12 +32,6 @@ class Student extends React.Component {
     const { web3, accounts, contract } = this.props;
     console.log(contract.methods);
 
-    const numTokens1 = await contract.methods
-      .getContractCount()
-      .call({ from: accounts[0], gas: 300000 });
-
-    console.log(numTokens1);
-
     const claim = {
       symbol: "PC1",
       name: "Proof Claim 1",
@@ -52,19 +46,6 @@ class Student extends React.Component {
       tx.events.newProofClaimContract.returnValues.contractAddress;
     console.log("PC token address:", pcTokenAddr);
 
-    const numTokens2 = await contract.methods
-      .getContractCount()
-      .call({ from: accounts[0], gas: 300000 });
-
-    console.log(numTokens2);
-
-    // const tx = await contract.methods
-    //   .newProofClaim("TST", "Test Token", accounts[0])
-    //   .send({ from: accounts[0], gas: 300000 })
-    // .on("receipt", function(receipt) {
-    //   console.log(receipt.events.newProofClaimContract);
-    // });
-    console.log("Here");
   };
 
   render() {
