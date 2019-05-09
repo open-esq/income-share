@@ -5,7 +5,7 @@ import Web3Container from "../utils/Web3Container";
 import IncomeAssignmentContract from "../contracts/IncomeAssignment.json";
 import OwnedTokens from "./OwnedTokens"
 
-class Manage extends React.Component {
+export default class Manage extends React.Component {
 
   render() {
 
@@ -38,12 +38,3 @@ class Manage extends React.Component {
   }
 }
 
-export default () => (
-  <Web3Container
-    contractJSON={IncomeAssignmentContract}
-    renderLoading={() => <div>Loading</div>}
-    render={({ web3, accounts, contract }) => (
-      <Manage web3={web3} accounts={accounts} contract={contract} />
-    )}
-  />
-);

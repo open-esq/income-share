@@ -20,7 +20,7 @@ export const FixedMenu = ({ contract, accounts }) => (
   >
       
       <Menu.Item as={Link} to="/" header style={{fontSize:"25px"}}>
-        OpenLaw Income Share Assignment
+        OpenLaw ISA
       </Menu.Item>
       <Menu.Item as={Link} to="/agreement" header>
         Agreement

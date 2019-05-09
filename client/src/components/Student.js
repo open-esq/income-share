@@ -1,8 +1,8 @@
 import React from "react";
 import { APIClient, Openlaw } from "openlaw";
-import { Container, Button, Form } from "semantic-ui-react";
+import { Container, Button, Form, Header, Segment } from "semantic-ui-react";
 import Web3Container from "../utils/Web3Container";
-import IncomeAssignmentContract from "../contracts/IncomeAssignment.json";
+import MasterPOCContract from "../contracts/MasterPOC.json";
 require("dotenv").config();
 
 //create config
@@ -28,8 +28,46 @@ class Student extends React.Component {
     console.log(olContract);
   };
 
+  initializeISA = async () => {
+    const { web3, accounts, contract } = this.props;
+    console.log(contract.methods);
+
+    const numTokens1 = await contract.methods
+      .getContractCount()
+      .call({ from: accounts[0], gas: 300000 });
+
+    console.log(numTokens1);
+
+    const claim = {
+      symbol: "PC1",
+      name: "Proof Claim 1",
+      owner: accounts[0]
+    };
+    
+    const tx = await contract.methods
+      .newProofClaim(claim.symbol, claim.name, claim.owner)
+      .send({ from: accounts[0], gas: 3000000 });
+
+    const pcTokenAddr =
+      tx.events.newProofClaimContract.returnValues.contractAddress;
+    console.log("PC token address:", pcTokenAddr);
+
+    const numTokens2 = await contract.methods
+      .getContractCount()
+      .call({ from: accounts[0], gas: 300000 });
+
+    console.log(numTokens2);
+
+    // const tx = await contract.methods
+    //   .newProofClaim("TST", "Test Token", accounts[0])
+    //   .send({ from: accounts[0], gas: 300000 })
+    // .on("receipt", function(receipt) {
+    //   console.log(receipt.events.newProofClaimContract);
+    // });
+    console.log("Here");
+  };
+
   render() {
-    console.log(process.env.URL);
     return (
       <div>
         <Container style={{ marginTop: "7em" }}>
@@ -45,6 +83,13 @@ class Student extends React.Component {
             </Form.Field>
             <Button type="submit">Submit</Button>
           </Form>
+
+          <Header as="h4" attached="top" block>
+            Emulate OpenLaw Functions (TestRPC Only!)
+          </Header>
+          <Segment attached>
+            <Button onClick={this.initializeISA}>Initialize ISA</Button>
+          </Segment>
         </Container>
       </div>
     );
@@ -53,7 +98,7 @@ class Student extends React.Component {
 
 export default () => (
   <Web3Container
-    contractJSON={IncomeAssignmentContract}
+    contractJSON={MasterPOCContract}
     renderLoading={() => <div>Loading</div>}
     render={({ web3, accounts, contract }) => (
       <Student web3={web3} accounts={accounts} contract={contract} />

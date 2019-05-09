@@ -1,73 +1,68 @@
 import React from "react";
 import { Grid, Table, Segment, Header, Form, Button } from "semantic-ui-react";
+import TokensTemplate from "./TokensTemplate"
+import MasterPOCContract from "../contracts/MasterPOC.json"
+import Web3Container from "../utils/Web3Container"
 
 class OwnedTokens extends React.Component {
-  state={
-    tokenIndex: 1
+
+  componentDidMount = async () => {
+    const {web3, accounts, contract} = this.props;
+    
+    // May not have public getter yet in Master contract
+    const tokenContracts = await contract.methods.getContracts().call({from: accounts[0], gas: 300000})
+
+    // Object which shows all the owners for each token: {address => address[]}
+    const tokenOwnershipByToken = tokenContracts.map(async curr => {
+      const uniqueAddresses = await getAddresesByToken(curr)
+      return {curr: uniqueAddresses}
+    })
+    
+    // Filter above for active MetaMask user's tokens 
+    const myTokens = tokenOwnershipByToken.map(curr => {
+    })
+  }
+
+  getAddresesByToken = async (tokenContract) => {
+    const {web3, accounts, contract} = this.props;
+
+    // Get log of Transfer events from specified token contract address
+    const transferEvents = await tokenContract.getPastEvents("Transfer", {
+      fromBlock: 0,
+      toBlock: "latest"
+    });  
+
+    // Filter the Event for unique holder addresses
+    const addresses = transferEvents
+    .map(curr => {
+      return [curr.returnValues.from, curr.returnValues.to];
+    })
+    .reduce((acc, curr) => acc.concat(curr), [])
+    .reduce((acc, curr) => {
+      if (web3.utils.toBN(curr).isZero()) return acc;
+      if (acc.indexOf(curr) < 0) acc.push(curr);
+      return acc;
+    }, []);
+
+    return addresses
+
   }
 
   render() {
     return (
       <div>
-        <Grid>
-          <Grid.Column width={10}>
-            <Header as="h3">Your Owned Tokens</Header>
-            <Table celled>
-              <Table.Header>
-                <Table.Row>
-                  <Table.HeaderCell width={5}>
-                    Token Contract Address
-                  </Table.HeaderCell>
-                  <Table.HeaderCell width={3}>
-                    Number of Tokens
-                  </Table.HeaderCell>
-                </Table.Row>
-              </Table.Header>
-              <Table.Body>
-                <Table.Row>
-                  <Table.Cell>
-                  <a onClick={()=>this.setState({tokenIndex:1})}>0xf290f3d843826d00f8176182fd76550535f6dbb4</a> 
-                    
-                  </Table.Cell>
-                  <Table.Cell>52</Table.Cell>
-                </Table.Row>
-
-                <Table.Row>
-                  <Table.Cell>
-                  <a style={{fontWeight:"bold"}} onClick={()=>this.setState({tokenIndex:2})}>0x04Bb2058E3cfC31721d50DceF96C576C761b38c0</a> 
-                    
-                  </Table.Cell>
-                  <Table.Cell>11</Table.Cell>
-                </Table.Row>
-              </Table.Body>
-            </Table>
-          </Grid.Column>
-          <Grid.Column width={6}>
-            <Header as="h3">Token Details</Header>
-            <Segment>
-              <Form size="large">
-                <span style={{display:"block", paddingBottom:"5px", fontSize:"13px", fontWeight:"bold"}}>0x04Bb2058E3cfC31721d50DceF96C576C761b38c0</span>
-                <Form.Field name="companyName" width={16}>
-                  <label>Company Name</label>
-                  <input disabled value="Lambda Inc." />
-                </Form.Field>
-
-                <Form.Field name="studentName" width={16}>
-                  <label>Student Name</label>
-                  <input disabled value="Josh Ma" />
-                </Form.Field>
-                <Form.Field name="ethPaid" width={16}>
-                  <label>ETH Paid to You</label>
-                  <input disabled value="4.4" />
-                </Form.Field>
-                <Button>Manage Pending Assignment</Button>
-              </Form>
-            </Segment>
-          </Grid.Column>
-        </Grid>
+       <TokensTemplate/>
       </div>
     );
   }
 }
 
-export default OwnedTokens;
+export default () => (
+  <Web3Container
+    contractJSON={MasterPOCContract}
+    renderLoading={() => <div>Loading</div>}
+    render={({ web3, accounts, contract }) => (
+      <OwnedTokens web3={web3} accounts={accounts} contract={contract} />
+    )}
+  />
+);
