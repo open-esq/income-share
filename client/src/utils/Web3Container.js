@@ -1,20 +1,15 @@
 import React from 'react'
-import getWeb3 from "@drizzle-utils/get-web3"
-import getContractInstance from "@drizzle-utils/get-contract-instance"
-import createDrizzleUtils from "@drizzle-utils/core"
+import getWeb3 from "./getWeb3"
+import getContract from "./getContract"
 
 export default class Web3Container extends React.Component {
   state = { web3: null, accounts: null, contract: null };
 
   async componentDidMount () {
     try {
-      const web3 = await getWeb3()
-      const drizzleUtils = await createDrizzleUtils({ web3 })
-      const accounts = await drizzleUtils.getAccounts()
-      const contract = await getContractInstance({
-        web3,
-        artifact: this.props.contractJSON
-      })
+      const web3 = await getWeb3();
+      const accounts = await web3.eth.getAccounts()
+      const contract = await getContract(web3, this.props.contractJSON)
       this.setState({ web3, accounts, contract })
     } catch (error) {
       alert(
