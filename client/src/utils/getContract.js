@@ -8,7 +8,6 @@ const getContractInstance = async (web3, contractDefinition) => {
     contractDefinition.abi,
     deployedAddress
   );
-  console.log(instance)
   return instance;
 };
 
