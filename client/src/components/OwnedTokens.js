@@ -3,26 +3,43 @@ import { Grid, Table, Segment, Header, Form, Button } from "semantic-ui-react";
 import MasterPOCContract from "../contracts/MasterPOC.json";
 import pcTokenJSON from "../contracts/ProofClaim.json";
 import Web3Container from "../utils/Web3Container";
+import { getTokenContracts } from "../utils/helpers";
 
 class OwnedTokens extends React.Component {
   state = { ownedTokenBalances: [] };
   componentDidMount = async () => {
     const { web3, accounts, contract } = this.props;
 
-    const numTokens = await contract.methods
-      .getContractCount()
-      .call({ from: accounts[0], gas: 300000 });
+    const tokenContracts = await getTokenContracts(accounts, contract);
 
-    // Gets all the token addresses created through MasterPOC
-    const tokenContractPromise = [...Array(parseInt(numTokens)).keys()].map(
-      index =>
-        contract.methods
-          .contracts(index)
-          .call({ from: accounts[0], gas: 300000 })
-    );
-
-    const tokenContracts = await Promise.all(tokenContractPromise);
     console.log(tokenContracts);
+
+    const ownedTokens = await this.getOwnedTokens(tokenContracts);
+    // Array of tokens owned by account[0]
+    console.log("acct0 owned tokens:", ownedTokens);
+
+    const ownedTokenBalances = await this.getOwnedTokenBalances(ownedTokens)
+
+    console.log(ownedTokenBalances);
+    this.setState({ ownedTokenBalances });
+  };
+
+  getOwnedTokenBalances = async (ownedTokens) => {
+    const {web3, accounts} = this.props
+    const ownedTokenBalancesPromises = ownedTokens.map(async tokenAddr => {
+      const instance = new web3.eth.Contract(pcTokenJSON.abi, tokenAddr);
+      const balance = await instance.methods
+        .balanceOf(accounts[0])
+        .call({ from: accounts[0], gas: 3000000 });
+      return { [tokenAddr]: balance };
+    });
+
+    const ownedTokenBalances = await Promise.all(ownedTokenBalancesPromises);
+    return ownedTokenBalances
+  }
+
+  getOwnedTokens = async (tokenContracts) => {
+    const {accounts} = this.props
     // Object which shows all the owners for each token: {address => address[]}
     const ownershipByTokenPromises = tokenContracts.map(async curr => {
       const uniqueAddresses = await this.getAddresesByToken(curr);
@@ -37,20 +54,7 @@ class OwnedTokens extends React.Component {
       console.log(token);
       return tokenOwnership[token].includes(accounts[0]) ? token[0] : null;
     });
-    // Array of tokens owned by account[0]
-    console.log("acct0 owned tokens:", ownedTokens);
-
-    const ownedTokenBalancesPromises = ownedTokens.map(async tokenAddr => {
-      const instance = new web3.eth.Contract(pcTokenJSON.abi, tokenAddr);
-      const balance = await instance.methods
-        .balanceOf(accounts[0])
-        .call({ from: accounts[0], gas: 3000000 });
-        return {[tokenAddr]: balance}
-    })
-
-    const ownedTokenBalances = await Promise.all(ownedTokenBalancesPromises)
-    console.log(ownedTokenBalances)
-    this.setState({ ownedTokenBalances });
+    return ownedTokens
   };
 
   getAddresesByToken = async tokenAddr => {
@@ -74,6 +78,8 @@ class OwnedTokens extends React.Component {
 
     return addresses;
   };
+
+  
 
   render() {
     const { ownedTokenBalances } = this.state;

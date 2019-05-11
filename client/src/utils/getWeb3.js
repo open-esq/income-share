@@ -4,8 +4,9 @@ const resolveWeb3 = (resolve) => {
   let { web3 } = window
   const alreadyInjected = typeof web3 !== 'undefined' // i.e. Mist/Metamask
   const localProvider = `http://localhost:9545`
-
+  
   if (alreadyInjected) {
+    ethereum.enable()
     console.log(`Injected web3 detected.`)
     web3 = new Web3(web3.currentProvider)
   } else {

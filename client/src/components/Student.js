@@ -4,6 +4,7 @@ import { Container, Button, Form, Header, Segment } from "semantic-ui-react";
 import Web3Container from "../utils/Web3Container";
 import MasterPOCContract from "../contracts/MasterPOC.json";
 import pcTokenJSON from "../contracts/ProofClaim.json";
+import {getTokenContracts} from "../utils/helpers"
 require("dotenv").config();
 
 //create config
@@ -25,10 +26,8 @@ class Student extends React.Component {
       .login(openLawConfig.userName, openLawConfig.password)
       .then(console.log);
 
-    const olContract = await apiClient.getContract(
-      "f35a7b2c9b8b2a430ee7bf1d9f840efd6379a0e99eb706fe976816f3726f8955"
-    );
-    console.log(olContract);
+    const tokenContracts = await getTokenContracts(accounts, contract)
+    console.log("token contracts", tokenContracts);
   };
 
   setTokenAddress = e => this.setState({ tokenAddress: e.target.value });
@@ -73,7 +72,6 @@ class Student extends React.Component {
 
   initializeISA = async () => {
     const { web3, accounts, contract } = this.props;
-    console.log(contract.methods);
 
     const claim = {
       symbol: "PC1",
