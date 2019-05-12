@@ -6,7 +6,7 @@ import Web3Container from "../utils/Web3Container";
 import { getTokenContracts } from "../utils/helpers";
 
 class OwnedTokens extends React.Component {
-  state = { ownedTokenBalances: [] };
+  state = { ownedTokenBalances: [], activeToken: null, activeKey: null };
   componentDidMount = async () => {
     const { web3, accounts, contract } = this.props;
 
@@ -18,28 +18,33 @@ class OwnedTokens extends React.Component {
     // Array of tokens owned by account[0]
     console.log("acct0 owned tokens:", ownedTokens);
 
-    const ownedTokenBalances = await this.getOwnedTokenBalances(ownedTokens)
+    const ownedTokenBalances = await this.getOwnedTokenBalances(ownedTokens);
 
-    console.log(ownedTokenBalances);
+    console.log("owned token balances:", ownedTokenBalances);
     this.setState({ ownedTokenBalances });
   };
 
-  getOwnedTokenBalances = async (ownedTokens) => {
-    const {web3, accounts} = this.props
+  getOwnedTokenBalances = async ownedTokens => {
+    const { web3, accounts } = this.props;
     const ownedTokenBalancesPromises = ownedTokens.map(async tokenAddr => {
       const instance = new web3.eth.Contract(pcTokenJSON.abi, tokenAddr);
       const balance = await instance.methods
         .balanceOf(accounts[0])
         .call({ from: accounts[0], gas: 3000000 });
-      return { [tokenAddr]: balance };
+
+      const amountReceived = await instance.methods
+        .getAmountPaid(accounts[0])
+        .call({ from: accounts[0], gas: 300000 });
+      console.log("amount received", amountReceived);
+      return { [tokenAddr]: { balance, amountReceived } };
     });
 
     const ownedTokenBalances = await Promise.all(ownedTokenBalancesPromises);
-    return ownedTokenBalances
-  }
+    return ownedTokenBalances;
+  };
 
-  getOwnedTokens = async (tokenContracts) => {
-    const {accounts} = this.props
+  getOwnedTokens = async tokenContracts => {
+    const { accounts } = this.props;
     // Object which shows all the owners for each token: {address => address[]}
     const ownershipByTokenPromises = tokenContracts.map(async curr => {
       const uniqueAddresses = await this.getAddresesByToken(curr);
@@ -47,14 +52,12 @@ class OwnedTokens extends React.Component {
     });
 
     const ownershipByToken = await Promise.all(ownershipByTokenPromises);
-    console.log(ownershipByToken);
 
     const ownedTokens = ownershipByToken.map(tokenOwnership => {
       const token = Object.keys(tokenOwnership);
-      console.log(token);
       return tokenOwnership[token].includes(accounts[0]) ? token[0] : null;
     });
-    return ownedTokens
+    return ownedTokens;
   };
 
   getAddresesByToken = async tokenAddr => {
@@ -79,10 +82,18 @@ class OwnedTokens extends React.Component {
     return addresses;
   };
 
-  
+  setActiveToken = (token, i) => {
+    const activeToken = {
+      address: Object.keys(token)[0],
+      amountReceived: Object.values(token)[0].amountReceived
+    };
+    const activeKey = i;
+    this.setState({ activeToken, activeKey });
+  };
 
   render() {
-    const { ownedTokenBalances } = this.state;
+    const { ownedTokenBalances, activeToken, activeKey } = this.state;
+    const {web3} = this.props
     return (
       <div>
         <Grid>
@@ -100,15 +111,18 @@ class OwnedTokens extends React.Component {
                 </Table.Row>
               </Table.Header>
               <Table.Body>
-                {ownedTokenBalances.map(token => {
+                {ownedTokenBalances.map((token, i) => {
                   return (
-                    <Table.Row>
+                    <Table.Row
+                      style={activeKey == i ? { fontWeight: "bold" } : null}
+                      key={i}
+                    >
                       <Table.Cell>
-                        <a onClick={() => this.setState({ tokenIndex: 1 })}>
+                        <a href="#" onClick={() => this.setActiveToken(token, i)}>
                           {Object.keys(token)[0]}
                         </a>
                       </Table.Cell>
-                      <Table.Cell>{Object.values(token)}</Table.Cell>
+                      <Table.Cell>{Object.values(token)[0].balance}</Table.Cell>
                     </Table.Row>
                   );
                 })}
@@ -117,34 +131,36 @@ class OwnedTokens extends React.Component {
           </Grid.Column>
           <Grid.Column width={6}>
             <Header as="h3">Token Details</Header>
-            <Segment>
-              <Form size="large">
-                <span
-                  style={{
-                    display: "block",
-                    paddingBottom: "5px",
-                    fontSize: "13px",
-                    fontWeight: "bold"
-                  }}
-                >
-                  0x04Bb2058E3cfC31721d50DceF96C576C761b38c0
-                </span>
-                <Form.Field name="companyName" width={16}>
-                  <label>Company Name</label>
-                  <input disabled value="Lambda Inc." />
-                </Form.Field>
+            {activeToken ? (
+              <Segment>
+                <Form size="large">
+                  <span
+                    style={{
+                      display: "block",
+                      paddingBottom: "5px",
+                      fontSize: "13px",
+                      fontWeight: "bold"
+                    }}
+                  >
+                    activeToken.address
+                  </span>
+                  <Form.Field name="companyName" width={16}>
+                    <label>Company Name</label>
+                    <input disabled value="Lambda Inc." />
+                  </Form.Field>
 
-                <Form.Field name="studentName" width={16}>
-                  <label>Student Name</label>
-                  <input disabled value="Josh Ma" />
-                </Form.Field>
-                <Form.Field name="ethPaid" width={16}>
-                  <label>ETH Paid to You</label>
-                  <input disabled value="4.4" />
-                </Form.Field>
-                <Button>Manage Pending Assignment</Button>
-              </Form>
-            </Segment>
+                  <Form.Field name="studentName" width={16}>
+                    <label>Student Name</label>
+                    <input disabled value="Josh Ma" />
+                  </Form.Field>
+                  <Form.Field name="ethPaid" width={16}>
+                    <label>ETH Paid to You</label>
+                    <input disabled value={web3.utils.fromWei(activeToken.amountReceived)} />
+                  </Form.Field>
+                  <Button>Manage Pending Assignment</Button>
+                </Form>
+              </Segment>
+            ) : null}
           </Grid.Column>
         </Grid>
       </div>

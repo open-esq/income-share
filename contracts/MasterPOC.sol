@@ -113,6 +113,7 @@ contract ProofClaim is ERC20Interface, Owned, SafeMath {
 
 	mapping(address => uint) balances;
 	mapping(address => mapping(address => uint)) allowed;
+	mapping(address => uint) amountPaid;
     
 constructor(string memory _symbol, string memory _name, address _owner, uint _supply) public {
     	symbol = _symbol;
@@ -122,7 +123,6 @@ constructor(string memory _symbol, string memory _name, address _owner, uint _su
     	balances[_owner] = _totalSupply;
     	emit Transfer(address(0), _owner, _totalSupply);
 }
-
 
 function totalSupply() public view returns (uint) {
     	return _totalSupply  - balances[address(0)];
@@ -176,7 +176,13 @@ function disbursePayment(address[] memory _addresses) public payable {
 		for (uint i = 0; i < _addresses.length; i++) {
 			address payable _addr = address(uint160(_addresses[i]));
 			uint balance = balances[_addresses[i]];
-			_addr.transfer(msg.value*balance/_totalSupply);
+			uint paymentAmount = msg.value*balance/_totalSupply;
+			_addr.transfer(paymentAmount);
+			amountPaid[_addr] = amountPaid[_addr] + paymentAmount;
 		}
 	}		
+
+function getAmountPaid(address _address) public returns (uint) { 
+		return amountPaid[_address]; 
+	}
 }

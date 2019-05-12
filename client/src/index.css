@@ -6,8 +6,11 @@ html {
   scroll-behavior: smooth;
 }
 
-
-
+.fake-link {
+  color: blue;
+  text-decoration: underline;
+  cursor: pointer;
+}
 
 .ui.container.overlay {
   position:absolute;
