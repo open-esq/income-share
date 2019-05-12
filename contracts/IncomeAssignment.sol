@@ -18,7 +18,6 @@ contract IncomeAssignment {
   // @notice Event emitting Assignment details upon execution 
   event AssignmentExecuted (
     address _contract,
-    uint contractNo,
     address seller,
     address buyer,
     uint priceInEth,

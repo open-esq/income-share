@@ -1,6 +1,15 @@
 import React from "react";
-import { Grid, Table, Segment, Header, Form, Button } from "semantic-ui-react";
+import {
+  Grid,
+  Table,
+  Segment,
+  Header,
+  Form,
+  Button,
+  Accordion
+} from "semantic-ui-react";
 import MasterPOCContract from "../contracts/MasterPOC.json";
+import IncomeAssignmentContract from "../contracts/IncomeAssignment.json"
 import pcTokenJSON from "../contracts/ProofClaim.json";
 import Web3Container from "../utils/Web3Container";
 import { getTokenContracts } from "../utils/helpers";
@@ -12,7 +21,7 @@ class OwnedTokens extends React.Component {
 
     const tokenContracts = await getTokenContracts(accounts, contract);
 
-    console.log(tokenContracts);
+    console.log("token contracts", tokenContracts);
 
     const ownedTokens = await this.getOwnedTokens(tokenContracts);
     // Array of tokens owned by account[0]
@@ -91,9 +100,38 @@ class OwnedTokens extends React.Component {
     this.setState({ activeToken, activeKey });
   };
 
+  createAssignment = async () => {
+    const { activeToken } = this.state;
+    const { web3, accounts } = this.props;
+    const assignment = {
+      contract: activeToken.address,
+      seller: "0x5fD256B07691629B4d2Ce4336dc8f01E5BB8Ae8D",
+      buyer: "0x4e7627E12Cf6a04d0AF3361a67D015bAa33EeAEE",
+      price: 20,
+      numTransferred: 40
+    };
+
+    const networkId = await web3.eth.net.getId();
+    const deployedAddress = IncomeAssignmentContract.networks[networkId].address;  
+    const assignmentContract = new web3.eth.Contract(IncomeAssignmentContract.abi, deployedAddress)
+
+    const tx = await assignmentContract.methods
+      .recordAssignment(
+        assignment.contract,
+        assignment.seller,
+        assignment.buyer,
+        assignment.price,
+        assignment.numTransferred
+      )
+      .send({ from: accounts[0], gas: 300000 });
+
+    const createdAssignment = tx.events.AssignmentExecuted.returnValues;
+    console.log(createdAssignment);
+  };
+
   render() {
     const { ownedTokenBalances, activeToken, activeKey } = this.state;
-    const {web3} = this.props
+    const { web3 } = this.props;
     return (
       <div>
         <Grid>
@@ -118,9 +156,12 @@ class OwnedTokens extends React.Component {
                       key={i}
                     >
                       <Table.Cell>
-                        <a href="#" onClick={() => this.setActiveToken(token, i)}>
+                        <span
+                          className="fake-link"
+                          onClick={() => this.setActiveToken(token, i)}
+                        >
                           {Object.keys(token)[0]}
-                        </a>
+                        </span>
                       </Table.Cell>
                       <Table.Cell>{Object.values(token)[0].balance}</Table.Cell>
                     </Table.Row>
@@ -142,7 +183,7 @@ class OwnedTokens extends React.Component {
                       fontWeight: "bold"
                     }}
                   >
-                    activeToken.address
+                    {activeToken.address}
                   </span>
                   <Form.Field name="companyName" width={16}>
                     <label>Company Name</label>
@@ -155,10 +196,18 @@ class OwnedTokens extends React.Component {
                   </Form.Field>
                   <Form.Field name="ethPaid" width={16}>
                     <label>ETH Paid to You</label>
-                    <input disabled value={web3.utils.fromWei(activeToken.amountReceived)} />
+                    <input
+                      disabled
+                      value={web3.utils.fromWei(activeToken.amountReceived)}
+                    />
                   </Form.Field>
                   <Button>Manage Pending Assignment</Button>
                 </Form>
+                Emulate OpenLaw Functions (TestRPC Only!)
+                <Button onClick={this.createAssignment}>
+                  {" "}
+                  Create Assignment
+                </Button>
               </Segment>
             ) : null}
           </Grid.Column>
