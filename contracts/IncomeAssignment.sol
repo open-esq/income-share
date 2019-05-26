@@ -62,7 +62,7 @@ contract IncomeAssignment {
     
     assignmentHistory[_contract][_assignmentNo] = _assignment;
 
-    emit AssignmentExecuted(_contract, _assignmentNo, _seller, _buyer, _price, _numTransferred);
+    emit AssignmentExecuted(_contract, _seller, _buyer, _price, _numTransferred);
   }
 
   function () external payable { }

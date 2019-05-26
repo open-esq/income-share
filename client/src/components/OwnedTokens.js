@@ -9,7 +9,7 @@ import {
   Accordion
 } from "semantic-ui-react";
 import MasterPOCContract from "../contracts/MasterPOC.json";
-import IncomeAssignmentContract from "../contracts/IncomeAssignment.json"
+import IncomeAssignmentContract from "../contracts/IncomeAssignment.json";
 import pcTokenJSON from "../contracts/ProofClaim.json";
 import Web3Container from "../utils/Web3Container";
 import { getTokenContracts } from "../utils/helpers";
@@ -112,8 +112,12 @@ class OwnedTokens extends React.Component {
     };
 
     const networkId = await web3.eth.net.getId();
-    const deployedAddress = IncomeAssignmentContract.networks[networkId].address;  
-    const assignmentContract = new web3.eth.Contract(IncomeAssignmentContract.abi, deployedAddress)
+    const deployedAddress =
+      IncomeAssignmentContract.networks[networkId].address;
+    const assignmentContract = new web3.eth.Contract(
+      IncomeAssignmentContract.abi,
+      deployedAddress
+    );
 
     const tx = await assignmentContract.methods
       .recordAssignment(
@@ -125,8 +129,14 @@ class OwnedTokens extends React.Component {
       )
       .send({ from: accounts[0], gas: 300000 });
 
-    const createdAssignment = tx.events.AssignmentExecuted.returnValues;
-    console.log(createdAssignment);
+    const returnedAssignment = await assignmentContract.methods
+      .getAssignment(assignment.contract, 0)
+      .call({ from: accounts[0], gas: 30000 });
+
+    console.log(returnedAssignment);
+
+    // const createdAssignment = tx.events.AssignmentExecuted.returnValues;
+    // console.log(createdAssignment);
   };
 
   render() {

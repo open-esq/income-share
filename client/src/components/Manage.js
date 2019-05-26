@@ -4,6 +4,7 @@ import "semantic-ui-css/semantic.min.css";
 import Web3Container from "../utils/Web3Container";
 import IncomeAssignmentContract from "../contracts/IncomeAssignment.json";
 import OwnedTokens from "./OwnedTokens"
+import Assignments from "./Assignments"
 
 export default class Manage extends React.Component {
 
@@ -25,7 +26,7 @@ export default class Manage extends React.Component {
           <Tab.Pane
 
           >
-            Yo here now
+            <Assignments/>
           </Tab.Pane>
         )
       }
