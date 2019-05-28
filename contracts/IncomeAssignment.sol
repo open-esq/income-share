@@ -100,6 +100,21 @@ contract IncomeAssignment {
     return currAssignment[_contract];
   }
 
+  function getAssignmentNoByAddress(address _contract) public view returns (uint[] memory){
+    uint numAssignments = currAssignment[_contract];
+    uint[] memory assignmentNos = new uint[](numAssignments);
+
+    for(uint i = 0; i < numAssignments; i++) {
+      Assignment memory assignment = assignmentHistory[_contract][i];
+      if(assignment.seller == msg.sender || assignment.buyer == msg.sender) {
+        assignmentNos[i] = i;
+      } else {
+        assignmentNos[i] = 0;
+      }
+    }
+    return assignmentNos;
+  }
+
 /**
    * @notice getAssignment returns the details of an Assignment 
    * @param _contract - the address of the tokenized ERC20 income shares 

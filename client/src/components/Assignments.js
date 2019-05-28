@@ -15,6 +15,13 @@ import Web3Container from "../utils/Web3Container";
 
 class Assignments extends React.Component {
   componentDidMount = async () => {
+
+    const { web3, ownedTokenBalances, accounts } = this.props
+
+    const numAssignments = await contract.methods
+      .getNumAssignments()
+
+      
     const {contract} = this.props
     const returnedAssignment = await contract.methods
       .getAssignment(assignment.contract, 0)

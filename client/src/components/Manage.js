@@ -107,7 +107,7 @@ class Manage extends React.Component {
           <Tab.Pane
 
           >
-            <Assignments/>
+            <Assignments ownedTokenBalances={ownedTokenBalances} web3={web3} accounts={accounts}/>
           </Tab.Pane>
         )
       }
