@@ -57,7 +57,7 @@ export default class OwnedTokens extends React.Component {
 
     const returnedAssignment = await assignmentContract.methods
       .getAssignment(assignment.contract, 0)
-      .call({ from: accounts[0], gas: 30000 });
+      .call({ from: accounts[0], gas: 300000 });
 
     console.log(returnedAssignment);
 

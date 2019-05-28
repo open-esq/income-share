@@ -112,7 +112,7 @@ contract IncomeAssignment {
         assignmentNos[i] = 0;
       }
     }
-    return assignmentNos;
+  return assignmentNos;
   }
 
 /**
