@@ -12,6 +12,7 @@ import IncomeAssignmentContract from "../contracts/IncomeAssignment.json";
 import Web3Container from "../utils/Web3Container";
 
 export default class Assignments extends React.Component {
+  state = {allAssignments: null}
   componentDidMount = async () => {
     const { web3, ownedTokenBalances, accounts } = this.props;
 
@@ -22,19 +23,35 @@ export default class Assignments extends React.Component {
       IncomeAssignmentContract.abi,
       deployedAddress
     );
- 
-    console.log(assignmentContract)
+
+    console.log(assignmentContract);
     const myTokens = ownedTokenBalances.map(x => Object.keys(x)[0]);
-    const assignmentNosByContract = myTokens.map(async token => {
+    const assignmentByContract = myTokens.map(async token => {
       const tokenNumbers = await assignmentContract.methods
         .getAssignmentNoByAddress(token)
         .call({ from: accounts[0], gas: 300000 });
-      console.log(tokenNumbers)
+      console.log(tokenNumbers);
+
+      const assignmentPromises = tokenNumbers.map(async tokenNo => {
+        const assignment = await assignmentContract.methods
+          .getAssignment(token, tokenNo)
+          .call({ from: accounts[0], gas: 300000 });
+
+        return assignment;
+      });
+
+      const assignments = await Promise.all(assignmentPromises);
+      return { [token]: assignments };
     });
-    // const tokenNumbers = contract.getAssignmentNoByAddress();
+    
+    const allAssignments = await Promise.all(assignmentByContract)
+
+    this.setState({allAssignments})
   };
 
   render() {
+    const {allAssignments} = this.state
+    console.log(allAssignments)
     return <div>these are my assignments</div>;
   }
 }
