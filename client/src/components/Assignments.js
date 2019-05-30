@@ -6,13 +6,14 @@ import {
   Header,
   Form,
   Button,
-  Accordion
+  Accordion,
+  Loader
 } from "semantic-ui-react";
 import IncomeAssignmentContract from "../contracts/IncomeAssignment.json";
 import Web3Container from "../utils/Web3Container";
 
 export default class Assignments extends React.Component {
-  state = {allAssignments: null}
+  state = { allAssignments: null };
   componentDidMount = async () => {
     const { web3, ownedTokenBalances, accounts } = this.props;
 
@@ -43,15 +44,64 @@ export default class Assignments extends React.Component {
       const assignments = await Promise.all(assignmentPromises);
       return { [token]: assignments };
     });
-    
-    const allAssignments = await Promise.all(assignmentByContract)
 
-    this.setState({allAssignments})
+    const allAssignments = await Promise.all(assignmentByContract);
+
+    this.setState({ allAssignments });
   };
 
   render() {
-    const {allAssignments} = this.state
-    console.log(allAssignments)
-    return <div>these are my assignments</div>;
+    const { allAssignments } = this.state;
+    if (!allAssignments) return <Loader active />;
+    return (
+      <div>
+        {allAssignments.map((token, i) => {
+          console.log(token)
+          return (
+            <div>
+              <Header>{Object.keys(token)[0]}</Header>
+            <Table celled style={{marginBottom:"20px"}}>
+              <Table.Header>
+                <Table.Row>
+                  <Table.HeaderCell width={2}>
+                    ID
+                  </Table.HeaderCell>
+                  <Table.HeaderCell width={2}>
+                    Buyer
+                  </Table.HeaderCell>
+                  <Table.HeaderCell width={2}>
+                    Seller
+                  </Table.HeaderCell>
+                  <Table.HeaderCell width={2}>
+                    Number Transferred
+                  </Table.HeaderCell>
+                  <Table.HeaderCell width={2}>
+                    Price in ETH
+                  </Table.HeaderCell>
+                  <Table.HeaderCell width={2}>
+                    Confirm
+                  </Table.HeaderCell>
+                </Table.Row>
+              </Table.Header>
+              <Table.Body>
+                {Object.values(token)[0].map((assignment, i) => {
+                  return (
+                    <Table.Row key={i}>
+                    <Table.Cell>{i}</Table.Cell>
+                    <Table.Cell>{assignment.buyer}</Table.Cell>
+                    <Table.Cell>{assignment.seller}</Table.Cell>
+                    <Table.Cell>{assignment.numTransferred}</Table.Cell>
+                    <Table.Cell>{assignment.price}</Table.Cell>
+                    <Table.Cell>{assignment.confirmed.toString()}</Table.Cell>
+                  </Table.Row>
+                  )
+                })}
+              </Table.Body>
+            </Table>
+            </div>
+          );
+        })}
+      </div>
+    );
   }
 }

@@ -115,7 +115,7 @@ class Manage extends React.Component {
     if(!this.state.ownedTokenBalances) return null
     return (
       <Container style={{ marginTop: "7em" }}>
-        <Tab menu={{}} panes={panes} />
+        <Tab menu={{ borderless: true }} panes={panes} />
       </Container>
     );
   }
