@@ -27,7 +27,9 @@ export default class Assignments extends React.Component {
     );
 
     console.log(assignmentContract);
-    const myTokens = ownedTokenBalances.map(x => Object.keys(x)[0]);
+    const myTokens = ownedTokenBalances.map(x => {
+      if(x) return Object.keys(x)[0];
+    });
     const assignmentByContract = myTokens.map(async token => {
       const tokenNumbers = await assignmentContract.methods
         .getAssignmentNoByAddress(token)
@@ -55,23 +57,27 @@ export default class Assignments extends React.Component {
     const { assignmentContract } = this.state;
     const { accounts, web3 } = this.props;
 
-    const assignment = await assignmentContract.methods.getAssignment(tokenAddr, assignmentNo).call({from: accounts[0], gas: 300000})
-  
+    const assignment = await assignmentContract.methods
+      .getAssignment(tokenAddr, assignmentNo)
+      .call({ from: accounts[0], gas: 300000 });
+
     const numTransferred = assignment.numTransferred;
-    console.log("number transferred", numTransferred)
+    console.log("number transferred", numTransferred);
 
     const tokenContract = new web3.eth.Contract(pcTokenJSON.abi, tokenAddr);
-    await tokenContract.methods.approve(assignmentContract._address, numTransferred)
-    .send({ from: accounts[0], gas: 3000000 }); 
+    await tokenContract.methods
+      .approve(assignmentContract._address, numTransferred)
+      .send({ from: accounts[0], gas: 3000000 });
 
     await assignmentContract.methods
       .executeAssignment(tokenAddr, assignmentNo)
       .send({ from: accounts[0], gas: 300000 });
 
-    const executedAssignment = await assignmentContract.methods.getAssignment(tokenAddr, assignmentNo).call({from: accounts[0], gas: 300000})
+    const executedAssignment = await assignmentContract.methods
+      .getAssignment(tokenAddr, assignmentNo)
+      .call({ from: accounts[0], gas: 300000 });
 
-    console.log(executedAssignment)
-
+    console.log(executedAssignment);
   };
 
   render() {
