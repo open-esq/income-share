@@ -226,64 +226,6 @@
       "payable": false,
       "stateMutability": "view",
       "type": "function"
-    },
-    {
-      "constant": true,
-      "inputs": [
-        {
-          "name": "_contract",
-          "type": "address"
-        }
-      ],
-      "name": "getAssignmentNos",
-      "outputs": [
-        {
-          "name": "",
-          "type": "uint256"
-        }
-      ],
-      "payable": false,
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "constant": true,
-      "inputs": [
-        {
-          "name": "_contract",
-          "type": "address"
-        },
-        {
-          "name": "_assignmentNum",
-          "type": "uint256"
-        }
-      ],
-      "name": "getAssignment",
-      "outputs": [
-        {
-          "name": "seller",
-          "type": "address"
-        },
-        {
-          "name": "buyer",
-          "type": "address"
-        },
-        {
-          "name": "price",
-          "type": "uint256"
-        },
-        {
-          "name": "numTransferred",
-          "type": "uint256"
-        },
-        {
-          "name": "confirmed",
-          "type": "bool"
-        }
-      ],
-      "payable": false,
-      "stateMutability": "view",
-      "type": "function"
     }
   ],
   "metadata": "{\"compiler\":{\"version\":\"0.5.0+commit.1d4f565a\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"constant\":false,\"inputs\":[{\"name\":\"_contract\",\"type\":\"address\"},{\"name\":\"_seller\",\"type\":\"address\"},{\"name\":\"_buyer\",\"type\":\"address\"},{\"name\":\"_price\",\"type\":\"uint256\"},{\"name\":\"_numTransferred\",\"type\":\"uint256\"}],\"name\":\"recordAssignment\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"_contract\",\"type\":\"address\"},{\"name\":\"_assignmentNum\",\"type\":\"uint256\"}],\"name\":\"getAssignment\",\"outputs\":[{\"name\":\"seller\",\"type\":\"address\"},{\"name\":\"buyer\",\"type\":\"address\"},{\"name\":\"price\",\"type\":\"uint256\"},{\"name\":\"numTransferred\",\"type\":\"uint256\"},{\"name\":\"confirmed\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"\",\"type\":\"address\"}],\"name\":\"currAssignment\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"_contract\",\"type\":\"address\"}],\"name\":\"getAssignmentNoByAddress\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256[]\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_contract\",\"type\":\"address\"},{\"name\":\"_assignmentNum\",\"type\":\"uint256\"}],\"name\":\"executeAssignment\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"_contract\",\"type\":\"address\"}],\"name\":\"getNumAssignments\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"\",\"type\":\"address\"},{\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"assignmentHistory\",\"outputs\":[{\"name\":\"seller\",\"type\":\"address\"},{\"name\":\"buyer\",\"type\":\"address\"},{\"name\":\"price\",\"type\":\"uint256\"},{\"name\":\"numTransferred\",\"type\":\"uint256\"},{\"name\":\"confirmed\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"},{\"payable\":true,\"stateMutability\":\"payable\",\"type\":\"fallback\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"name\":\"_contract\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"seller\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"buyer\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"priceInEth\",\"type\":\"uint256\"},{\"indexed\":false,\"name\":\"numTransferred\",\"type\":\"uint256\"}],\"name\":\"AssignmentExecuted\",\"type\":\"event\"}],\"devdoc\":{\"methods\":{\"executeAssignment(address,uint256)\":{\"params\":{\"_assignmentNum\":\"- the particular Assignment's index for retrieval \",\"_contract\":\"- the address of the tokenized ERC20 income shares \"}},\"getAssignment(address,uint256)\":{\"params\":{\"_assignmentNum\":\"- the particular Assignment's index for retrieval \",\"_contract\":\"- the address of the tokenized ERC20 income shares \"}},\"getNumAssignments(address)\":{\"params\":{\"_contract\":\"- the address of the tokenized ERC20 income shares \"}},\"recordAssignment(address,address,address,uint256,uint256)\":{\"params\":{\"_buyer\":\"- address receiving tokens\",\"_contract\":\"- the address of the tokenized ERC20 income shares \",\"_numTransferred\":\"- number of transferred shares\",\"_price\":\"- price the buyer pays in Wei\",\"_seller\":\"- address assigning tokens\"}}},\"title\":\"IncomeAssignment\"},\"userdoc\":{\"methods\":{\"executeAssignment(address,uint256)\":{\"notice\":\"executeAssignment is called by an seller to effect token transfer after receiving payment \"},\"getAssignment(address,uint256)\":{\"notice\":\"getAssignment returns the details of an Assignment \"},\"getNumAssignments(address)\":{\"notice\":\"getNumAssignments returns the number of assignments made for a token  \"},\"recordAssignment(address,address,address,uint256,uint256)\":{\"notice\":\"recordAssignment creates a new assignment \"}},\"notice\":\"IncomeAssignment controls the assignment of income share tokens*\"}},\"settings\":{\"compilationTarget\":{\"/home/josh/dev/income-share/contracts/IncomeAssignment.sol\":\"IncomeAssignment\"},\"evmVersion\":\"byzantium\",\"libraries\":{},\"optimizer\":{\"enabled\":true,\"runs\":200},\"remappings\":[]},\"sources\":{\"/home/josh/dev/income-share/contracts/IncomeAssignment.sol\":{\"keccak256\":\"0x1181f8adb6e4c2804d87d0544dfd55af1975b4387702032f781cf9c676cab418\",\"urls\":[\"bzzr://ad9c63751cb06deb4d2746c34cd1d9ccf965f15c0c3abb56bddccd2e932d35db\"]}},\"version\":1}",
@@ -1772,18 +1714,98 @@
                 {
                   "expression": {
                     "argumentTypes": null,
+                    "id": 127,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftHandSide": {
+                      "argumentTypes": null,
+                      "expression": {
+                        "argumentTypes": null,
+                        "id": 120,
+                        "name": "_assignment",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 113,
+                        "src": "2826:11:0",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_struct$_Assignment_$12_memory_ptr",
+                          "typeString": "struct IncomeAssignment.Assignment memory"
+                        }
+                      },
+                      "id": 122,
+                      "isConstant": false,
+                      "isLValue": true,
+                      "isPure": false,
+                      "lValueRequested": true,
+                      "memberName": "confirmed",
+                      "nodeType": "MemberAccess",
+                      "referencedDeclaration": 11,
+                      "src": "2826:21:0",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_bool",
+                        "typeString": "bool"
+                      }
+                    },
+                    "nodeType": "FunctionCall",
+                    "operator": "=",
+                    "rightHandSide": {
+                      "argumentTypes": null,
+                      "hexValue": "74727565",
+                      "id": 123,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": true,
+                      "kind": "bool",
+                      "lValueRequested": false,
+                      "nodeType": "Literal",
+                      "src": "2850:4:0",
+                      "subdenomination": null,
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_bool",
+                        "typeString": "bool"
+                      },
+                      "value": "true"
+                    },
+                    "src": "2408:69:0",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    },
                     "arguments": [
                       {
                         "argumentTypes": null,
-                        "commonType": {
-                          "typeIdentifier": "t_address",
-                          "typeString": "address"
+                        "expression": {
+                          "argumentTypes": null,
+                          "id": 123,
+                          "name": "_assignment",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 113,
+                          "src": "2847:11:0",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_struct$_Assignment_$12_memory_ptr",
+                            "typeString": "struct IncomeAssignment.Assignment memory"
+                          }
                         },
                         "id": 125,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": false,
                         "lValueRequested": false,
+                        "memberName": "seller",
+                        "nodeType": "BinaryOperation",
+                        "referencedDeclaration": 3,
+                        "src": "2417:32:0",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        },
+                        "commonType": {
+                          "typeIdentifier": "t_address",
+                          "typeString": "address"
+                        },
                         "leftExpression": {
                           "argumentTypes": null,
                           "expression": {
@@ -1813,7 +1835,6 @@
                             "typeString": "address payable"
                           }
                         },
-                        "nodeType": "BinaryOperation",
                         "operator": "==",
                         "rightExpression": {
                           "argumentTypes": null,
@@ -1843,30 +1864,69 @@
                             "typeIdentifier": "t_address",
                             "typeString": "address"
                           }
-                        },
-                        "src": "2417:32:0",
-                        "typeDescriptions": {
-                          "typeIdentifier": "t_bool",
-                          "typeString": "bool"
                         }
                       },
                       {
                         "argumentTypes": null,
-                        "hexValue": "6f6e6c792073656c6c65722063616e20636f6e6669726d",
+                        "expression": {
+                          "argumentTypes": null,
+                          "id": 125,
+                          "name": "_assignment",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 113,
+                          "src": "2867:11:0",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_struct$_Assignment_$12_memory_ptr",
+                            "typeString": "struct IncomeAssignment.Assignment memory"
+                          }
+                        },
                         "id": 126,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": true,
-                        "kind": "string",
                         "lValueRequested": false,
+                        "memberName": "buyer",
                         "nodeType": "Literal",
+                        "referencedDeclaration": 5,
                         "src": "2451:25:0",
-                        "subdenomination": null,
                         "typeDescriptions": {
                           "typeIdentifier": "t_stringliteral_ab07ebecb3935ac064e00d5b6d2713165085451fa9374c777a41e0b16dc544b7",
                           "typeString": "literal_string \"only seller can confirm\""
                         },
+                        "hexValue": "6f6e6c792073656c6c65722063616e20636f6e6669726d",
+                        "kind": "string",
+                        "subdenomination": null,
                         "value": "only seller can confirm"
+                      },
+                      {
+                        "argumentTypes": null,
+                        "expression": {
+                          "argumentTypes": null,
+                          "id": 127,
+                          "name": "_assignment",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 113,
+                          "src": "2886:11:0",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_struct$_Assignment_$12_memory_ptr",
+                            "typeString": "struct IncomeAssignment.Assignment memory"
+                          }
+                        },
+                        "id": 128,
+                        "isConstant": false,
+                        "isLValue": true,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "memberName": "numTransferred",
+                        "nodeType": "MemberAccess",
+                        "referencedDeclaration": 9,
+                        "src": "2886:26:0",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_uint256",
+                          "typeString": "uint256"
+                        }
                       }
                     ],
                     "expression": {
@@ -1878,35 +1938,46 @@
                         {
                           "typeIdentifier": "t_stringliteral_ab07ebecb3935ac064e00d5b6d2713165085451fa9374c777a41e0b16dc544b7",
                           "typeString": "literal_string \"only seller can confirm\""
+                        },
+                        {
+                          "typeIdentifier": "t_uint256",
+                          "typeString": "uint256"
                         }
                       ],
+                      "expression": {
+                        "argumentTypes": null,
+                        "id": 120,
+                        "name": "pcToken",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 99,
+                        "src": "2826:7:0",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_contract$_ProofClaim_$356",
+                          "typeString": "contract ProofClaim"
+                        }
+                      },
                       "id": 120,
-                      "name": "require",
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": false,
+                      "lValueRequested": false,
+                      "memberName": "transferFrom",
                       "nodeType": "Identifier",
-                      "overloadedDeclarations": [
-                        1162,
-                        1163
-                      ],
                       "referencedDeclaration": 1163,
                       "src": "2408:7:0",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_require_pure$_t_bool_$_t_string_memory_ptr_$returns$__$",
                         "typeString": "function (bool,string memory) pure"
-                      }
+                      },
+                      "name": "require",
+                      "overloadedDeclarations": [
+                        1162,
+                        1163
+                      ]
                     },
-                    "id": 127,
-                    "isConstant": false,
-                    "isLValue": false,
-                    "isPure": false,
                     "kind": "functionCall",
-                    "lValueRequested": false,
-                    "names": [],
-                    "nodeType": "FunctionCall",
-                    "src": "2408:69:0",
-                    "typeDescriptions": {
-                      "typeIdentifier": "t_tuple$__$",
-                      "typeString": "tuple()"
-                    }
+                    "names": []
                   },
                   "id": 128,
                   "nodeType": "ExpressionStatement",
@@ -1915,6 +1986,68 @@
                 {
                   "expression": {
                     "argumentTypes": null,
+                    "id": 135,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftHandSide": {
+                      "argumentTypes": null,
+                      "expression": {
+                        "argumentTypes": null,
+                        "id": 131,
+                        "name": "_assignment",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 113,
+                        "src": "2919:11:0",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_struct$_Assignment_$12_memory_ptr",
+                          "typeString": "struct IncomeAssignment.Assignment memory"
+                        }
+                      },
+                      "id": 133,
+                      "isConstant": false,
+                      "isLValue": true,
+                      "isPure": false,
+                      "lValueRequested": true,
+                      "memberName": "confirmed",
+                      "nodeType": "MemberAccess",
+                      "referencedDeclaration": 11,
+                      "src": "2919:21:0",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_bool",
+                        "typeString": "bool"
+                      }
+                    },
+                    "nodeType": "FunctionCall",
+                    "operator": "=",
+                    "rightHandSide": {
+                      "argumentTypes": null,
+                      "id": 134,
+                      "name": "sellerTokens",
+                      "nodeType": "Literal",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 105,
+                      "src": "2943:4:0",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_bool",
+                        "typeString": "bool"
+                      },
+                      "hexValue": "74727565",
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": true,
+                      "kind": "bool",
+                      "lValueRequested": false,
+                      "subdenomination": null,
+                      "value": "true"
+                    },
+                    "src": "2483:100:0",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    },
                     "arguments": [
                       {
                         "argumentTypes": null,
@@ -2021,19 +2154,8 @@
                         "typeString": "function (bool,string memory) pure"
                       }
                     },
-                    "id": 135,
-                    "isConstant": false,
-                    "isLValue": false,
-                    "isPure": false,
                     "kind": "functionCall",
-                    "lValueRequested": false,
-                    "names": [],
-                    "nodeType": "FunctionCall",
-                    "src": "2483:100:0",
-                    "typeDescriptions": {
-                      "typeIdentifier": "t_tuple$__$",
-                      "typeString": "tuple()"
-                    }
+                    "names": []
                   },
                   "id": 136,
                   "nodeType": "ExpressionStatement",
@@ -2042,6 +2164,113 @@
                 {
                   "expression": {
                     "argumentTypes": null,
+                    "id": 148,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftHandSide": {
+                      "argumentTypes": null,
+                      "baseExpression": {
+                        "argumentTypes": null,
+                        "baseExpression": {
+                          "argumentTypes": null,
+                          "id": 132,
+                          "name": "assignmentHistory",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 32,
+                          "src": "2957:17:0",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_mapping$_t_address_$_t_mapping$_t_uint256_$_t_struct$_Assignment_$12_storage_$_$",
+                            "typeString": "mapping(address => mapping(uint256 => struct IncomeAssignment.Assignment storage ref))"
+                          }
+                        },
+                        "id": 135,
+                        "indexExpression": {
+                          "argumentTypes": null,
+                          "id": 133,
+                          "name": "_contract",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 93,
+                          "src": "2975:9:0",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_address",
+                            "typeString": "address"
+                          }
+                        },
+                        "isConstant": false,
+                        "isLValue": true,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "nodeType": "IndexAccess",
+                        "src": "2957:28:0",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_Assignment_$12_storage_$",
+                          "typeString": "mapping(uint256 => struct IncomeAssignment.Assignment storage ref)"
+                        }
+                      },
+                      "id": 139,
+                      "indexExpression": {
+                        "argumentTypes": null,
+                        "id": 134,
+                        "name": "_assignmentNum",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 95,
+                        "src": "2986:14:0",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_uint256",
+                          "typeString": "uint256"
+                        }
+                      },
+                      "isConstant": false,
+                      "isLValue": true,
+                      "isPure": false,
+                      "lValueRequested": true,
+                      "nodeType": "MemberAccess",
+                      "src": "2953:26:0",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_uint256",
+                        "typeString": "uint256"
+                      },
+                      "expression": {
+                        "argumentTypes": null,
+                        "id": 137,
+                        "name": "_assignment",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 113,
+                        "src": "2953:11:0",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_struct$_Assignment_$12_memory_ptr",
+                          "typeString": "struct IncomeAssignment.Assignment memory"
+                        }
+                      },
+                      "memberName": "numTransferred",
+                      "referencedDeclaration": 9
+                    },
+                    "nodeType": "FunctionCall",
+                    "operator": "=",
+                    "rightHandSide": {
+                      "argumentTypes": null,
+                      "id": 140,
+                      "name": "sellerTokens",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 105,
+                      "src": "2982:12:0",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_uint256",
+                        "typeString": "uint256"
+                      }
+                    },
+                    "src": "2686:121:0",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    },
                     "arguments": [
                       {
                         "argumentTypes": null,
@@ -2234,19 +2463,8 @@
                         "typeString": "function (bool,string memory) pure"
                       }
                     },
-                    "id": 148,
-                    "isConstant": false,
-                    "isLValue": false,
-                    "isPure": false,
                     "kind": "functionCall",
-                    "lValueRequested": false,
-                    "names": [],
-                    "nodeType": "FunctionCall",
-                    "src": "2686:121:0",
-                    "typeDescriptions": {
-                      "typeIdentifier": "t_tuple$__$",
-                      "typeString": "tuple()"
-                    }
+                    "names": []
                   },
                   "id": 149,
                   "nodeType": "ExpressionStatement",
@@ -2262,6 +2480,70 @@
                     "lValueRequested": false,
                     "leftHandSide": {
                       "argumentTypes": null,
+                      "baseExpression": {
+                        "argumentTypes": null,
+                        "baseExpression": {
+                          "argumentTypes": null,
+                          "id": 143,
+                          "name": "assignmentHistory",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 32,
+                          "src": "3050:17:0",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_mapping$_t_address_$_t_mapping$_t_uint256_$_t_struct$_Assignment_$12_storage_$_$",
+                            "typeString": "mapping(address => mapping(uint256 => struct IncomeAssignment.Assignment storage ref))"
+                          }
+                        },
+                        "id": 146,
+                        "indexExpression": {
+                          "argumentTypes": null,
+                          "id": 144,
+                          "name": "_contract",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 93,
+                          "src": "3068:9:0",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_address",
+                            "typeString": "address"
+                          }
+                        },
+                        "isConstant": false,
+                        "isLValue": true,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "nodeType": "IndexAccess",
+                        "src": "3050:28:0",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_Assignment_$12_storage_$",
+                          "typeString": "mapping(uint256 => struct IncomeAssignment.Assignment storage ref)"
+                        }
+                      },
+                      "id": 152,
+                      "indexExpression": {
+                        "argumentTypes": null,
+                        "id": 145,
+                        "name": "_assignmentNum",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 95,
+                        "src": "3079:14:0",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_uint256",
+                          "typeString": "uint256"
+                        }
+                      },
+                      "isConstant": false,
+                      "isLValue": true,
+                      "isPure": false,
+                      "lValueRequested": true,
+                      "nodeType": "MemberAccess",
+                      "src": "2814:21:0",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_bool",
+                        "typeString": "bool"
+                      },
                       "expression": {
                         "argumentTypes": null,
                         "id": 150,
@@ -2275,38 +2557,30 @@
                           "typeString": "struct IncomeAssignment.Assignment memory"
                         }
                       },
-                      "id": 152,
-                      "isConstant": false,
-                      "isLValue": true,
-                      "isPure": false,
-                      "lValueRequested": true,
                       "memberName": "confirmed",
-                      "nodeType": "MemberAccess",
-                      "referencedDeclaration": 11,
-                      "src": "2814:21:0",
-                      "typeDescriptions": {
-                        "typeIdentifier": "t_bool",
-                        "typeString": "bool"
-                      }
+                      "referencedDeclaration": 11
                     },
                     "nodeType": "Assignment",
                     "operator": "=",
                     "rightHandSide": {
                       "argumentTypes": null,
-                      "hexValue": "74727565",
                       "id": 153,
+                      "name": "_assignment",
+                      "nodeType": "Literal",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 113,
+                      "src": "2838:4:0",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_bool",
+                        "typeString": "bool"
+                      },
+                      "hexValue": "74727565",
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": true,
                       "kind": "bool",
                       "lValueRequested": false,
-                      "nodeType": "Literal",
-                      "src": "2838:4:0",
                       "subdenomination": null,
-                      "typeDescriptions": {
-                        "typeIdentifier": "t_bool",
-                        "typeString": "bool"
-                      },
                       "value": "true"
                     },
                     "src": "2814:28:0",
@@ -2641,50 +2915,6 @@
               "src": "3342:429:0",
               "statements": [
                 {
-                  "expression": {
-                    "argumentTypes": null,
-                    "baseExpression": {
-                      "argumentTypes": null,
-                      "id": 184,
-                      "name": "currAssignment",
-                      "nodeType": "Identifier",
-                      "overloadedDeclarations": [],
-                      "referencedDeclaration": 36,
-                      "src": "3342:14:0",
-                      "typeDescriptions": {
-                        "typeIdentifier": "t_mapping$_t_address_$_t_uint256_$",
-                        "typeString": "mapping(address => uint256)"
-                      }
-                    },
-                    "id": 186,
-                    "indexExpression": {
-                      "argumentTypes": null,
-                      "id": 185,
-                      "name": "_contract",
-                      "nodeType": "Identifier",
-                      "overloadedDeclarations": [],
-                      "referencedDeclaration": 179,
-                      "src": "3357:9:0",
-                      "typeDescriptions": {
-                        "typeIdentifier": "t_address",
-                        "typeString": "address"
-                      }
-                    },
-                    "isConstant": false,
-                    "isLValue": true,
-                    "isPure": false,
-                    "lValueRequested": false,
-                    "nodeType": "IndexAccess",
-                    "src": "3342:25:0",
-                    "typeDescriptions": {
-                      "typeIdentifier": "t_uint256",
-                      "typeString": "uint256"
-                    }
-                  },
-                  "functionReturnParameters": 183,
-                  "id": 190,
-                  "nodeType": "VariableDeclarationStatement",
-                  "src": "3348:47:0",
                   "assignments": [
                     186
                   ],
@@ -2716,6 +2946,7 @@
                       "visibility": "internal"
                     }
                   ],
+                  "id": 190,
                   "initialValue": {
                     "argumentTypes": null,
                     "baseExpression": {
@@ -2755,7 +2986,9 @@
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
                     }
-                  }
+                  },
+                  "nodeType": "VariableDeclarationStatement",
+                  "src": "3348:47:0"
                 },
                 {
                   "assignments": [
@@ -3546,14 +3779,6 @@
                     "typeString": "uint256[]"
                   },
                   "typeName": {
-                    "id": 182,
-                    "name": "uint",
-                    "nodeType": "ArrayTypeName",
-                    "src": "3328:6:0",
-                    "typeDescriptions": {
-                      "typeIdentifier": "t_array$_t_uint256_$dyn_storage_ptr",
-                      "typeString": "uint256[]"
-                    },
                     "baseType": {
                       "id": 181,
                       "name": "uint",
@@ -3564,7 +3789,14 @@
                         "typeString": "uint256"
                       }
                     },
-                    "length": null
+                    "id": 182,
+                    "length": null,
+                    "nodeType": "ArrayTypeName",
+                    "src": "3328:6:0",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_array$_t_uint256_$dyn_storage_ptr",
+                      "typeString": "uint256[]"
+                    }
                   },
                   "value": null,
                   "visibility": "internal"
@@ -3585,50 +3817,6 @@
               "src": "4189:275:0",
               "statements": [
                 {
-                  "expression": {
-                    "argumentTypes": null,
-                    "baseExpression": {
-                      "argumentTypes": null,
-                      "id": 196,
-                      "name": "currAssignment",
-                      "nodeType": "Identifier",
-                      "overloadedDeclarations": [],
-                      "referencedDeclaration": 36,
-                      "src": "3468:14:0",
-                      "typeDescriptions": {
-                        "typeIdentifier": "t_mapping$_t_address_$_t_uint256_$",
-                        "typeString": "mapping(address => uint256)"
-                      }
-                    },
-                    "id": 198,
-                    "indexExpression": {
-                      "argumentTypes": null,
-                      "id": 197,
-                      "name": "_contract",
-                      "nodeType": "Identifier",
-                      "overloadedDeclarations": [],
-                      "referencedDeclaration": 191,
-                      "src": "3483:9:0",
-                      "typeDescriptions": {
-                        "typeIdentifier": "t_address",
-                        "typeString": "address"
-                      }
-                    },
-                    "isConstant": false,
-                    "isLValue": true,
-                    "isPure": false,
-                    "lValueRequested": false,
-                    "nodeType": "IndexAccess",
-                    "src": "3468:25:0",
-                    "typeDescriptions": {
-                      "typeIdentifier": "t_uint256",
-                      "typeString": "uint256"
-                    }
-                  },
-                  "functionReturnParameters": 195,
-                  "id": 274,
-                  "nodeType": "VariableDeclarationStatement",
-                  "src": "4200:76:0",
                   "assignments": [
                     268
                   ],
@@ -3662,6 +3850,7 @@
                       "visibility": "internal"
                     }
                   ],
+                  "id": 274,
                   "initialValue": {
                     "argumentTypes": null,
                     "baseExpression": {
@@ -3728,7 +3917,9 @@
                       "typeIdentifier": "t_struct$_Assignment_$12_storage",
                       "typeString": "struct IncomeAssignment.Assignment storage ref"
                     }
-                  }
+                  },
+                  "nodeType": "VariableDeclarationStatement",
+                  "src": "4200:76:0"
                 },
                 {
                   "expression": {
@@ -4131,11 +4322,11 @@
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "4093:7:0",
+                    "stateMutability": "nonpayable",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
                       "typeString": "address"
-                    },
-                    "stateMutability": "nonpayable"
+                    }
                   },
                   "value": null,
                   "visibility": "internal"
@@ -4250,775 +4441,6 @@
             },
             "scope": 302,
             "src": "4002:462:0",
-            "stateMutability": "view",
-            "superFunction": null,
-            "visibility": "public"
-          },
-          {
-            "body": {
-              "id": 212,
-              "nodeType": "Block",
-              "src": "3573:43:0",
-              "statements": [
-                {
-                  "expression": {
-                    "argumentTypes": null,
-                    "baseExpression": {
-                      "argumentTypes": null,
-                      "id": 208,
-                      "name": "currAssignment",
-                      "nodeType": "Identifier",
-                      "overloadedDeclarations": [],
-                      "referencedDeclaration": 36,
-                      "src": "3586:14:0",
-                      "typeDescriptions": {
-                        "typeIdentifier": "t_mapping$_t_address_$_t_uint256_$",
-                        "typeString": "mapping(address => uint256)"
-                      }
-                    },
-                    "id": 210,
-                    "indexExpression": {
-                      "argumentTypes": null,
-                      "id": 209,
-                      "name": "_contract",
-                      "nodeType": "Identifier",
-                      "overloadedDeclarations": [],
-                      "referencedDeclaration": 203,
-                      "src": "3601:9:0",
-                      "typeDescriptions": {
-                        "typeIdentifier": "t_address",
-                        "typeString": "address"
-                      }
-                    },
-                    "isConstant": false,
-                    "isLValue": true,
-                    "isPure": false,
-                    "lValueRequested": false,
-                    "nodeType": "IndexAccess",
-                    "src": "3586:25:0",
-                    "typeDescriptions": {
-                      "typeIdentifier": "t_uint256",
-                      "typeString": "uint256"
-                    }
-                  },
-                  "functionReturnParameters": 207,
-                  "id": 211,
-                  "nodeType": "Return",
-                  "src": "3579:32:0"
-                }
-              ]
-            },
-            "documentation": null,
-            "id": 213,
-            "implemented": true,
-            "kind": "function",
-            "modifiers": [],
-            "name": "getAssignmentNos",
-            "nodeType": "FunctionDefinition",
-            "parameters": {
-              "id": 204,
-              "nodeType": "ParameterList",
-              "parameters": [
-                {
-                  "constant": false,
-                  "id": 203,
-                  "name": "_contract",
-                  "nodeType": "VariableDeclaration",
-                  "scope": 213,
-                  "src": "3528:17:0",
-                  "stateVariable": false,
-                  "storageLocation": "default",
-                  "typeDescriptions": {
-                    "typeIdentifier": "t_address",
-                    "typeString": "address"
-                  },
-                  "typeName": {
-                    "id": 202,
-                    "name": "address",
-                    "nodeType": "ElementaryTypeName",
-                    "src": "3528:7:0",
-                    "stateMutability": "nonpayable",
-                    "typeDescriptions": {
-                      "typeIdentifier": "t_address",
-                      "typeString": "address"
-                    }
-                  },
-                  "value": null,
-                  "visibility": "internal"
-                }
-              ],
-              "src": "3527:19:0"
-            },
-            "returnParameters": {
-              "id": 207,
-              "nodeType": "ParameterList",
-              "parameters": [
-                {
-                  "constant": false,
-                  "id": 206,
-                  "name": "",
-                  "nodeType": "VariableDeclaration",
-                  "scope": 213,
-                  "src": "3568:4:0",
-                  "stateVariable": false,
-                  "storageLocation": "default",
-                  "typeDescriptions": {
-                    "typeIdentifier": "t_uint256",
-                    "typeString": "uint256"
-                  },
-                  "typeName": {
-                    "id": 205,
-                    "name": "uint",
-                    "nodeType": "ElementaryTypeName",
-                    "src": "3568:4:0",
-                    "typeDescriptions": {
-                      "typeIdentifier": "t_uint256",
-                      "typeString": "uint256"
-                    }
-                  },
-                  "value": null,
-                  "visibility": "internal"
-                }
-              ],
-              "src": "3567:6:0"
-            },
-            "scope": 265,
-            "src": "3502:114:0",
-            "stateMutability": "view",
-            "superFunction": null,
-            "visibility": "public"
-          },
-          {
-            "body": {
-              "id": 263,
-              "nodeType": "Block",
-              "src": "4034:275:0",
-              "statements": [
-                {
-                  "assignments": [
-                    231
-                  ],
-                  "declarations": [
-                    {
-                      "constant": false,
-                      "id": 231,
-                      "name": "_assignment",
-                      "nodeType": "VariableDeclaration",
-                      "scope": 263,
-                      "src": "4045:29:0",
-                      "stateVariable": false,
-                      "storageLocation": "memory",
-                      "typeDescriptions": {
-                        "typeIdentifier": "t_struct$_Assignment_$12_memory_ptr",
-                        "typeString": "struct IncomeAssignment.Assignment"
-                      },
-                      "typeName": {
-                        "contractScope": null,
-                        "id": 230,
-                        "name": "Assignment",
-                        "nodeType": "UserDefinedTypeName",
-                        "referencedDeclaration": 12,
-                        "src": "4045:10:0",
-                        "typeDescriptions": {
-                          "typeIdentifier": "t_struct$_Assignment_$12_storage_ptr",
-                          "typeString": "struct IncomeAssignment.Assignment"
-                        }
-                      },
-                      "value": null,
-                      "visibility": "internal"
-                    }
-                  ],
-                  "id": 237,
-                  "initialValue": {
-                    "argumentTypes": null,
-                    "baseExpression": {
-                      "argumentTypes": null,
-                      "baseExpression": {
-                        "argumentTypes": null,
-                        "id": 232,
-                        "name": "assignmentHistory",
-                        "nodeType": "Identifier",
-                        "overloadedDeclarations": [],
-                        "referencedDeclaration": 32,
-                        "src": "4077:17:0",
-                        "typeDescriptions": {
-                          "typeIdentifier": "t_mapping$_t_address_$_t_mapping$_t_uint256_$_t_struct$_Assignment_$12_storage_$_$",
-                          "typeString": "mapping(address => mapping(uint256 => struct IncomeAssignment.Assignment storage ref))"
-                        }
-                      },
-                      "id": 234,
-                      "indexExpression": {
-                        "argumentTypes": null,
-                        "id": 233,
-                        "name": "_contract",
-                        "nodeType": "Identifier",
-                        "overloadedDeclarations": [],
-                        "referencedDeclaration": 215,
-                        "src": "4095:9:0",
-                        "typeDescriptions": {
-                          "typeIdentifier": "t_address",
-                          "typeString": "address"
-                        }
-                      },
-                      "isConstant": false,
-                      "isLValue": true,
-                      "isPure": false,
-                      "lValueRequested": false,
-                      "nodeType": "IndexAccess",
-                      "src": "4077:28:0",
-                      "typeDescriptions": {
-                        "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_Assignment_$12_storage_$",
-                        "typeString": "mapping(uint256 => struct IncomeAssignment.Assignment storage ref)"
-                      }
-                    },
-                    "id": 236,
-                    "indexExpression": {
-                      "argumentTypes": null,
-                      "id": 235,
-                      "name": "_assignmentNum",
-                      "nodeType": "Identifier",
-                      "overloadedDeclarations": [],
-                      "referencedDeclaration": 217,
-                      "src": "4106:14:0",
-                      "typeDescriptions": {
-                        "typeIdentifier": "t_uint256",
-                        "typeString": "uint256"
-                      }
-                    },
-                    "isConstant": false,
-                    "isLValue": true,
-                    "isPure": false,
-                    "lValueRequested": false,
-                    "nodeType": "IndexAccess",
-                    "src": "4077:44:0",
-                    "typeDescriptions": {
-                      "typeIdentifier": "t_struct$_Assignment_$12_storage",
-                      "typeString": "struct IncomeAssignment.Assignment storage ref"
-                    }
-                  },
-                  "nodeType": "VariableDeclarationStatement",
-                  "src": "4045:76:0"
-                },
-                {
-                  "expression": {
-                    "argumentTypes": null,
-                    "id": 241,
-                    "isConstant": false,
-                    "isLValue": false,
-                    "isPure": false,
-                    "lValueRequested": false,
-                    "leftHandSide": {
-                      "argumentTypes": null,
-                      "id": 238,
-                      "name": "seller",
-                      "nodeType": "Identifier",
-                      "overloadedDeclarations": [],
-                      "referencedDeclaration": 220,
-                      "src": "4127:6:0",
-                      "typeDescriptions": {
-                        "typeIdentifier": "t_address",
-                        "typeString": "address"
-                      }
-                    },
-                    "nodeType": "Assignment",
-                    "operator": "=",
-                    "rightHandSide": {
-                      "argumentTypes": null,
-                      "expression": {
-                        "argumentTypes": null,
-                        "id": 239,
-                        "name": "_assignment",
-                        "nodeType": "Identifier",
-                        "overloadedDeclarations": [],
-                        "referencedDeclaration": 231,
-                        "src": "4136:11:0",
-                        "typeDescriptions": {
-                          "typeIdentifier": "t_struct$_Assignment_$12_memory_ptr",
-                          "typeString": "struct IncomeAssignment.Assignment memory"
-                        }
-                      },
-                      "id": 240,
-                      "isConstant": false,
-                      "isLValue": true,
-                      "isPure": false,
-                      "lValueRequested": false,
-                      "memberName": "seller",
-                      "nodeType": "MemberAccess",
-                      "referencedDeclaration": 3,
-                      "src": "4136:18:0",
-                      "typeDescriptions": {
-                        "typeIdentifier": "t_address",
-                        "typeString": "address"
-                      }
-                    },
-                    "src": "4127:27:0",
-                    "typeDescriptions": {
-                      "typeIdentifier": "t_address",
-                      "typeString": "address"
-                    }
-                  },
-                  "id": 242,
-                  "nodeType": "ExpressionStatement",
-                  "src": "4127:27:0"
-                },
-                {
-                  "expression": {
-                    "argumentTypes": null,
-                    "id": 246,
-                    "isConstant": false,
-                    "isLValue": false,
-                    "isPure": false,
-                    "lValueRequested": false,
-                    "leftHandSide": {
-                      "argumentTypes": null,
-                      "id": 243,
-                      "name": "buyer",
-                      "nodeType": "Identifier",
-                      "overloadedDeclarations": [],
-                      "referencedDeclaration": 222,
-                      "src": "4160:5:0",
-                      "typeDescriptions": {
-                        "typeIdentifier": "t_address",
-                        "typeString": "address"
-                      }
-                    },
-                    "nodeType": "Assignment",
-                    "operator": "=",
-                    "rightHandSide": {
-                      "argumentTypes": null,
-                      "expression": {
-                        "argumentTypes": null,
-                        "id": 244,
-                        "name": "_assignment",
-                        "nodeType": "Identifier",
-                        "overloadedDeclarations": [],
-                        "referencedDeclaration": 231,
-                        "src": "4168:11:0",
-                        "typeDescriptions": {
-                          "typeIdentifier": "t_struct$_Assignment_$12_memory_ptr",
-                          "typeString": "struct IncomeAssignment.Assignment memory"
-                        }
-                      },
-                      "id": 245,
-                      "isConstant": false,
-                      "isLValue": true,
-                      "isPure": false,
-                      "lValueRequested": false,
-                      "memberName": "buyer",
-                      "nodeType": "MemberAccess",
-                      "referencedDeclaration": 5,
-                      "src": "4168:17:0",
-                      "typeDescriptions": {
-                        "typeIdentifier": "t_address",
-                        "typeString": "address"
-                      }
-                    },
-                    "src": "4160:25:0",
-                    "typeDescriptions": {
-                      "typeIdentifier": "t_address",
-                      "typeString": "address"
-                    }
-                  },
-                  "id": 247,
-                  "nodeType": "ExpressionStatement",
-                  "src": "4160:25:0"
-                },
-                {
-                  "expression": {
-                    "argumentTypes": null,
-                    "id": 251,
-                    "isConstant": false,
-                    "isLValue": false,
-                    "isPure": false,
-                    "lValueRequested": false,
-                    "leftHandSide": {
-                      "argumentTypes": null,
-                      "id": 248,
-                      "name": "price",
-                      "nodeType": "Identifier",
-                      "overloadedDeclarations": [],
-                      "referencedDeclaration": 224,
-                      "src": "4191:5:0",
-                      "typeDescriptions": {
-                        "typeIdentifier": "t_uint256",
-                        "typeString": "uint256"
-                      }
-                    },
-                    "nodeType": "Assignment",
-                    "operator": "=",
-                    "rightHandSide": {
-                      "argumentTypes": null,
-                      "expression": {
-                        "argumentTypes": null,
-                        "id": 249,
-                        "name": "_assignment",
-                        "nodeType": "Identifier",
-                        "overloadedDeclarations": [],
-                        "referencedDeclaration": 231,
-                        "src": "4199:11:0",
-                        "typeDescriptions": {
-                          "typeIdentifier": "t_struct$_Assignment_$12_memory_ptr",
-                          "typeString": "struct IncomeAssignment.Assignment memory"
-                        }
-                      },
-                      "id": 250,
-                      "isConstant": false,
-                      "isLValue": true,
-                      "isPure": false,
-                      "lValueRequested": false,
-                      "memberName": "price",
-                      "nodeType": "MemberAccess",
-                      "referencedDeclaration": 7,
-                      "src": "4199:17:0",
-                      "typeDescriptions": {
-                        "typeIdentifier": "t_uint256",
-                        "typeString": "uint256"
-                      }
-                    },
-                    "src": "4191:25:0",
-                    "typeDescriptions": {
-                      "typeIdentifier": "t_uint256",
-                      "typeString": "uint256"
-                    }
-                  },
-                  "id": 252,
-                  "nodeType": "ExpressionStatement",
-                  "src": "4191:25:0"
-                },
-                {
-                  "expression": {
-                    "argumentTypes": null,
-                    "id": 256,
-                    "isConstant": false,
-                    "isLValue": false,
-                    "isPure": false,
-                    "lValueRequested": false,
-                    "leftHandSide": {
-                      "argumentTypes": null,
-                      "id": 253,
-                      "name": "numTransferred",
-                      "nodeType": "Identifier",
-                      "overloadedDeclarations": [],
-                      "referencedDeclaration": 226,
-                      "src": "4222:14:0",
-                      "typeDescriptions": {
-                        "typeIdentifier": "t_uint256",
-                        "typeString": "uint256"
-                      }
-                    },
-                    "nodeType": "Assignment",
-                    "operator": "=",
-                    "rightHandSide": {
-                      "argumentTypes": null,
-                      "expression": {
-                        "argumentTypes": null,
-                        "id": 254,
-                        "name": "_assignment",
-                        "nodeType": "Identifier",
-                        "overloadedDeclarations": [],
-                        "referencedDeclaration": 231,
-                        "src": "4239:11:0",
-                        "typeDescriptions": {
-                          "typeIdentifier": "t_struct$_Assignment_$12_memory_ptr",
-                          "typeString": "struct IncomeAssignment.Assignment memory"
-                        }
-                      },
-                      "id": 255,
-                      "isConstant": false,
-                      "isLValue": true,
-                      "isPure": false,
-                      "lValueRequested": false,
-                      "memberName": "numTransferred",
-                      "nodeType": "MemberAccess",
-                      "referencedDeclaration": 9,
-                      "src": "4239:26:0",
-                      "typeDescriptions": {
-                        "typeIdentifier": "t_uint256",
-                        "typeString": "uint256"
-                      }
-                    },
-                    "src": "4222:43:0",
-                    "typeDescriptions": {
-                      "typeIdentifier": "t_uint256",
-                      "typeString": "uint256"
-                    }
-                  },
-                  "id": 257,
-                  "nodeType": "ExpressionStatement",
-                  "src": "4222:43:0"
-                },
-                {
-                  "expression": {
-                    "argumentTypes": null,
-                    "id": 261,
-                    "isConstant": false,
-                    "isLValue": false,
-                    "isPure": false,
-                    "lValueRequested": false,
-                    "leftHandSide": {
-                      "argumentTypes": null,
-                      "id": 258,
-                      "name": "confirmed",
-                      "nodeType": "Identifier",
-                      "overloadedDeclarations": [],
-                      "referencedDeclaration": 228,
-                      "src": "4271:9:0",
-                      "typeDescriptions": {
-                        "typeIdentifier": "t_bool",
-                        "typeString": "bool"
-                      }
-                    },
-                    "nodeType": "Assignment",
-                    "operator": "=",
-                    "rightHandSide": {
-                      "argumentTypes": null,
-                      "expression": {
-                        "argumentTypes": null,
-                        "id": 259,
-                        "name": "_assignment",
-                        "nodeType": "Identifier",
-                        "overloadedDeclarations": [],
-                        "referencedDeclaration": 231,
-                        "src": "4283:11:0",
-                        "typeDescriptions": {
-                          "typeIdentifier": "t_struct$_Assignment_$12_memory_ptr",
-                          "typeString": "struct IncomeAssignment.Assignment memory"
-                        }
-                      },
-                      "id": 260,
-                      "isConstant": false,
-                      "isLValue": true,
-                      "isPure": false,
-                      "lValueRequested": false,
-                      "memberName": "confirmed",
-                      "nodeType": "MemberAccess",
-                      "referencedDeclaration": 11,
-                      "src": "4283:21:0",
-                      "typeDescriptions": {
-                        "typeIdentifier": "t_bool",
-                        "typeString": "bool"
-                      }
-                    },
-                    "src": "4271:33:0",
-                    "typeDescriptions": {
-                      "typeIdentifier": "t_bool",
-                      "typeString": "bool"
-                    }
-                  },
-                  "id": 262,
-                  "nodeType": "ExpressionStatement",
-                  "src": "4271:33:0"
-                }
-              ]
-            },
-            "documentation": "@notice getAssignment returns the details of an Assignment \n@param _contract - the address of the tokenized ERC20 income shares \n@param _assignmentNum - the particular Assignment's index for retrieval ",
-            "id": 264,
-            "implemented": true,
-            "kind": "function",
-            "modifiers": [],
-            "name": "getAssignment",
-            "nodeType": "FunctionDefinition",
-            "parameters": {
-              "id": 218,
-              "nodeType": "ParameterList",
-              "parameters": [
-                {
-                  "constant": false,
-                  "id": 215,
-                  "name": "_contract",
-                  "nodeType": "VariableDeclaration",
-                  "scope": 264,
-                  "src": "3870:17:0",
-                  "stateVariable": false,
-                  "storageLocation": "default",
-                  "typeDescriptions": {
-                    "typeIdentifier": "t_address",
-                    "typeString": "address"
-                  },
-                  "typeName": {
-                    "id": 214,
-                    "name": "address",
-                    "nodeType": "ElementaryTypeName",
-                    "src": "3870:7:0",
-                    "stateMutability": "nonpayable",
-                    "typeDescriptions": {
-                      "typeIdentifier": "t_address",
-                      "typeString": "address"
-                    }
-                  },
-                  "value": null,
-                  "visibility": "internal"
-                },
-                {
-                  "constant": false,
-                  "id": 217,
-                  "name": "_assignmentNum",
-                  "nodeType": "VariableDeclaration",
-                  "scope": 264,
-                  "src": "3889:19:0",
-                  "stateVariable": false,
-                  "storageLocation": "default",
-                  "typeDescriptions": {
-                    "typeIdentifier": "t_uint256",
-                    "typeString": "uint256"
-                  },
-                  "typeName": {
-                    "id": 216,
-                    "name": "uint",
-                    "nodeType": "ElementaryTypeName",
-                    "src": "3889:4:0",
-                    "typeDescriptions": {
-                      "typeIdentifier": "t_uint256",
-                      "typeString": "uint256"
-                    }
-                  },
-                  "value": null,
-                  "visibility": "internal"
-                }
-              ],
-              "src": "3869:40:0"
-            },
-            "returnParameters": {
-              "id": 229,
-              "nodeType": "ParameterList",
-              "parameters": [
-                {
-                  "constant": false,
-                  "id": 220,
-                  "name": "seller",
-                  "nodeType": "VariableDeclaration",
-                  "scope": 264,
-                  "src": "3938:14:0",
-                  "stateVariable": false,
-                  "storageLocation": "default",
-                  "typeDescriptions": {
-                    "typeIdentifier": "t_address",
-                    "typeString": "address"
-                  },
-                  "typeName": {
-                    "id": 219,
-                    "name": "address",
-                    "nodeType": "ElementaryTypeName",
-                    "src": "3938:7:0",
-                    "stateMutability": "nonpayable",
-                    "typeDescriptions": {
-                      "typeIdentifier": "t_address",
-                      "typeString": "address"
-                    }
-                  },
-                  "value": null,
-                  "visibility": "internal"
-                },
-                {
-                  "constant": false,
-                  "id": 222,
-                  "name": "buyer",
-                  "nodeType": "VariableDeclaration",
-                  "scope": 264,
-                  "src": "3958:13:0",
-                  "stateVariable": false,
-                  "storageLocation": "default",
-                  "typeDescriptions": {
-                    "typeIdentifier": "t_address",
-                    "typeString": "address"
-                  },
-                  "typeName": {
-                    "id": 221,
-                    "name": "address",
-                    "nodeType": "ElementaryTypeName",
-                    "src": "3958:7:0",
-                    "stateMutability": "nonpayable",
-                    "typeDescriptions": {
-                      "typeIdentifier": "t_address",
-                      "typeString": "address"
-                    }
-                  },
-                  "value": null,
-                  "visibility": "internal"
-                },
-                {
-                  "constant": false,
-                  "id": 224,
-                  "name": "price",
-                  "nodeType": "VariableDeclaration",
-                  "scope": 264,
-                  "src": "3977:10:0",
-                  "stateVariable": false,
-                  "storageLocation": "default",
-                  "typeDescriptions": {
-                    "typeIdentifier": "t_uint256",
-                    "typeString": "uint256"
-                  },
-                  "typeName": {
-                    "id": 223,
-                    "name": "uint",
-                    "nodeType": "ElementaryTypeName",
-                    "src": "3977:4:0",
-                    "typeDescriptions": {
-                      "typeIdentifier": "t_uint256",
-                      "typeString": "uint256"
-                    }
-                  },
-                  "value": null,
-                  "visibility": "internal"
-                },
-                {
-                  "constant": false,
-                  "id": 226,
-                  "name": "numTransferred",
-                  "nodeType": "VariableDeclaration",
-                  "scope": 264,
-                  "src": "3993:19:0",
-                  "stateVariable": false,
-                  "storageLocation": "default",
-                  "typeDescriptions": {
-                    "typeIdentifier": "t_uint256",
-                    "typeString": "uint256"
-                  },
-                  "typeName": {
-                    "id": 225,
-                    "name": "uint",
-                    "nodeType": "ElementaryTypeName",
-                    "src": "3993:4:0",
-                    "typeDescriptions": {
-                      "typeIdentifier": "t_uint256",
-                      "typeString": "uint256"
-                    }
-                  },
-                  "value": null,
-                  "visibility": "internal"
-                },
-                {
-                  "constant": false,
-                  "id": 228,
-                  "name": "confirmed",
-                  "nodeType": "VariableDeclaration",
-                  "scope": 264,
-                  "src": "4018:14:0",
-                  "stateVariable": false,
-                  "storageLocation": "default",
-                  "typeDescriptions": {
-                    "typeIdentifier": "t_bool",
-                    "typeString": "bool"
-                  },
-                  "typeName": {
-                    "id": 227,
-                    "name": "bool",
-                    "nodeType": "ElementaryTypeName",
-                    "src": "4018:4:0",
-                    "typeDescriptions": {
-                      "typeIdentifier": "t_bool",
-                      "typeString": "bool"
-                    }
-                  },
-                  "value": null,
-                  "visibility": "internal"
-                }
-              ],
-              "src": "3930:103:0"
-            },
-            "scope": 265,
-            "src": "3847:462:0",
             "stateMutability": "view",
             "superFunction": null,
             "visibility": "public"
@@ -7318,18 +6740,98 @@
                 {
                   "expression": {
                     "argumentTypes": null,
+                    "id": 127,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftHandSide": {
+                      "argumentTypes": null,
+                      "expression": {
+                        "argumentTypes": null,
+                        "id": 120,
+                        "name": "_assignment",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 113,
+                        "src": "2826:11:0",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_struct$_Assignment_$12_memory_ptr",
+                          "typeString": "struct IncomeAssignment.Assignment memory"
+                        }
+                      },
+                      "id": 122,
+                      "isConstant": false,
+                      "isLValue": true,
+                      "isPure": false,
+                      "lValueRequested": true,
+                      "memberName": "confirmed",
+                      "nodeType": "MemberAccess",
+                      "referencedDeclaration": 11,
+                      "src": "2826:21:0",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_bool",
+                        "typeString": "bool"
+                      }
+                    },
+                    "nodeType": "FunctionCall",
+                    "operator": "=",
+                    "rightHandSide": {
+                      "argumentTypes": null,
+                      "hexValue": "74727565",
+                      "id": 123,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": true,
+                      "kind": "bool",
+                      "lValueRequested": false,
+                      "nodeType": "Literal",
+                      "src": "2850:4:0",
+                      "subdenomination": null,
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_bool",
+                        "typeString": "bool"
+                      },
+                      "value": "true"
+                    },
+                    "src": "2408:69:0",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    },
                     "arguments": [
                       {
                         "argumentTypes": null,
-                        "commonType": {
-                          "typeIdentifier": "t_address",
-                          "typeString": "address"
+                        "expression": {
+                          "argumentTypes": null,
+                          "id": 123,
+                          "name": "_assignment",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 113,
+                          "src": "2847:11:0",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_struct$_Assignment_$12_memory_ptr",
+                            "typeString": "struct IncomeAssignment.Assignment memory"
+                          }
                         },
                         "id": 125,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": false,
                         "lValueRequested": false,
+                        "memberName": "seller",
+                        "nodeType": "BinaryOperation",
+                        "referencedDeclaration": 3,
+                        "src": "2417:32:0",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        },
+                        "commonType": {
+                          "typeIdentifier": "t_address",
+                          "typeString": "address"
+                        },
                         "leftExpression": {
                           "argumentTypes": null,
                           "expression": {
@@ -7359,7 +6861,6 @@
                             "typeString": "address payable"
                           }
                         },
-                        "nodeType": "BinaryOperation",
                         "operator": "==",
                         "rightExpression": {
                           "argumentTypes": null,
@@ -7389,30 +6890,69 @@
                             "typeIdentifier": "t_address",
                             "typeString": "address"
                           }
-                        },
-                        "src": "2417:32:0",
-                        "typeDescriptions": {
-                          "typeIdentifier": "t_bool",
-                          "typeString": "bool"
                         }
                       },
                       {
                         "argumentTypes": null,
-                        "hexValue": "6f6e6c792073656c6c65722063616e20636f6e6669726d",
+                        "expression": {
+                          "argumentTypes": null,
+                          "id": 125,
+                          "name": "_assignment",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 113,
+                          "src": "2867:11:0",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_struct$_Assignment_$12_memory_ptr",
+                            "typeString": "struct IncomeAssignment.Assignment memory"
+                          }
+                        },
                         "id": 126,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": true,
-                        "kind": "string",
                         "lValueRequested": false,
+                        "memberName": "buyer",
                         "nodeType": "Literal",
+                        "referencedDeclaration": 5,
                         "src": "2451:25:0",
-                        "subdenomination": null,
                         "typeDescriptions": {
                           "typeIdentifier": "t_stringliteral_ab07ebecb3935ac064e00d5b6d2713165085451fa9374c777a41e0b16dc544b7",
                           "typeString": "literal_string \"only seller can confirm\""
                         },
+                        "hexValue": "6f6e6c792073656c6c65722063616e20636f6e6669726d",
+                        "kind": "string",
+                        "subdenomination": null,
                         "value": "only seller can confirm"
+                      },
+                      {
+                        "argumentTypes": null,
+                        "expression": {
+                          "argumentTypes": null,
+                          "id": 127,
+                          "name": "_assignment",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 113,
+                          "src": "2886:11:0",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_struct$_Assignment_$12_memory_ptr",
+                            "typeString": "struct IncomeAssignment.Assignment memory"
+                          }
+                        },
+                        "id": 128,
+                        "isConstant": false,
+                        "isLValue": true,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "memberName": "numTransferred",
+                        "nodeType": "MemberAccess",
+                        "referencedDeclaration": 9,
+                        "src": "2886:26:0",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_uint256",
+                          "typeString": "uint256"
+                        }
                       }
                     ],
                     "expression": {
@@ -7424,35 +6964,46 @@
                         {
                           "typeIdentifier": "t_stringliteral_ab07ebecb3935ac064e00d5b6d2713165085451fa9374c777a41e0b16dc544b7",
                           "typeString": "literal_string \"only seller can confirm\""
+                        },
+                        {
+                          "typeIdentifier": "t_uint256",
+                          "typeString": "uint256"
                         }
                       ],
+                      "expression": {
+                        "argumentTypes": null,
+                        "id": 120,
+                        "name": "pcToken",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 99,
+                        "src": "2826:7:0",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_contract$_ProofClaim_$356",
+                          "typeString": "contract ProofClaim"
+                        }
+                      },
                       "id": 120,
-                      "name": "require",
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": false,
+                      "lValueRequested": false,
+                      "memberName": "transferFrom",
                       "nodeType": "Identifier",
-                      "overloadedDeclarations": [
-                        1162,
-                        1163
-                      ],
                       "referencedDeclaration": 1163,
                       "src": "2408:7:0",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_require_pure$_t_bool_$_t_string_memory_ptr_$returns$__$",
                         "typeString": "function (bool,string memory) pure"
-                      }
+                      },
+                      "name": "require",
+                      "overloadedDeclarations": [
+                        1162,
+                        1163
+                      ]
                     },
-                    "id": 127,
-                    "isConstant": false,
-                    "isLValue": false,
-                    "isPure": false,
                     "kind": "functionCall",
-                    "lValueRequested": false,
-                    "names": [],
-                    "nodeType": "FunctionCall",
-                    "src": "2408:69:0",
-                    "typeDescriptions": {
-                      "typeIdentifier": "t_tuple$__$",
-                      "typeString": "tuple()"
-                    }
+                    "names": []
                   },
                   "id": 128,
                   "nodeType": "ExpressionStatement",
@@ -7461,6 +7012,68 @@
                 {
                   "expression": {
                     "argumentTypes": null,
+                    "id": 135,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftHandSide": {
+                      "argumentTypes": null,
+                      "expression": {
+                        "argumentTypes": null,
+                        "id": 131,
+                        "name": "_assignment",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 113,
+                        "src": "2919:11:0",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_struct$_Assignment_$12_memory_ptr",
+                          "typeString": "struct IncomeAssignment.Assignment memory"
+                        }
+                      },
+                      "id": 133,
+                      "isConstant": false,
+                      "isLValue": true,
+                      "isPure": false,
+                      "lValueRequested": true,
+                      "memberName": "confirmed",
+                      "nodeType": "MemberAccess",
+                      "referencedDeclaration": 11,
+                      "src": "2919:21:0",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_bool",
+                        "typeString": "bool"
+                      }
+                    },
+                    "nodeType": "FunctionCall",
+                    "operator": "=",
+                    "rightHandSide": {
+                      "argumentTypes": null,
+                      "id": 134,
+                      "name": "sellerTokens",
+                      "nodeType": "Literal",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 105,
+                      "src": "2943:4:0",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_bool",
+                        "typeString": "bool"
+                      },
+                      "hexValue": "74727565",
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": true,
+                      "kind": "bool",
+                      "lValueRequested": false,
+                      "subdenomination": null,
+                      "value": "true"
+                    },
+                    "src": "2483:100:0",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    },
                     "arguments": [
                       {
                         "argumentTypes": null,
@@ -7567,19 +7180,8 @@
                         "typeString": "function (bool,string memory) pure"
                       }
                     },
-                    "id": 135,
-                    "isConstant": false,
-                    "isLValue": false,
-                    "isPure": false,
                     "kind": "functionCall",
-                    "lValueRequested": false,
-                    "names": [],
-                    "nodeType": "FunctionCall",
-                    "src": "2483:100:0",
-                    "typeDescriptions": {
-                      "typeIdentifier": "t_tuple$__$",
-                      "typeString": "tuple()"
-                    }
+                    "names": []
                   },
                   "id": 136,
                   "nodeType": "ExpressionStatement",
@@ -7588,6 +7190,113 @@
                 {
                   "expression": {
                     "argumentTypes": null,
+                    "id": 148,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftHandSide": {
+                      "argumentTypes": null,
+                      "baseExpression": {
+                        "argumentTypes": null,
+                        "baseExpression": {
+                          "argumentTypes": null,
+                          "id": 132,
+                          "name": "assignmentHistory",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 32,
+                          "src": "2957:17:0",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_mapping$_t_address_$_t_mapping$_t_uint256_$_t_struct$_Assignment_$12_storage_$_$",
+                            "typeString": "mapping(address => mapping(uint256 => struct IncomeAssignment.Assignment storage ref))"
+                          }
+                        },
+                        "id": 135,
+                        "indexExpression": {
+                          "argumentTypes": null,
+                          "id": 133,
+                          "name": "_contract",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 93,
+                          "src": "2975:9:0",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_address",
+                            "typeString": "address"
+                          }
+                        },
+                        "isConstant": false,
+                        "isLValue": true,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "nodeType": "IndexAccess",
+                        "src": "2957:28:0",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_Assignment_$12_storage_$",
+                          "typeString": "mapping(uint256 => struct IncomeAssignment.Assignment storage ref)"
+                        }
+                      },
+                      "id": 139,
+                      "indexExpression": {
+                        "argumentTypes": null,
+                        "id": 134,
+                        "name": "_assignmentNum",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 95,
+                        "src": "2986:14:0",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_uint256",
+                          "typeString": "uint256"
+                        }
+                      },
+                      "isConstant": false,
+                      "isLValue": true,
+                      "isPure": false,
+                      "lValueRequested": true,
+                      "nodeType": "MemberAccess",
+                      "src": "2953:26:0",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_uint256",
+                        "typeString": "uint256"
+                      },
+                      "expression": {
+                        "argumentTypes": null,
+                        "id": 137,
+                        "name": "_assignment",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 113,
+                        "src": "2953:11:0",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_struct$_Assignment_$12_memory_ptr",
+                          "typeString": "struct IncomeAssignment.Assignment memory"
+                        }
+                      },
+                      "memberName": "numTransferred",
+                      "referencedDeclaration": 9
+                    },
+                    "nodeType": "FunctionCall",
+                    "operator": "=",
+                    "rightHandSide": {
+                      "argumentTypes": null,
+                      "id": 140,
+                      "name": "sellerTokens",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 105,
+                      "src": "2982:12:0",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_uint256",
+                        "typeString": "uint256"
+                      }
+                    },
+                    "src": "2686:121:0",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    },
                     "arguments": [
                       {
                         "argumentTypes": null,
@@ -7780,19 +7489,8 @@
                         "typeString": "function (bool,string memory) pure"
                       }
                     },
-                    "id": 148,
-                    "isConstant": false,
-                    "isLValue": false,
-                    "isPure": false,
                     "kind": "functionCall",
-                    "lValueRequested": false,
-                    "names": [],
-                    "nodeType": "FunctionCall",
-                    "src": "2686:121:0",
-                    "typeDescriptions": {
-                      "typeIdentifier": "t_tuple$__$",
-                      "typeString": "tuple()"
-                    }
+                    "names": []
                   },
                   "id": 149,
                   "nodeType": "ExpressionStatement",
@@ -7808,6 +7506,70 @@
                     "lValueRequested": false,
                     "leftHandSide": {
                       "argumentTypes": null,
+                      "baseExpression": {
+                        "argumentTypes": null,
+                        "baseExpression": {
+                          "argumentTypes": null,
+                          "id": 143,
+                          "name": "assignmentHistory",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 32,
+                          "src": "3050:17:0",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_mapping$_t_address_$_t_mapping$_t_uint256_$_t_struct$_Assignment_$12_storage_$_$",
+                            "typeString": "mapping(address => mapping(uint256 => struct IncomeAssignment.Assignment storage ref))"
+                          }
+                        },
+                        "id": 146,
+                        "indexExpression": {
+                          "argumentTypes": null,
+                          "id": 144,
+                          "name": "_contract",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 93,
+                          "src": "3068:9:0",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_address",
+                            "typeString": "address"
+                          }
+                        },
+                        "isConstant": false,
+                        "isLValue": true,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "nodeType": "IndexAccess",
+                        "src": "3050:28:0",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_Assignment_$12_storage_$",
+                          "typeString": "mapping(uint256 => struct IncomeAssignment.Assignment storage ref)"
+                        }
+                      },
+                      "id": 152,
+                      "indexExpression": {
+                        "argumentTypes": null,
+                        "id": 145,
+                        "name": "_assignmentNum",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 95,
+                        "src": "3079:14:0",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_uint256",
+                          "typeString": "uint256"
+                        }
+                      },
+                      "isConstant": false,
+                      "isLValue": true,
+                      "isPure": false,
+                      "lValueRequested": true,
+                      "nodeType": "MemberAccess",
+                      "src": "2814:21:0",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_bool",
+                        "typeString": "bool"
+                      },
                       "expression": {
                         "argumentTypes": null,
                         "id": 150,
@@ -7821,38 +7583,30 @@
                           "typeString": "struct IncomeAssignment.Assignment memory"
                         }
                       },
-                      "id": 152,
-                      "isConstant": false,
-                      "isLValue": true,
-                      "isPure": false,
-                      "lValueRequested": true,
                       "memberName": "confirmed",
-                      "nodeType": "MemberAccess",
-                      "referencedDeclaration": 11,
-                      "src": "2814:21:0",
-                      "typeDescriptions": {
-                        "typeIdentifier": "t_bool",
-                        "typeString": "bool"
-                      }
+                      "referencedDeclaration": 11
                     },
                     "nodeType": "Assignment",
                     "operator": "=",
                     "rightHandSide": {
                       "argumentTypes": null,
-                      "hexValue": "74727565",
                       "id": 153,
+                      "name": "_assignment",
+                      "nodeType": "Literal",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 113,
+                      "src": "2838:4:0",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_bool",
+                        "typeString": "bool"
+                      },
+                      "hexValue": "74727565",
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": true,
                       "kind": "bool",
                       "lValueRequested": false,
-                      "nodeType": "Literal",
-                      "src": "2838:4:0",
                       "subdenomination": null,
-                      "typeDescriptions": {
-                        "typeIdentifier": "t_bool",
-                        "typeString": "bool"
-                      },
                       "value": "true"
                     },
                     "src": "2814:28:0",
@@ -8187,50 +7941,6 @@
               "src": "3342:429:0",
               "statements": [
                 {
-                  "expression": {
-                    "argumentTypes": null,
-                    "baseExpression": {
-                      "argumentTypes": null,
-                      "id": 184,
-                      "name": "currAssignment",
-                      "nodeType": "Identifier",
-                      "overloadedDeclarations": [],
-                      "referencedDeclaration": 36,
-                      "src": "3342:14:0",
-                      "typeDescriptions": {
-                        "typeIdentifier": "t_mapping$_t_address_$_t_uint256_$",
-                        "typeString": "mapping(address => uint256)"
-                      }
-                    },
-                    "id": 186,
-                    "indexExpression": {
-                      "argumentTypes": null,
-                      "id": 185,
-                      "name": "_contract",
-                      "nodeType": "Identifier",
-                      "overloadedDeclarations": [],
-                      "referencedDeclaration": 179,
-                      "src": "3357:9:0",
-                      "typeDescriptions": {
-                        "typeIdentifier": "t_address",
-                        "typeString": "address"
-                      }
-                    },
-                    "isConstant": false,
-                    "isLValue": true,
-                    "isPure": false,
-                    "lValueRequested": false,
-                    "nodeType": "IndexAccess",
-                    "src": "3342:25:0",
-                    "typeDescriptions": {
-                      "typeIdentifier": "t_uint256",
-                      "typeString": "uint256"
-                    }
-                  },
-                  "functionReturnParameters": 183,
-                  "id": 190,
-                  "nodeType": "VariableDeclarationStatement",
-                  "src": "3348:47:0",
                   "assignments": [
                     186
                   ],
@@ -8262,6 +7972,7 @@
                       "visibility": "internal"
                     }
                   ],
+                  "id": 190,
                   "initialValue": {
                     "argumentTypes": null,
                     "baseExpression": {
@@ -8301,7 +8012,9 @@
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
                     }
-                  }
+                  },
+                  "nodeType": "VariableDeclarationStatement",
+                  "src": "3348:47:0"
                 },
                 {
                   "assignments": [
@@ -9092,14 +8805,6 @@
                     "typeString": "uint256[]"
                   },
                   "typeName": {
-                    "id": 182,
-                    "name": "uint",
-                    "nodeType": "ArrayTypeName",
-                    "src": "3328:6:0",
-                    "typeDescriptions": {
-                      "typeIdentifier": "t_array$_t_uint256_$dyn_storage_ptr",
-                      "typeString": "uint256[]"
-                    },
                     "baseType": {
                       "id": 181,
                       "name": "uint",
@@ -9110,7 +8815,14 @@
                         "typeString": "uint256"
                       }
                     },
-                    "length": null
+                    "id": 182,
+                    "length": null,
+                    "nodeType": "ArrayTypeName",
+                    "src": "3328:6:0",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_array$_t_uint256_$dyn_storage_ptr",
+                      "typeString": "uint256[]"
+                    }
                   },
                   "value": null,
                   "visibility": "internal"
@@ -9131,50 +8843,6 @@
               "src": "4189:275:0",
               "statements": [
                 {
-                  "expression": {
-                    "argumentTypes": null,
-                    "baseExpression": {
-                      "argumentTypes": null,
-                      "id": 196,
-                      "name": "currAssignment",
-                      "nodeType": "Identifier",
-                      "overloadedDeclarations": [],
-                      "referencedDeclaration": 36,
-                      "src": "3468:14:0",
-                      "typeDescriptions": {
-                        "typeIdentifier": "t_mapping$_t_address_$_t_uint256_$",
-                        "typeString": "mapping(address => uint256)"
-                      }
-                    },
-                    "id": 198,
-                    "indexExpression": {
-                      "argumentTypes": null,
-                      "id": 197,
-                      "name": "_contract",
-                      "nodeType": "Identifier",
-                      "overloadedDeclarations": [],
-                      "referencedDeclaration": 191,
-                      "src": "3483:9:0",
-                      "typeDescriptions": {
-                        "typeIdentifier": "t_address",
-                        "typeString": "address"
-                      }
-                    },
-                    "isConstant": false,
-                    "isLValue": true,
-                    "isPure": false,
-                    "lValueRequested": false,
-                    "nodeType": "IndexAccess",
-                    "src": "3468:25:0",
-                    "typeDescriptions": {
-                      "typeIdentifier": "t_uint256",
-                      "typeString": "uint256"
-                    }
-                  },
-                  "functionReturnParameters": 195,
-                  "id": 274,
-                  "nodeType": "VariableDeclarationStatement",
-                  "src": "4200:76:0",
                   "assignments": [
                     268
                   ],
@@ -9208,6 +8876,7 @@
                       "visibility": "internal"
                     }
                   ],
+                  "id": 274,
                   "initialValue": {
                     "argumentTypes": null,
                     "baseExpression": {
@@ -9274,7 +8943,9 @@
                       "typeIdentifier": "t_struct$_Assignment_$12_storage",
                       "typeString": "struct IncomeAssignment.Assignment storage ref"
                     }
-                  }
+                  },
+                  "nodeType": "VariableDeclarationStatement",
+                  "src": "4200:76:0"
                 },
                 {
                   "expression": {
@@ -9677,11 +9348,11 @@
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "4093:7:0",
+                    "stateMutability": "nonpayable",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
                       "typeString": "address"
-                    },
-                    "stateMutability": "nonpayable"
+                    }
                   },
                   "value": null,
                   "visibility": "internal"
@@ -9796,775 +9467,6 @@
             },
             "scope": 302,
             "src": "4002:462:0",
-            "stateMutability": "view",
-            "superFunction": null,
-            "visibility": "public"
-          },
-          {
-            "body": {
-              "id": 212,
-              "nodeType": "Block",
-              "src": "3573:43:0",
-              "statements": [
-                {
-                  "expression": {
-                    "argumentTypes": null,
-                    "baseExpression": {
-                      "argumentTypes": null,
-                      "id": 208,
-                      "name": "currAssignment",
-                      "nodeType": "Identifier",
-                      "overloadedDeclarations": [],
-                      "referencedDeclaration": 36,
-                      "src": "3586:14:0",
-                      "typeDescriptions": {
-                        "typeIdentifier": "t_mapping$_t_address_$_t_uint256_$",
-                        "typeString": "mapping(address => uint256)"
-                      }
-                    },
-                    "id": 210,
-                    "indexExpression": {
-                      "argumentTypes": null,
-                      "id": 209,
-                      "name": "_contract",
-                      "nodeType": "Identifier",
-                      "overloadedDeclarations": [],
-                      "referencedDeclaration": 203,
-                      "src": "3601:9:0",
-                      "typeDescriptions": {
-                        "typeIdentifier": "t_address",
-                        "typeString": "address"
-                      }
-                    },
-                    "isConstant": false,
-                    "isLValue": true,
-                    "isPure": false,
-                    "lValueRequested": false,
-                    "nodeType": "IndexAccess",
-                    "src": "3586:25:0",
-                    "typeDescriptions": {
-                      "typeIdentifier": "t_uint256",
-                      "typeString": "uint256"
-                    }
-                  },
-                  "functionReturnParameters": 207,
-                  "id": 211,
-                  "nodeType": "Return",
-                  "src": "3579:32:0"
-                }
-              ]
-            },
-            "documentation": null,
-            "id": 213,
-            "implemented": true,
-            "kind": "function",
-            "modifiers": [],
-            "name": "getAssignmentNos",
-            "nodeType": "FunctionDefinition",
-            "parameters": {
-              "id": 204,
-              "nodeType": "ParameterList",
-              "parameters": [
-                {
-                  "constant": false,
-                  "id": 203,
-                  "name": "_contract",
-                  "nodeType": "VariableDeclaration",
-                  "scope": 213,
-                  "src": "3528:17:0",
-                  "stateVariable": false,
-                  "storageLocation": "default",
-                  "typeDescriptions": {
-                    "typeIdentifier": "t_address",
-                    "typeString": "address"
-                  },
-                  "typeName": {
-                    "id": 202,
-                    "name": "address",
-                    "nodeType": "ElementaryTypeName",
-                    "src": "3528:7:0",
-                    "stateMutability": "nonpayable",
-                    "typeDescriptions": {
-                      "typeIdentifier": "t_address",
-                      "typeString": "address"
-                    }
-                  },
-                  "value": null,
-                  "visibility": "internal"
-                }
-              ],
-              "src": "3527:19:0"
-            },
-            "returnParameters": {
-              "id": 207,
-              "nodeType": "ParameterList",
-              "parameters": [
-                {
-                  "constant": false,
-                  "id": 206,
-                  "name": "",
-                  "nodeType": "VariableDeclaration",
-                  "scope": 213,
-                  "src": "3568:4:0",
-                  "stateVariable": false,
-                  "storageLocation": "default",
-                  "typeDescriptions": {
-                    "typeIdentifier": "t_uint256",
-                    "typeString": "uint256"
-                  },
-                  "typeName": {
-                    "id": 205,
-                    "name": "uint",
-                    "nodeType": "ElementaryTypeName",
-                    "src": "3568:4:0",
-                    "typeDescriptions": {
-                      "typeIdentifier": "t_uint256",
-                      "typeString": "uint256"
-                    }
-                  },
-                  "value": null,
-                  "visibility": "internal"
-                }
-              ],
-              "src": "3567:6:0"
-            },
-            "scope": 265,
-            "src": "3502:114:0",
-            "stateMutability": "view",
-            "superFunction": null,
-            "visibility": "public"
-          },
-          {
-            "body": {
-              "id": 263,
-              "nodeType": "Block",
-              "src": "4034:275:0",
-              "statements": [
-                {
-                  "assignments": [
-                    231
-                  ],
-                  "declarations": [
-                    {
-                      "constant": false,
-                      "id": 231,
-                      "name": "_assignment",
-                      "nodeType": "VariableDeclaration",
-                      "scope": 263,
-                      "src": "4045:29:0",
-                      "stateVariable": false,
-                      "storageLocation": "memory",
-                      "typeDescriptions": {
-                        "typeIdentifier": "t_struct$_Assignment_$12_memory_ptr",
-                        "typeString": "struct IncomeAssignment.Assignment"
-                      },
-                      "typeName": {
-                        "contractScope": null,
-                        "id": 230,
-                        "name": "Assignment",
-                        "nodeType": "UserDefinedTypeName",
-                        "referencedDeclaration": 12,
-                        "src": "4045:10:0",
-                        "typeDescriptions": {
-                          "typeIdentifier": "t_struct$_Assignment_$12_storage_ptr",
-                          "typeString": "struct IncomeAssignment.Assignment"
-                        }
-                      },
-                      "value": null,
-                      "visibility": "internal"
-                    }
-                  ],
-                  "id": 237,
-                  "initialValue": {
-                    "argumentTypes": null,
-                    "baseExpression": {
-                      "argumentTypes": null,
-                      "baseExpression": {
-                        "argumentTypes": null,
-                        "id": 232,
-                        "name": "assignmentHistory",
-                        "nodeType": "Identifier",
-                        "overloadedDeclarations": [],
-                        "referencedDeclaration": 32,
-                        "src": "4077:17:0",
-                        "typeDescriptions": {
-                          "typeIdentifier": "t_mapping$_t_address_$_t_mapping$_t_uint256_$_t_struct$_Assignment_$12_storage_$_$",
-                          "typeString": "mapping(address => mapping(uint256 => struct IncomeAssignment.Assignment storage ref))"
-                        }
-                      },
-                      "id": 234,
-                      "indexExpression": {
-                        "argumentTypes": null,
-                        "id": 233,
-                        "name": "_contract",
-                        "nodeType": "Identifier",
-                        "overloadedDeclarations": [],
-                        "referencedDeclaration": 215,
-                        "src": "4095:9:0",
-                        "typeDescriptions": {
-                          "typeIdentifier": "t_address",
-                          "typeString": "address"
-                        }
-                      },
-                      "isConstant": false,
-                      "isLValue": true,
-                      "isPure": false,
-                      "lValueRequested": false,
-                      "nodeType": "IndexAccess",
-                      "src": "4077:28:0",
-                      "typeDescriptions": {
-                        "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_Assignment_$12_storage_$",
-                        "typeString": "mapping(uint256 => struct IncomeAssignment.Assignment storage ref)"
-                      }
-                    },
-                    "id": 236,
-                    "indexExpression": {
-                      "argumentTypes": null,
-                      "id": 235,
-                      "name": "_assignmentNum",
-                      "nodeType": "Identifier",
-                      "overloadedDeclarations": [],
-                      "referencedDeclaration": 217,
-                      "src": "4106:14:0",
-                      "typeDescriptions": {
-                        "typeIdentifier": "t_uint256",
-                        "typeString": "uint256"
-                      }
-                    },
-                    "isConstant": false,
-                    "isLValue": true,
-                    "isPure": false,
-                    "lValueRequested": false,
-                    "nodeType": "IndexAccess",
-                    "src": "4077:44:0",
-                    "typeDescriptions": {
-                      "typeIdentifier": "t_struct$_Assignment_$12_storage",
-                      "typeString": "struct IncomeAssignment.Assignment storage ref"
-                    }
-                  },
-                  "nodeType": "VariableDeclarationStatement",
-                  "src": "4045:76:0"
-                },
-                {
-                  "expression": {
-                    "argumentTypes": null,
-                    "id": 241,
-                    "isConstant": false,
-                    "isLValue": false,
-                    "isPure": false,
-                    "lValueRequested": false,
-                    "leftHandSide": {
-                      "argumentTypes": null,
-                      "id": 238,
-                      "name": "seller",
-                      "nodeType": "Identifier",
-                      "overloadedDeclarations": [],
-                      "referencedDeclaration": 220,
-                      "src": "4127:6:0",
-                      "typeDescriptions": {
-                        "typeIdentifier": "t_address",
-                        "typeString": "address"
-                      }
-                    },
-                    "nodeType": "Assignment",
-                    "operator": "=",
-                    "rightHandSide": {
-                      "argumentTypes": null,
-                      "expression": {
-                        "argumentTypes": null,
-                        "id": 239,
-                        "name": "_assignment",
-                        "nodeType": "Identifier",
-                        "overloadedDeclarations": [],
-                        "referencedDeclaration": 231,
-                        "src": "4136:11:0",
-                        "typeDescriptions": {
-                          "typeIdentifier": "t_struct$_Assignment_$12_memory_ptr",
-                          "typeString": "struct IncomeAssignment.Assignment memory"
-                        }
-                      },
-                      "id": 240,
-                      "isConstant": false,
-                      "isLValue": true,
-                      "isPure": false,
-                      "lValueRequested": false,
-                      "memberName": "seller",
-                      "nodeType": "MemberAccess",
-                      "referencedDeclaration": 3,
-                      "src": "4136:18:0",
-                      "typeDescriptions": {
-                        "typeIdentifier": "t_address",
-                        "typeString": "address"
-                      }
-                    },
-                    "src": "4127:27:0",
-                    "typeDescriptions": {
-                      "typeIdentifier": "t_address",
-                      "typeString": "address"
-                    }
-                  },
-                  "id": 242,
-                  "nodeType": "ExpressionStatement",
-                  "src": "4127:27:0"
-                },
-                {
-                  "expression": {
-                    "argumentTypes": null,
-                    "id": 246,
-                    "isConstant": false,
-                    "isLValue": false,
-                    "isPure": false,
-                    "lValueRequested": false,
-                    "leftHandSide": {
-                      "argumentTypes": null,
-                      "id": 243,
-                      "name": "buyer",
-                      "nodeType": "Identifier",
-                      "overloadedDeclarations": [],
-                      "referencedDeclaration": 222,
-                      "src": "4160:5:0",
-                      "typeDescriptions": {
-                        "typeIdentifier": "t_address",
-                        "typeString": "address"
-                      }
-                    },
-                    "nodeType": "Assignment",
-                    "operator": "=",
-                    "rightHandSide": {
-                      "argumentTypes": null,
-                      "expression": {
-                        "argumentTypes": null,
-                        "id": 244,
-                        "name": "_assignment",
-                        "nodeType": "Identifier",
-                        "overloadedDeclarations": [],
-                        "referencedDeclaration": 231,
-                        "src": "4168:11:0",
-                        "typeDescriptions": {
-                          "typeIdentifier": "t_struct$_Assignment_$12_memory_ptr",
-                          "typeString": "struct IncomeAssignment.Assignment memory"
-                        }
-                      },
-                      "id": 245,
-                      "isConstant": false,
-                      "isLValue": true,
-                      "isPure": false,
-                      "lValueRequested": false,
-                      "memberName": "buyer",
-                      "nodeType": "MemberAccess",
-                      "referencedDeclaration": 5,
-                      "src": "4168:17:0",
-                      "typeDescriptions": {
-                        "typeIdentifier": "t_address",
-                        "typeString": "address"
-                      }
-                    },
-                    "src": "4160:25:0",
-                    "typeDescriptions": {
-                      "typeIdentifier": "t_address",
-                      "typeString": "address"
-                    }
-                  },
-                  "id": 247,
-                  "nodeType": "ExpressionStatement",
-                  "src": "4160:25:0"
-                },
-                {
-                  "expression": {
-                    "argumentTypes": null,
-                    "id": 251,
-                    "isConstant": false,
-                    "isLValue": false,
-                    "isPure": false,
-                    "lValueRequested": false,
-                    "leftHandSide": {
-                      "argumentTypes": null,
-                      "id": 248,
-                      "name": "price",
-                      "nodeType": "Identifier",
-                      "overloadedDeclarations": [],
-                      "referencedDeclaration": 224,
-                      "src": "4191:5:0",
-                      "typeDescriptions": {
-                        "typeIdentifier": "t_uint256",
-                        "typeString": "uint256"
-                      }
-                    },
-                    "nodeType": "Assignment",
-                    "operator": "=",
-                    "rightHandSide": {
-                      "argumentTypes": null,
-                      "expression": {
-                        "argumentTypes": null,
-                        "id": 249,
-                        "name": "_assignment",
-                        "nodeType": "Identifier",
-                        "overloadedDeclarations": [],
-                        "referencedDeclaration": 231,
-                        "src": "4199:11:0",
-                        "typeDescriptions": {
-                          "typeIdentifier": "t_struct$_Assignment_$12_memory_ptr",
-                          "typeString": "struct IncomeAssignment.Assignment memory"
-                        }
-                      },
-                      "id": 250,
-                      "isConstant": false,
-                      "isLValue": true,
-                      "isPure": false,
-                      "lValueRequested": false,
-                      "memberName": "price",
-                      "nodeType": "MemberAccess",
-                      "referencedDeclaration": 7,
-                      "src": "4199:17:0",
-                      "typeDescriptions": {
-                        "typeIdentifier": "t_uint256",
-                        "typeString": "uint256"
-                      }
-                    },
-                    "src": "4191:25:0",
-                    "typeDescriptions": {
-                      "typeIdentifier": "t_uint256",
-                      "typeString": "uint256"
-                    }
-                  },
-                  "id": 252,
-                  "nodeType": "ExpressionStatement",
-                  "src": "4191:25:0"
-                },
-                {
-                  "expression": {
-                    "argumentTypes": null,
-                    "id": 256,
-                    "isConstant": false,
-                    "isLValue": false,
-                    "isPure": false,
-                    "lValueRequested": false,
-                    "leftHandSide": {
-                      "argumentTypes": null,
-                      "id": 253,
-                      "name": "numTransferred",
-                      "nodeType": "Identifier",
-                      "overloadedDeclarations": [],
-                      "referencedDeclaration": 226,
-                      "src": "4222:14:0",
-                      "typeDescriptions": {
-                        "typeIdentifier": "t_uint256",
-                        "typeString": "uint256"
-                      }
-                    },
-                    "nodeType": "Assignment",
-                    "operator": "=",
-                    "rightHandSide": {
-                      "argumentTypes": null,
-                      "expression": {
-                        "argumentTypes": null,
-                        "id": 254,
-                        "name": "_assignment",
-                        "nodeType": "Identifier",
-                        "overloadedDeclarations": [],
-                        "referencedDeclaration": 231,
-                        "src": "4239:11:0",
-                        "typeDescriptions": {
-                          "typeIdentifier": "t_struct$_Assignment_$12_memory_ptr",
-                          "typeString": "struct IncomeAssignment.Assignment memory"
-                        }
-                      },
-                      "id": 255,
-                      "isConstant": false,
-                      "isLValue": true,
-                      "isPure": false,
-                      "lValueRequested": false,
-                      "memberName": "numTransferred",
-                      "nodeType": "MemberAccess",
-                      "referencedDeclaration": 9,
-                      "src": "4239:26:0",
-                      "typeDescriptions": {
-                        "typeIdentifier": "t_uint256",
-                        "typeString": "uint256"
-                      }
-                    },
-                    "src": "4222:43:0",
-                    "typeDescriptions": {
-                      "typeIdentifier": "t_uint256",
-                      "typeString": "uint256"
-                    }
-                  },
-                  "id": 257,
-                  "nodeType": "ExpressionStatement",
-                  "src": "4222:43:0"
-                },
-                {
-                  "expression": {
-                    "argumentTypes": null,
-                    "id": 261,
-                    "isConstant": false,
-                    "isLValue": false,
-                    "isPure": false,
-                    "lValueRequested": false,
-                    "leftHandSide": {
-                      "argumentTypes": null,
-                      "id": 258,
-                      "name": "confirmed",
-                      "nodeType": "Identifier",
-                      "overloadedDeclarations": [],
-                      "referencedDeclaration": 228,
-                      "src": "4271:9:0",
-                      "typeDescriptions": {
-                        "typeIdentifier": "t_bool",
-                        "typeString": "bool"
-                      }
-                    },
-                    "nodeType": "Assignment",
-                    "operator": "=",
-                    "rightHandSide": {
-                      "argumentTypes": null,
-                      "expression": {
-                        "argumentTypes": null,
-                        "id": 259,
-                        "name": "_assignment",
-                        "nodeType": "Identifier",
-                        "overloadedDeclarations": [],
-                        "referencedDeclaration": 231,
-                        "src": "4283:11:0",
-                        "typeDescriptions": {
-                          "typeIdentifier": "t_struct$_Assignment_$12_memory_ptr",
-                          "typeString": "struct IncomeAssignment.Assignment memory"
-                        }
-                      },
-                      "id": 260,
-                      "isConstant": false,
-                      "isLValue": true,
-                      "isPure": false,
-                      "lValueRequested": false,
-                      "memberName": "confirmed",
-                      "nodeType": "MemberAccess",
-                      "referencedDeclaration": 11,
-                      "src": "4283:21:0",
-                      "typeDescriptions": {
-                        "typeIdentifier": "t_bool",
-                        "typeString": "bool"
-                      }
-                    },
-                    "src": "4271:33:0",
-                    "typeDescriptions": {
-                      "typeIdentifier": "t_bool",
-                      "typeString": "bool"
-                    }
-                  },
-                  "id": 262,
-                  "nodeType": "ExpressionStatement",
-                  "src": "4271:33:0"
-                }
-              ]
-            },
-            "documentation": "@notice getAssignment returns the details of an Assignment \n@param _contract - the address of the tokenized ERC20 income shares \n@param _assignmentNum - the particular Assignment's index for retrieval ",
-            "id": 264,
-            "implemented": true,
-            "kind": "function",
-            "modifiers": [],
-            "name": "getAssignment",
-            "nodeType": "FunctionDefinition",
-            "parameters": {
-              "id": 218,
-              "nodeType": "ParameterList",
-              "parameters": [
-                {
-                  "constant": false,
-                  "id": 215,
-                  "name": "_contract",
-                  "nodeType": "VariableDeclaration",
-                  "scope": 264,
-                  "src": "3870:17:0",
-                  "stateVariable": false,
-                  "storageLocation": "default",
-                  "typeDescriptions": {
-                    "typeIdentifier": "t_address",
-                    "typeString": "address"
-                  },
-                  "typeName": {
-                    "id": 214,
-                    "name": "address",
-                    "nodeType": "ElementaryTypeName",
-                    "src": "3870:7:0",
-                    "stateMutability": "nonpayable",
-                    "typeDescriptions": {
-                      "typeIdentifier": "t_address",
-                      "typeString": "address"
-                    }
-                  },
-                  "value": null,
-                  "visibility": "internal"
-                },
-                {
-                  "constant": false,
-                  "id": 217,
-                  "name": "_assignmentNum",
-                  "nodeType": "VariableDeclaration",
-                  "scope": 264,
-                  "src": "3889:19:0",
-                  "stateVariable": false,
-                  "storageLocation": "default",
-                  "typeDescriptions": {
-                    "typeIdentifier": "t_uint256",
-                    "typeString": "uint256"
-                  },
-                  "typeName": {
-                    "id": 216,
-                    "name": "uint",
-                    "nodeType": "ElementaryTypeName",
-                    "src": "3889:4:0",
-                    "typeDescriptions": {
-                      "typeIdentifier": "t_uint256",
-                      "typeString": "uint256"
-                    }
-                  },
-                  "value": null,
-                  "visibility": "internal"
-                }
-              ],
-              "src": "3869:40:0"
-            },
-            "returnParameters": {
-              "id": 229,
-              "nodeType": "ParameterList",
-              "parameters": [
-                {
-                  "constant": false,
-                  "id": 220,
-                  "name": "seller",
-                  "nodeType": "VariableDeclaration",
-                  "scope": 264,
-                  "src": "3938:14:0",
-                  "stateVariable": false,
-                  "storageLocation": "default",
-                  "typeDescriptions": {
-                    "typeIdentifier": "t_address",
-                    "typeString": "address"
-                  },
-                  "typeName": {
-                    "id": 219,
-                    "name": "address",
-                    "nodeType": "ElementaryTypeName",
-                    "src": "3938:7:0",
-                    "stateMutability": "nonpayable",
-                    "typeDescriptions": {
-                      "typeIdentifier": "t_address",
-                      "typeString": "address"
-                    }
-                  },
-                  "value": null,
-                  "visibility": "internal"
-                },
-                {
-                  "constant": false,
-                  "id": 222,
-                  "name": "buyer",
-                  "nodeType": "VariableDeclaration",
-                  "scope": 264,
-                  "src": "3958:13:0",
-                  "stateVariable": false,
-                  "storageLocation": "default",
-                  "typeDescriptions": {
-                    "typeIdentifier": "t_address",
-                    "typeString": "address"
-                  },
-                  "typeName": {
-                    "id": 221,
-                    "name": "address",
-                    "nodeType": "ElementaryTypeName",
-                    "src": "3958:7:0",
-                    "stateMutability": "nonpayable",
-                    "typeDescriptions": {
-                      "typeIdentifier": "t_address",
-                      "typeString": "address"
-                    }
-                  },
-                  "value": null,
-                  "visibility": "internal"
-                },
-                {
-                  "constant": false,
-                  "id": 224,
-                  "name": "price",
-                  "nodeType": "VariableDeclaration",
-                  "scope": 264,
-                  "src": "3977:10:0",
-                  "stateVariable": false,
-                  "storageLocation": "default",
-                  "typeDescriptions": {
-                    "typeIdentifier": "t_uint256",
-                    "typeString": "uint256"
-                  },
-                  "typeName": {
-                    "id": 223,
-                    "name": "uint",
-                    "nodeType": "ElementaryTypeName",
-                    "src": "3977:4:0",
-                    "typeDescriptions": {
-                      "typeIdentifier": "t_uint256",
-                      "typeString": "uint256"
-                    }
-                  },
-                  "value": null,
-                  "visibility": "internal"
-                },
-                {
-                  "constant": false,
-                  "id": 226,
-                  "name": "numTransferred",
-                  "nodeType": "VariableDeclaration",
-                  "scope": 264,
-                  "src": "3993:19:0",
-                  "stateVariable": false,
-                  "storageLocation": "default",
-                  "typeDescriptions": {
-                    "typeIdentifier": "t_uint256",
-                    "typeString": "uint256"
-                  },
-                  "typeName": {
-                    "id": 225,
-                    "name": "uint",
-                    "nodeType": "ElementaryTypeName",
-                    "src": "3993:4:0",
-                    "typeDescriptions": {
-                      "typeIdentifier": "t_uint256",
-                      "typeString": "uint256"
-                    }
-                  },
-                  "value": null,
-                  "visibility": "internal"
-                },
-                {
-                  "constant": false,
-                  "id": 228,
-                  "name": "confirmed",
-                  "nodeType": "VariableDeclaration",
-                  "scope": 264,
-                  "src": "4018:14:0",
-                  "stateVariable": false,
-                  "storageLocation": "default",
-                  "typeDescriptions": {
-                    "typeIdentifier": "t_bool",
-                    "typeString": "bool"
-                  },
-                  "typeName": {
-                    "id": 227,
-                    "name": "bool",
-                    "nodeType": "ElementaryTypeName",
-                    "src": "4018:4:0",
-                    "typeDescriptions": {
-                      "typeIdentifier": "t_bool",
-                      "typeString": "bool"
-                    }
-                  },
-                  "value": null,
-                  "visibility": "internal"
-                }
-              ],
-              "src": "3930:103:0"
-            },
-            "scope": 265,
-            "src": "3847:462:0",
             "stateMutability": "view",
             "superFunction": null,
             "visibility": "public"
@@ -11393,12 +10295,12 @@
     "5777": {
       "events": {},
       "links": {},
-      "address": "0x5B8A7056527313dE1b0799aed085205a9E19a2E8",
-      "transactionHash": "0xbd8283543f61d4d9d5f122fbe444340a8a878b3f8412f31d5dd6809b9c498bcf"
+      "address": "0x4e6BF6741D2f372Bb30Cc15ff66c86b31EDE9E62",
+      "transactionHash": "0xf66d3775ec8061c559c8573e8617be9fd0ed8e2bbec44818ef5ec4b7afaf60bc"
     }
   },
   "schemaVersion": "3.0.9",
-  "updatedAt": "2019-05-28T18:22:33.748Z",
+  "updatedAt": "2019-05-31T16:50:17.040Z",
   "devdoc": {
     "methods": {
       "executeAssignment(address,uint256)": {

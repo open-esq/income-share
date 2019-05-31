@@ -31,9 +31,9 @@ export default class OwnedTokens extends React.Component {
     const { web3, accounts } = this.props;
     const assignment = {
       contract: activeToken.address,
-      seller: "0x5fD256B07691629B4d2Ce4336dc8f01E5BB8Ae8D",
+      seller: accounts[0],
       buyer: "0x4e7627E12Cf6a04d0AF3361a67D015bAa33EeAEE",
-      price: 20,
+      price: "20",
       numTransferred: 40
     };
 
