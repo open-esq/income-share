@@ -10295,12 +10295,12 @@
     "5777": {
       "events": {},
       "links": {},
-      "address": "0x4e6BF6741D2f372Bb30Cc15ff66c86b31EDE9E62",
-      "transactionHash": "0xf66d3775ec8061c559c8573e8617be9fd0ed8e2bbec44818ef5ec4b7afaf60bc"
+      "address": "0x518d7dd3f5D2C41C33035b7193eCCD20bAC6889F",
+      "transactionHash": "0xf0168a6e4add5b6860746195c349242397d362936bf15133fbcb11a44c356931"
     }
   },
   "schemaVersion": "3.0.9",
-  "updatedAt": "2019-05-31T16:50:17.040Z",
+  "updatedAt": "2019-05-31T17:26:17.809Z",
   "devdoc": {
     "methods": {
       "executeAssignment(address,uint256)": {

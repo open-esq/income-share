@@ -5,17 +5,17 @@ import Web3Container from "../utils/Web3Container";
 import MasterPOCContract from "../contracts/MasterPOC.json";
 import IncomeAssignmentContract from "../contracts/IncomeAssignment.json";
 import pcTokenJSON from "../contracts/ProofClaim.json";
-import OwnedTokens from "./OwnedTokens"
-import Assignments from "./Assignments"
+import OwnedTokens from "./OwnedTokens";
+import Assignments from "./Assignments";
 import { getTokenContracts } from "../utils/helpers";
 
 class Manage extends React.Component {
-  state = {ownedTokenBalances: []}
+  state = { ownedTokenBalances: [] };
 
   componentDidMount = async () => {
     const { web3, accounts, contract } = this.props;
 
-    console.log(contract)
+    console.log(contract);
     const tokenContracts = await getTokenContracts(accounts, contract);
 
     console.log("token contracts", tokenContracts);
@@ -33,16 +33,18 @@ class Manage extends React.Component {
   getOwnedTokenBalances = async ownedTokens => {
     const { web3, accounts } = this.props;
     const ownedTokenBalancesPromises = ownedTokens.map(async tokenAddr => {
-      const instance = new web3.eth.Contract(pcTokenJSON.abi, tokenAddr);
-      const balance = await instance.methods
-        .balanceOf(accounts[0])
-        .call({ from: accounts[0], gas: 3000000 });
+      if (tokenAddr) {
+        const instance = new web3.eth.Contract(pcTokenJSON.abi, tokenAddr);
+        const balance = await instance.methods
+          .balanceOf(accounts[0])
+          .call({ from: accounts[0], gas: 3000000 });
 
-      const amountReceived = await instance.methods
-        .getAmountPaid(accounts[0])
-        .call({ from: accounts[0], gas: 300000 });
-      console.log("amount received", amountReceived);
-      return { [tokenAddr]: { balance, amountReceived } };
+        const amountReceived = await instance.methods
+          .getAmountPaid(accounts[0])
+          .call({ from: accounts[0], gas: 300000 });
+        console.log("amount received", amountReceived);
+        return { [tokenAddr]: { balance, amountReceived } };
+      }
     });
 
     const ownedTokenBalances = await Promise.all(ownedTokenBalancesPromises);
@@ -89,30 +91,35 @@ class Manage extends React.Component {
   };
 
   render() {
-    const{web3, accounts} = this.props
-    const{ownedTokenBalances} = this.state
+    const { web3, accounts } = this.props;
+    const { ownedTokenBalances } = this.state;
     const panes = [
       {
         menuItem: "Owned Tokens",
         render: () => (
-          <Tab.Pane
-          >
-            <OwnedTokens ownedTokenBalances={ownedTokenBalances} web3={web3} accounts={accounts}/>
+          <Tab.Pane>
+            <OwnedTokens
+              ownedTokenBalances={ownedTokenBalances}
+              web3={web3}
+              accounts={accounts}
+            />
           </Tab.Pane>
         )
       },
       {
         menuItem: "Assignments",
         render: () => (
-          <Tab.Pane
-
-          >
-            <Assignments ownedTokenBalances={ownedTokenBalances} web3={web3} accounts={accounts}/>
+          <Tab.Pane>
+            <Assignments
+              ownedTokenBalances={ownedTokenBalances}
+              web3={web3}
+              accounts={accounts}
+            />
           </Tab.Pane>
         )
       }
-    ]
-    if(!this.state.ownedTokenBalances) return null
+    ];
+    if (!this.state.ownedTokenBalances) return null;
     return (
       <Container style={{ marginTop: "7em" }}>
         <Tab menu={{ borderless: true }} panes={panes} />

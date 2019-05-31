@@ -86,7 +86,7 @@ export default class OwnedTokens extends React.Component {
               </Table.Header>
               <Table.Body>
                 {ownedTokenBalances.map((token, i) => {
-                  return (
+                  if(token) return (
                     <Table.Row
                       style={activeKey == i ? { fontWeight: "bold" } : null}
                       key={i}

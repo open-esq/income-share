@@ -55,9 +55,6 @@ export default class Assignments extends React.Component {
     const { assignmentContract } = this.state;
     const { accounts, web3 } = this.props;
 
-    console.log(tokenAddr)
-    console.log(assignmentNo)
-
     const assignment = await assignmentContract.methods.getAssignment(tokenAddr, assignmentNo).call({from: accounts[0], gas: 300000})
   
     const numTransferred = assignment.numTransferred;
