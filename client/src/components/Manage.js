@@ -10,7 +10,7 @@ import Assignments from "./Assignments";
 import { getTokenContracts } from "../utils/helpers";
 
 class Manage extends React.Component {
-  state = { ownedTokenBalances: [] };
+  state = { ownedTokenBalances: [], tokenContracts: [] };
 
   componentDidMount = async () => {
     const { web3, accounts, contract } = this.props;
@@ -27,7 +27,7 @@ class Manage extends React.Component {
     const ownedTokenBalances = await this.getOwnedTokenBalances(ownedTokens);
 
     console.log("owned token balances:", ownedTokenBalances);
-    this.setState({ ownedTokenBalances });
+    this.setState({ ownedTokenBalances, tokenContracts });
   };
 
   getOwnedTokenBalances = async ownedTokens => {
@@ -92,7 +92,7 @@ class Manage extends React.Component {
 
   render() {
     const { web3, accounts } = this.props;
-    const { ownedTokenBalances } = this.state;
+    const { ownedTokenBalances, tokenContracts } = this.state;
     const panes = [
       {
         menuItem: "Owned Tokens",
@@ -112,6 +112,7 @@ class Manage extends React.Component {
           <Tab.Pane>
             <Assignments
               ownedTokenBalances={ownedTokenBalances}
+              tokenContracts={tokenContracts}
               web3={web3}
               accounts={accounts}
             />

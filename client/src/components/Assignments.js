@@ -16,8 +16,8 @@ import Web3Container from "../utils/Web3Container";
 export default class Assignments extends React.Component {
   state = { allAssignments: null, assignmentContract: null };
   componentDidMount = async () => {
-    const { web3, ownedTokenBalances, accounts } = this.props;
-
+    const { web3, tokenContracts, accounts } = this.props;
+    console.log(tokenContracts)
     const networkId = await web3.eth.net.getId();
     const deployedAddress =
       IncomeAssignmentContract.networks[networkId].address;
@@ -26,11 +26,7 @@ export default class Assignments extends React.Component {
       deployedAddress
     );
 
-    console.log(assignmentContract);
-    const myTokens = ownedTokenBalances.map(x => {
-      if(x) return Object.keys(x)[0];
-    });
-    const assignmentByContract = myTokens.map(async token => {
+    const assignmentByContract = tokenContracts.map(async token => {
       const tokenNumbers = await assignmentContract.methods
         .getAssignmentNoByAddress(token)
         .call({ from: accounts[0], gas: 300000 });
