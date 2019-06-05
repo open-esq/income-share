@@ -3,6 +3,7 @@ import { Container, Loader, Tab } from "semantic-ui-react";
 import "semantic-ui-css/semantic.min.css";
 import AgreementTemplate from "./AgreementTemplate";
 import { getTokenContracts } from "../utils/helpers";
+require("dotenv").config();
 
 export default class Agreements extends React.Component {
   render() {
@@ -13,8 +14,8 @@ export default class Agreements extends React.Component {
           <Tab.Pane>
             <AgreementTemplate
               key={1}
-              templateName={"LAMBDA INCOME SHARE AGREEMENT (LISA) (TOKENIZED)"}
-              title={"INCOME SHARE AGREEMENT"}
+              templateName={process.env.ISA_TEMPLATE_NAME}
+              title={process.env.ISA_TEMPLATE_NAME}
             />
           </Tab.Pane>
         )

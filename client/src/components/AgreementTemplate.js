@@ -31,11 +31,12 @@ class AgreementTemplate extends React.Component {
   };
 
   componentDidMount = async () => {
+    //create config
     const openLawConfig = {
-      server: "https://app.openlaw.io",
+      server: process.env.URL,
       templateName: this.props.templateName,
-      userName: "josh.ma91@gmail.com",
-      password: "p!GJuNYiG.b6XCA"
+      userName: process.env.OPENLAW_USER,
+      password: process.env.OPENLAW_PASSWORD
     };
 
     const apiClient = new APIClient(openLawConfig.server);

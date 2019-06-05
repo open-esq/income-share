@@ -1,30 +1,15 @@
 import React from "react";
-import { APIClient, Openlaw } from "openlaw";
 import { Container, Button, Form, Header, Segment } from "semantic-ui-react";
 import Web3Container from "../utils/Web3Container";
 import MasterPOCContract from "../contracts/MasterPOC.json";
 import pcTokenJSON from "../contracts/ProofClaim.json";
 import {getTokenContracts} from "../utils/helpers"
-require("dotenv").config();
-
-//create config
-const openLawConfig = {
-  server: process.env.URL,
-  templateName: process.env.ASSIGNMENT_TEMPLATE_NAME,
-  userName: process.env.OPENLAW_USER,
-  password: process.env.OPENLAW_PASSWORD
-};
-
-const apiClient = new APIClient(process.env.URL);
 
 class Student extends React.Component {
   state = { tokenAddress: "", paymentAmount: "", paymentLoading: false };
 
   componentDidMount = async () => {
     const { web3, accounts, contract } = this.props;
-    apiClient
-      .login(openLawConfig.userName, openLawConfig.password)
-      .then(console.log);
 
     const tokenContracts = await getTokenContracts(accounts, contract)
     console.log("token contracts", tokenContracts);
