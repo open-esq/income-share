@@ -4,7 +4,7 @@
   "description": "",
   "scripts": {
     "start": "webpack-dev-server",
-    "build": "webpack --config webpack.dist.config.js"
+    "build": "webpack"
   },
   "main": "src/index.js",
   "babel": {

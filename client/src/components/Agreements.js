@@ -26,8 +26,8 @@ export default class Agreements extends React.Component {
           <Tab.Pane>
             <AgreementTemplate
               key={2}
-              templateName={"INCOME SHARE ASSIGNMENT AGREEMENT"}
-              title={"INCOME SHARE ASSIGNMENT AGREEMENT"}
+              templateName={process.env.ISAA_TEMPLATE_NAME}
+              title={process.env.ISAA_TEMPLATE_NAME}
             />
           </Tab.Pane>
         )
