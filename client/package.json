@@ -3,14 +3,26 @@
   "version": "0.1.0",
   "description": "",
   "scripts": {
-    "start": "parcel index.html --no-cache",
-    "build": "parcel build index.html --no-cache"
+    "start": "webpack-dev-server",
+    "build": "webpack --config webpack.dist.config.js"
+  },
+  "main": "src/index.js",
+  "babel": {
+    "presets": [
+      "@babel/preset-env",
+      "@babel/preset-react"
+    ],
+    "plugins": [
+      "@babel/plugin-proposal-class-properties"
+    ]
   },
   "license": "MIT",
   "dependencies": {
     "@drizzle-utils/core": "^0.2.0",
     "@drizzle-utils/get-contract-instance": "^0.2.0",
     "@drizzle-utils/get-web3": "^0.2.0",
+    "acorn": "^6.1.1",
+    "dotenv": "^8.0.0",
     "html-react-parser": "^0.7.0",
     "openlaw": "^0.1.26",
     "openlaw-elements": "^1.0.0-beta.17",
@@ -22,27 +34,19 @@
     "web3": "^1.0.0-beta.35"
   },
   "devDependencies": {
-    "@babel/core": "^7.2.2",
+    "@babel/core": "^7.4.5",
+    "@babel/preset-env": "^7.4.5",
+    "@babel/preset-react": "^7.0.0",
+    "babel-loader": "^8.0.6",
     "babel-preset-nano-react-app": "^0.1.0",
-    "parcel-bundler": "^1.11.0"
-  },
-  "babel": {
-    "presets": [
-      "nano-react-app"
-    ],
-    "plugins": [
-      [
-        "@babel/plugin-proposal-class-properties",
-        {
-          "loose": true
-        }
-      ],
-      [
-        "@babel/plugin-transform-react-jsx",
-        {
-          "pragmaFrag": "React.Fragment"
-        }
-      ]
-    ]
+    "css-loader": "^2.1.1",
+    "dotenv-webpack": "^1.7.0",
+    "file-loader": "^4.0.0",
+    "html-webpack-plugin": "^3.2.0",
+    "style-loader": "^0.23.1",
+    "url-loader": "^2.0.0",
+    "webpack": "^4.33.0",
+    "webpack-cli": "^3.3.2",
+    "webpack-dev-server": "^3.6.0"
   }
 }
