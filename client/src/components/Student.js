@@ -1,9 +1,16 @@
 import React from "react";
-import { Container, Button, Form, Header, Segment } from "semantic-ui-react";
+import {
+  Container,
+  Button,
+  Form,
+  Header,
+  Segment,
+  Message
+} from "semantic-ui-react";
 import Web3Container from "../utils/Web3Container";
 import MasterPOCContract from "../contracts/MasterPOC.json";
 import pcTokenJSON from "../contracts/ProofClaim.json";
-import {getTokenContracts} from "../utils/helpers"
+import { getTokenContracts } from "../utils/helpers";
 
 class Student extends React.Component {
   state = { tokenAddress: "", paymentAmount: "", paymentLoading: false };
@@ -11,7 +18,7 @@ class Student extends React.Component {
   componentDidMount = async () => {
     const { web3, accounts, contract } = this.props;
 
-    const tokenContracts = await getTokenContracts(accounts, contract)
+    const tokenContracts = await getTokenContracts(accounts, contract);
     console.log("token contracts", tokenContracts);
   };
 
@@ -20,11 +27,14 @@ class Student extends React.Component {
   setPaymentAmount = e => this.setState({ paymentAmount: e.target.value });
 
   makePayment = async () => {
-    const {tokenAddress, paymentAmount} = this.state
-    console.log("making payment")
-    this.setState({paymentLoading: true}, async () => {
+    const { tokenAddress, paymentAmount } = this.state;
+    console.log("making payment");
+    this.setState({ paymentLoading: true }, async () => {
       const { web3, accounts, contract } = this.props;
-      const tokenInstance = new web3.eth.Contract(pcTokenJSON.abi, tokenAddress);
+      const tokenInstance = new web3.eth.Contract(
+        pcTokenJSON.abi,
+        tokenAddress
+      );
 
       const transferEvents = await tokenInstance.getPastEvents("Transfer", {
         fromBlock: 0,
@@ -52,7 +62,7 @@ class Student extends React.Component {
       this.setState({
         paymentLoading: false
       });
-    })
+    });
   };
 
   initializeISA = async () => {
@@ -78,7 +88,15 @@ class Student extends React.Component {
     return (
       <div>
         <Container style={{ marginTop: "7em" }}>
-          <p>Here's where the student sees their contract details and repays</p>
+          <Message>
+            <p>
+              <Message.Header>
+                Here's where students make payments into income share token
+                contracts
+              </Message.Header>
+            </p>
+          </Message>
+
           <Form>
             <Form.Field>
               <label>Token Address</label>
@@ -96,7 +114,11 @@ class Student extends React.Component {
                 value={paymentAmount}
               />
             </Form.Field>
-            <Button type="submit" onClick={this.makePayment} loading={paymentLoading}>
+            <Button
+              type="submit"
+              onClick={this.makePayment}
+              loading={paymentLoading}
+            >
               Make Payment
             </Button>
           </Form>

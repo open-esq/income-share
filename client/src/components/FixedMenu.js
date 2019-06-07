@@ -38,14 +38,12 @@ export const FixedMenu = ({ contract, accounts }) => (
       <Menu.Item
         as="a"
         target="_"
-        href="https://github.com/joshma91"
+        href="https://github.com/open-esq/"
         position=""
       >
-        <div style={{ textAlign: "center" }}>
-          <p style={{ margin: 0 }}>By Josh Ma </p>
-          <p style={{ margin: 0 }}>&</p>
-          <p style={{ margin: 0 }}>Ross Campbell</p>
-        </div>
+     <Image size="mini" src="https://i.ibb.co/cXMrJSb/Open-Esq-Clipped.png" />
+          <Header as="h3" style={{ paddingLeft:"7px", margin:"0", color:"#e6e6e6"}}>Open Esquire</Header>
+
       </Menu.Item>
   </Menu>
 );
