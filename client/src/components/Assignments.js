@@ -25,6 +25,7 @@ export default class Assignments extends React.Component {
       IncomeAssignmentContract.abi,
       deployedAddress
     );
+    console.log("deployed address", deployedAddress)
 
     const assignmentByContract = tokenContracts.map(async token => {
       const tokenNumbers = await assignmentContract.methods
@@ -41,7 +42,7 @@ export default class Assignments extends React.Component {
       });
 
       const assignments = await Promise.all(assignmentPromises);
-      return { [token]: assignments };
+      if (assignments.length > 0) return { [token]: assignments };
     });
 
     const allAssignments = await Promise.all(assignmentByContract);
@@ -78,12 +79,13 @@ export default class Assignments extends React.Component {
 
   render() {
     const { allAssignments } = this.state;
-    const { accounts } = this.props;
+    const { accounts, web3 } = this.props;
     if (!allAssignments) return <Loader active />;
     return (
       <div>
         {allAssignments.map((token, i) => {
           console.log(token);
+          if (!token) return null;
           return (
             <div>
               <Header>{Object.keys(token)[0]}</Header>
@@ -107,8 +109,8 @@ export default class Assignments extends React.Component {
                         <Table.Cell>{i}</Table.Cell>
                         <Table.Cell>{assignment.buyer}</Table.Cell>
                         <Table.Cell>{assignment.seller}</Table.Cell>
-                        <Table.Cell>{assignment.numTransferred}</Table.Cell>
-                        <Table.Cell>{assignment.price}</Table.Cell>
+                        <Table.Cell>{web3.utils.fromWei(assignment.numTransferred)}</Table.Cell>
+                        <Table.Cell>{web3.utils.fromWei(assignment.price)}</Table.Cell>
                         {assignment.confirmed ? (
                           <Table.Cell>&#10004;</Table.Cell>
                         ) : (

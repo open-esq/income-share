@@ -26,7 +26,7 @@ contract MasterPOC {
       public
       returns(bool)
   {
-    uint supply = 100;
+    uint supply = 100*1e18;
     ProofClaim c = new ProofClaim(symbol, name, owner, supply);
     contracts.push(address(c));
     lastContractAddress = address(c);

@@ -33,8 +33,8 @@ export default class OwnedTokens extends React.Component {
       contract: activeToken.address,
       seller: accounts[0],
       buyer: "0x4e7627E12Cf6a04d0AF3361a67D015bAa33EeAEE",
-      price: "20",
-      numTransferred: 40
+      price: web3.utils.toWei("20"),
+      numTransferred: web3.utils.toWei("40")
     };
 
     const networkId = await web3.eth.net.getId();
@@ -99,7 +99,7 @@ export default class OwnedTokens extends React.Component {
                           {Object.keys(token)[0]}
                         </span>
                       </Table.Cell>
-                      <Table.Cell>{Object.values(token)[0].balance}</Table.Cell>
+                      <Table.Cell>{web3.utils.fromWei(Object.values(token)[0].balance)}</Table.Cell>
                     </Table.Row>
                   );
                 })}
