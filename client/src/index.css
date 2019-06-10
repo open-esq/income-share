@@ -15,7 +15,7 @@ html {
 .ui.container.overlay {
   position:absolute;
   top:10%;
-  left:60%;
+  left:55%;
   z-index:1;
   margin-left:-100px !important;
 }
