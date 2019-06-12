@@ -128,7 +128,7 @@ export default class OwnedTokens extends React.Component {
 
                   <Form.Field name="studentName" width={16}>
                     <label>Student Name</label>
-                    <input disabled value="Josh Ma" />
+                    <input disabled value="Joshua Ma" />
                   </Form.Field>
                   <Form.Field name="ethPaid" width={16}>
                     <label>ETH Paid to You</label>
