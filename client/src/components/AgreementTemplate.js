@@ -41,7 +41,7 @@ class AgreementTemplate extends React.Component {
 
     const apiClient = new APIClient(openLawConfig.server);
 
-    console.log(openLawConfig);
+    console.log(openLawConfig.userName);
     //const { web3, accounts, contract } = this.props;
     //create an instance of the API client with url as parameter
     apiClient
