@@ -34,6 +34,7 @@ class AgreementTemplate extends React.Component {
     previewHTML: null,
     loading: false,
     ipfsLoading: false,
+    ipfsHash: null,
     success: false
   };
 
@@ -179,32 +180,12 @@ class AgreementTemplate extends React.Component {
     try {
       //login to api
       this.setState({ loading: true }, async () => {
-        
-        const token = await apiClient.login(openLawConfig.userName, openLawConfig.password);
-        const openlaw_jwt = token.headers.openlaw_jwt
-        console.log("OPENLAW_JWT", openlaw_jwt);
+        const token = await apiClient.login(
+          openLawConfig.userName,
+          openLawConfig.password
+        );
+        const openlaw_jwt = token.headers.openlaw_jwt;
 
-
-
-        const res = await fetch("https://pbs.twimg.com/profile_images/1580483969/parisjs_transparent.png")
-        // const res = await fetch(pdfURL, {
-        //   method: 'get',
-        //   headers: new Headers({
-        //     'OPENLAW_JWT': openlaw_jwt
-        //   })
-        // }
-        // );
-        const blob = await res.blob();
-        const reader = new window.FileReader();
-        reader.readAsArrayBuffer(blob);
-        reader.onloadend = async () => {
-          const buffer = await Buffer.from(reader.result);
-          console.log(buffer)
-          const ipfsHash = await ipfs.add(buffer);
-          console.log("IPFS Hash: ", ipfsHash[0].hash);
-        };
-
-        
         //add Open Law params to be uploaded
         const uploadParams = await this.buildOpenLawParamsObj(
           this.state.template,
@@ -231,35 +212,29 @@ class AgreementTemplate extends React.Component {
         const pdfURL = process.env.URL + "/contract/pdf/" + contractId;
 
         console.log(pdfURL);
-
-        await this.setState({ loading: false, success: true, draftId });
-        document.getElementById("success").scrollIntoView({
-          behavior: "smooth"
+        const res = await fetch(pdfURL, {
+          method: "get",
+          headers: new Headers({
+            OPENLAW_JWT: openlaw_jwt
+          })
         });
+        const blob = await res.blob();
+        const reader = new window.FileReader();
+        reader.readAsArrayBuffer(blob);
+        reader.onloadend = async () => {
+          const buffer = await Buffer.from(reader.result);
+          const ipfsHash = await ipfs.add(buffer);
+          console.log("IPFS Hash: ", ipfsHash[0].hash);
+
+          await this.setState({ loading: false, success: true, draftId, ipfsHash: ipfsHash[0].hash });
+          document.getElementById("success").scrollIntoView({
+            behavior: "smooth"
+          });
+        };
       });
     } catch (error) {
       console.log(error);
     }
-  };
-
-  fileChange = async event => {
-    event.stopPropagation();
-    event.preventDefault();
-    const file = event.target.files[0];
-    let reader = new window.FileReader();
-    reader.readAsArrayBuffer(file);
-    reader.onloadend = () => this.convertToBuffer(reader);
-  };
-
-  convertToBuffer = async reader => {
-    this.setState({ ipfsLoading: true }, async () => {
-      //file is converted to a buffer for upload to IPFS
-      const buffer = await Buffer.from(reader.result);
-      //set this buffer -using es6 syntax
-      const ipfsRes = await ipfs.add(buffer);
-      console.log(ipfsRes[0].hash);
-      this.setState({ ipfsLoading: false });
-    });
   };
 
   render() {
@@ -271,7 +246,7 @@ class AgreementTemplate extends React.Component {
       previewHTML,
       loading,
       success,
-      ipfsLoading
+      ipfsHash
     } = this.state;
     if (!executionResult) return <Loader active />;
     return (
@@ -290,19 +265,6 @@ class AgreementTemplate extends React.Component {
           <Button primary loading={loading} onClick={this.onSubmit}>
             Submit
           </Button>
-          <Button
-            content="Upload to IPFS"
-            labelPosition="left"
-            icon="file"
-            loading={ipfsLoading}
-            onClick={() => this.fileInputRef.current.click()}
-          />
-          <input
-            ref={this.fileInputRef}
-            type="file"
-            hidden
-            onChange={this.fileChange}
-          />
         </div>
 
         <Message
@@ -314,6 +276,9 @@ class AgreementTemplate extends React.Component {
           <Message.Header>Submission Successful</Message.Header>
           <p>
             Check your <b>e-mail</b> to sign contract
+          </p>
+          <p>
+            Contract uploaded to IPFS <a target="_blank" href={`http://ipfs.io/ipfs/${ipfsHash}`}><b>here</b></a>
           </p>
         </Message>
         <AgreementPreview id="preview" previewHTML={previewHTML} />
