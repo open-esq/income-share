@@ -2,10 +2,11 @@ import React from "react";
 import { Container, Loader, Tab } from "semantic-ui-react";
 import "semantic-ui-css/semantic.min.css";
 import AgreementTemplate from "./AgreementTemplate";
-import { getTokenContracts } from "../utils/helpers";
+import Web3Container from "../utils/Web3Container";
+import MasterPOCContract from "../contracts/MasterPOC.json";
 require("dotenv").config();
 
-export default class Agreements extends React.Component {
+class Agreements extends React.Component {
   render() {
     const panes = [
       {
@@ -16,6 +17,9 @@ export default class Agreements extends React.Component {
               key={1}
               templateName={process.env.ISA_TEMPLATE_NAME}
               title={"Income Share Agreement"}
+              web3={this.props.web3}
+              accounts={this.props.accounts}
+              contract={this.props.contract}
             />
           </Tab.Pane>
         )
@@ -28,6 +32,9 @@ export default class Agreements extends React.Component {
               key={2}
               templateName={process.env.ISAA_TEMPLATE_NAME}
               title={"Income Share Assignment Agreement"}
+              web3={this.props.web3}
+              accounts={this.props.accounts}
+              contract={this.props.contract}
             />
           </Tab.Pane>
         )
@@ -40,3 +47,13 @@ export default class Agreements extends React.Component {
     );
   }
 }
+
+export default () => (
+  <Web3Container
+    contractJSON={MasterPOCContract}
+    renderLoading={() => <div>Loading</div>}
+    render={({ web3, accounts, contract }) => (
+      <Agreements web3={web3} accounts={accounts} contract={contract} />
+    )}
+  />
+);

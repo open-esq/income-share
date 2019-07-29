@@ -5,6 +5,8 @@ import "semantic-ui-css/semantic.min.css";
 import "openlaw-elements/dist/openlaw-elements.min.css";
 import OpenLawForm from "openlaw-elements";
 import AgreementPreview from "./AgreementPreview";
+import pcTokenJSON from "../contracts/ProofClaim.json";
+import { getTokenContracts } from "../utils/helpers";
 import IPFS from "ipfs-http-client";
 require("dotenv").config();
 const ipfs = new IPFS({
@@ -40,6 +42,7 @@ class AgreementTemplate extends React.Component {
 
   fileInputRef = React.createRef();
   componentDidMount = async () => {
+
     //create config
     const openLawConfig = {
       server: process.env.URL,
@@ -180,11 +183,12 @@ class AgreementTemplate extends React.Component {
     try {
       //login to api
       this.setState({ loading: true }, async () => {
+        const { accounts, contract } = this.props;
         const token = await apiClient.login(
           openLawConfig.userName,
           openLawConfig.password
         );
-        const openlaw_jwt = token.headers.openlaw_jwt;
+        const OPENLAW_JWT = token.headers.openlaw_jwt;
 
         //add Open Law params to be uploaded
         const uploadParams = await this.buildOpenLawParamsObj(
@@ -215,7 +219,7 @@ class AgreementTemplate extends React.Component {
         const res = await fetch(pdfURL, {
           method: "get",
           headers: new Headers({
-            OPENLAW_JWT: openlaw_jwt
+            OPENLAW_JWT
           })
         });
         const blob = await res.blob();
@@ -226,7 +230,20 @@ class AgreementTemplate extends React.Component {
           const ipfsHash = await ipfs.add(buffer);
           console.log("IPFS Hash: ", ipfsHash[0].hash);
 
-          await this.setState({ loading: false, success: true, draftId, ipfsHash: ipfsHash[0].hash });
+          const tokenContracts = await getTokenContracts(accounts, contract);
+      
+          console.log("token contracts", tokenContracts);
+      
+          const ownedTokens = await this.getOwnedTokens(tokenContracts);
+          // Array of tokens owned by account[0]
+          console.log("acct0 owned tokens:", ownedTokens);
+
+          await this.setState({
+            loading: false,
+            success: true,
+            draftId,
+            ipfsHash: ipfsHash[0].hash
+          });
           document.getElementById("success").scrollIntoView({
             behavior: "smooth"
           });
@@ -235,6 +252,45 @@ class AgreementTemplate extends React.Component {
     } catch (error) {
       console.log(error);
     }
+  };
+
+  getOwnedTokens = async tokenContracts => {
+    const { accounts } = this.props;
+    // Object which shows all the owners for each token: {address => address[]}
+    const ownershipByTokenPromises = tokenContracts.map(async curr => {
+      const uniqueAddresses = await this.getAddresesByToken(curr);
+      return { [curr]: uniqueAddresses };
+    });
+
+    const ownershipByToken = await Promise.all(ownershipByTokenPromises);
+
+    const ownedTokens = ownershipByToken.map(tokenOwnership => {
+      const token = Object.keys(tokenOwnership);
+      return tokenOwnership[token].includes(this.state.parameters["Company EthAddress"]) ? token[0] : null;
+    });
+    return ownedTokens;
+  };
+
+  getAddresesByToken = async tokenAddr => {
+    const { web3 } = this.props;
+    const instance = new web3.eth.Contract(pcTokenJSON.abi, tokenAddr);
+    const transferEvents = await instance.getPastEvents("Transfer", {
+      fromBlock: 0,
+      toBlock: "latest"
+    });
+
+    const addresses = transferEvents
+      .map(curr => {
+        return [curr.returnValues.from, curr.returnValues.to];
+      })
+      .reduce((acc, curr) => acc.concat(curr), [])
+      .reduce((acc, curr) => {
+        if (web3.utils.toBN(curr).isZero()) return acc;
+        if (acc.indexOf(curr) < 0) acc.push(curr);
+        return acc;
+      }, []);
+
+    return addresses;
   };
 
   render() {
@@ -278,7 +334,10 @@ class AgreementTemplate extends React.Component {
             Check your <b>e-mail</b> to sign contract
           </p>
           <p>
-            Contract uploaded to IPFS <a target="_blank" href={`http://ipfs.io/ipfs/${ipfsHash}`}><b>here</b></a>
+            Contract uploaded to IPFS{" "}
+            <a target="_blank" href={`http://ipfs.io/ipfs/${ipfsHash}`}>
+              <b>here</b>
+            </a>
           </p>
         </Message>
         <AgreementPreview id="preview" previewHTML={previewHTML} />
