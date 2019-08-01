@@ -1,6 +1,12 @@
 import React from "react";
 import { APIClient, Openlaw } from "openlaw";
-import { Container, Loader, Button, Message } from "semantic-ui-react";
+import {
+  Container,
+  Loader,
+  Button,
+  Message,
+  Progress
+} from "semantic-ui-react";
 import "semantic-ui-css/semantic.min.css";
 import "openlaw-elements/dist/openlaw-elements.min.css";
 import OpenLawForm from "openlaw-elements";
@@ -29,14 +35,13 @@ class AgreementTemplate extends React.Component {
     parameters: {},
     executionResult: null,
     variables: null,
-    draftId: "",
-
     // State variables for preview component
     previewHTML: null,
     loading: false,
     ipfsLoading: false,
-    ipfsHash: null,
-    success: false
+    success: false,
+    progress: 0,
+    progressMessage: ""
   };
 
   fileInputRef = React.createRef();
@@ -115,7 +120,6 @@ class AgreementTemplate extends React.Component {
 
   onChange = (key, value) => {
     const { compiledTemplate } = this.state;
-    console.log(key);
     const parameters = key
       ? {
           ...this.state.parameters,
@@ -175,77 +179,105 @@ class AgreementTemplate extends React.Component {
   };
 
   onSubmit = async () => {
-    const { openLawConfig, apiClient } = this.state;
-    try {
-      //login to api
-      this.setState({ loading: true }, async () => {
-        const { accounts, contract } = this.props;
-        const token = await apiClient.login(
-          openLawConfig.userName,
-          openLawConfig.password
-        );
-        const OPENLAW_JWT = token.headers.openlaw_jwt;
+    const { openLawConfig, apiClient, progress, progressMessage } = this.state;
 
-        //add Open Law params to be uploaded
-        const uploadParams = await this.buildOpenLawParamsObj(
-          this.state.template
-        );
-        console.log("parmeters from user..", uploadParams.parameters);
-        console.log("all parameters uploading...", uploadParams);
-
-        const contractId = await apiClient.uploadContract(uploadParams);
-        console.log(contractId);
-
-        await apiClient.sendContract([], [], contractId);
-
-        const pdfURL = process.env.URL + "/contract/pdf/" + contractId;
-
-        console.log(pdfURL);
-        const res = await fetch(pdfURL, {
-          method: "get",
-          headers: new Headers({
-            OPENLAW_JWT
-          })
-        });
-        const blob = await res.blob();
-        const reader = new window.FileReader();
-        reader.readAsArrayBuffer(blob);
-        reader.onloadend = async () => {
-          const buffer = await Buffer.from(reader.result);
-          const ipfsHash = await ipfs.add(buffer);
-          console.log("IPFS Hash: ", ipfsHash[0].hash);
-
-          const tokenContracts = await getTokenContracts(accounts, contract);
-
-          console.log("token contracts", tokenContracts);
-
-          const ownedTokens = await this.getOwnedTokens(tokenContracts);
-          // Array of tokens owned by account[0]
-          console.log("acct0 owned tokens:", ownedTokens);
-
-          await this.setState({
-            loading: false,
-            success: true,
-            draftId,
-            ipfsHash: ipfsHash[0].hash
-          });
-          document.getElementById("success").scrollIntoView({
+    //login to api
+    this.setState(
+      {
+        loading: true,
+        progress: 30,
+        progressMessage: "Uploading to OpenLaw..."
+      },
+      async () => {
+        try {
+          const { accounts, contract } = this.props;
+          const token = await apiClient.login(
+            openLawConfig.userName,
+            openLawConfig.password
+          );
+          document.getElementById("progress").scrollIntoView({
             behavior: "smooth"
           });
-        };
-      });
-    } catch (error) {
-      console.log(error);
-    }
-  };
+          const OPENLAW_JWT = token.headers.openlaw_jwt;
 
-  fileChange = async event => {
-    event.stopPropagation();
-    event.preventDefault();
-    const file = event.target.files[0];
-    let reader = new window.FileReader();
-    reader.readAsArrayBuffer(file);
-    reader.onloadend = () => this.convertToBuffer(reader);
+          //add Open Law params to be uploaded
+          const uploadParams = await this.buildOpenLawParamsObj(
+            this.state.template
+          );
+          console.log("parmeters from user..", uploadParams.parameters);
+          const contractId = await apiClient.uploadContract(uploadParams);
+          console.log(contractId);
+
+          await apiClient.sendContract([], [], contractId);
+
+          await this.setState({
+            progress: 60,
+            progressMessage:
+              "Contract Uploaded! Please check your e-mail to sign"
+          });
+
+          this.timer = setInterval(async () => {
+            const contractStatus = await apiClient.loadContractStatus(
+              contractId
+            );
+            const completed = Object.keys(contractStatus.signatures)
+              .map(curr => contractStatus.signatures[curr].done)
+              .every(status => status);
+
+            if (completed) {
+              await this.setState({
+                progress: 90,
+                progressMessage: "Contract Signed! Uploading to IPFS..."
+              });
+              clearInterval(this.timer);
+              this.timer = null;
+              const pdfURL = process.env.URL + "/contract/pdf/" + contractId;
+
+              console.log(pdfURL);
+              const res = await fetch(pdfURL, {
+                method: "get",
+                headers: new Headers({
+                  OPENLAW_JWT
+                })
+              });
+
+              const blob = await res.blob();
+              const reader = new window.FileReader();
+              reader.readAsArrayBuffer(blob);
+              reader.onloadend = async () => {
+                const buffer = await Buffer.from(reader.result);
+                const ipfsHash = await ipfs.add(buffer);
+                console.log("IPFS Hash: ", ipfsHash[0].hash);
+
+                const tokenContracts = await getTokenContracts(
+                  accounts,
+                  contract
+                );
+                const ownedTokens = await this.getOwnedTokens(tokenContracts);
+                // Array of tokens owned by account[0]
+                const newToken = ownedTokens.pop();
+                console.log("created token:", newToken);
+
+                const successMessage =
+                  <p>Success! Contract uploaded to IPFS{" "}<a target="_blank" href={`http://ipfs.io/ipfs/${ipfsHash[0].hash}`}><b>here</b></a></p>
+
+                await this.setState({
+                  loading: false,
+                  success: true,
+                  progress: 100,
+                  progressMessage: successMessage
+                });
+              };
+            }
+          }, 1000);
+        } catch (error) {
+          await this.setState({
+            progressMessage: "Uh oh, we've run into an error..."
+          });
+          console.log(error);
+        }
+      }
+    );
   };
 
   convertToBuffer = async reader => {
@@ -311,8 +343,9 @@ class AgreementTemplate extends React.Component {
       previewHTML,
       loading,
       success,
-      ipfsHash,
-      ipfsLoading
+      ipfsLoading,
+      progress,
+      progressMessage
     } = this.state;
     if (!executionResult) return <Loader active />;
     return (
@@ -326,43 +359,28 @@ class AgreementTemplate extends React.Component {
           openLaw={Openlaw}
           variables={variables}
         />
-        <div className="button-group">
+        <Container className="button-group">
           <Button onClick={this.setTemplatePreview}>Preview</Button>
           <Button primary loading={loading} onClick={this.onSubmit}>
             Submit
           </Button>
-          <Button
-            content="Upload to IPFS"
-            labelPosition="left"
-            icon="file"
-            loading={ipfsLoading}
-            onClick={() => this.fileInputRef.current.click()}
-          />
-          <input
-            ref={this.fileInputRef}
-            type="file"
-            hidden
-            onChange={this.fileChange}
-          />
-        </div>
+        </Container>
 
-        <Message
-          style={success ? { display: "block" } : { display: "none" }}
-          className="success-message"
-          positive
-          id="success"
+        <Progress
+          style={
+            progress
+              ? { display: "block", margin: "1em 0 2.5em" }
+              : { display: "none" }
+          }
+          percent={progress}
+          indicating
+          id="progress"
+          progress
         >
-          <Message.Header>Submission Successful</Message.Header>
-          <p>
-            Check your <b>e-mail</b> to sign contract
-          </p>
-          <p>
-            Contract uploaded to IPFS{" "}
-            <a target="_blank" href={`http://ipfs.io/ipfs/${ipfsHash}`}>
-              <b>here</b>
-            </a>
-          </p>
-        </Message>
+          {progress != 100 ? "Please don't close or refresh this page" : null}
+          <p>{progressMessage}</p>
+        </Progress>
+
         <AgreementPreview id="preview" previewHTML={previewHTML} />
       </Container>
     );
