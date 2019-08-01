@@ -12,7 +12,7 @@ import "openlaw-elements/dist/openlaw-elements.min.css";
 import OpenLawForm from "openlaw-elements";
 import AgreementPreview from "./AgreementPreview";
 import pcTokenJSON from "../contracts/ProofClaim.json";
-import { getTokenContracts } from "../utils/helpers";
+import { getTokenContracts, getBytes32FromIpfsHash, getIpfsHashFromBytes32 } from "../utils/helpers";
 import IPFS from "ipfs-http-client";
 require("dotenv").config();
 const ipfs = new IPFS({
@@ -259,7 +259,7 @@ class AgreementTemplate extends React.Component {
                 console.log("created token:", newToken);
 
                 const successMessage =
-                  <p>Success! Contract uploaded to IPFS{" "}<a target="_blank" href={`http://ipfs.io/ipfs/${ipfsHash[0].hash}`}><b>here</b></a></p>
+                  <p>Success! Contract uploaded to IPFS{" "}<a target="_blank" href={`http://ipfs.infura.io/ipfs/${ipfsHash[0].hash}`}><b>here</b></a></p>
 
                 await this.setState({
                   loading: false,
