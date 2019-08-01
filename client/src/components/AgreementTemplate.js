@@ -25,7 +25,6 @@ class AgreementTemplate extends React.Component {
     // State variables for OpenLaw
     title: "",
     template: "",
-    creatorId: "",
     compiledTemplate: null,
     parameters: {},
     executionResult: null,
@@ -42,7 +41,6 @@ class AgreementTemplate extends React.Component {
 
   fileInputRef = React.createRef();
   componentDidMount = async () => {
-
     //create config
     const openLawConfig = {
       server: process.env.URL,
@@ -79,10 +77,6 @@ class AgreementTemplate extends React.Component {
     );
     console.log("versions..", versions[0], versions.length);
 
-    //Get the creatorID from the template.
-    const creatorId = versions[0].creatorId;
-    console.log("creatorId..", creatorId);
-
     //Get my compiled Template, for use in rendering the HTML in previewTemplate
     const compiledTemplate = await Openlaw.compileTemplate(content);
     if (compiledTemplate.isError) {
@@ -112,7 +106,6 @@ class AgreementTemplate extends React.Component {
       apiClient,
       title,
       template,
-      creatorId,
       compiledTemplate,
       parameters,
       executionResult,
@@ -122,10 +115,13 @@ class AgreementTemplate extends React.Component {
 
   onChange = (key, value) => {
     const { compiledTemplate } = this.state;
+    console.log(key);
     const parameters = key
       ? {
           ...this.state.parameters,
-          [key]: value
+          [key]: [key].includes("Email")
+            ? JSON.stringify({ email: value })
+            : value
         }
       : this.state.parameters;
 
@@ -160,20 +156,20 @@ class AgreementTemplate extends React.Component {
     });
   };
 
-  buildOpenLawParamsObj = async (template, creatorId) => {
-    const { parameters, draftId } = this.state;
+  buildOpenLawParamsObj = async template => {
+    const { parameters } = this.state;
 
     const object = {
       templateId: template.id,
       title: template.title,
       text: template.content,
-      creator: creatorId,
+      creator: process.env.OPENLAW_ID,
       parameters,
       overriddenParagraphs: {},
       agreements: {},
       readonlyEmails: [],
       editEmails: [],
-      draftId
+      draftId: ""
     };
     return object;
   };
@@ -192,23 +188,12 @@ class AgreementTemplate extends React.Component {
 
         //add Open Law params to be uploaded
         const uploadParams = await this.buildOpenLawParamsObj(
-          this.state.template,
-          this.state.creatorId
+          this.state.template
         );
         console.log("parmeters from user..", uploadParams.parameters);
         console.log("all parameters uploading...", uploadParams);
 
-        //uploadDraft, sends a draft contract to "Draft Management", which can be edited.
-        const draftId = await apiClient.uploadDraft(uploadParams);
-        console.log("draft id..", draftId);
-
-        const contractParams = {
-          ...uploadParams,
-          draftId
-        };
-        console.log(contractParams);
-
-        const contractId = await apiClient.uploadContract(contractParams);
+        const contractId = await apiClient.uploadContract(uploadParams);
         console.log(contractId);
 
         await apiClient.sendContract([], [], contractId);
@@ -231,9 +216,9 @@ class AgreementTemplate extends React.Component {
           console.log("IPFS Hash: ", ipfsHash[0].hash);
 
           const tokenContracts = await getTokenContracts(accounts, contract);
-      
+
           console.log("token contracts", tokenContracts);
-      
+
           const ownedTokens = await this.getOwnedTokens(tokenContracts);
           // Array of tokens owned by account[0]
           console.log("acct0 owned tokens:", ownedTokens);
@@ -254,6 +239,26 @@ class AgreementTemplate extends React.Component {
     }
   };
 
+  fileChange = async event => {
+    event.stopPropagation();
+    event.preventDefault();
+    const file = event.target.files[0];
+    let reader = new window.FileReader();
+    reader.readAsArrayBuffer(file);
+    reader.onloadend = () => this.convertToBuffer(reader);
+  };
+
+  convertToBuffer = async reader => {
+    this.setState({ ipfsLoading: true }, async () => {
+      //file is converted to a buffer for upload to IPFS
+      const buffer = await Buffer.from(reader.result);
+      //set this buffer -using es6 syntax
+      const ipfsRes = await ipfs.add(buffer);
+      console.log(ipfsRes[0].hash);
+      this.setState({ ipfsLoading: false });
+    });
+  };
+
   getOwnedTokens = async tokenContracts => {
     const { accounts } = this.props;
     // Object which shows all the owners for each token: {address => address[]}
@@ -266,7 +271,11 @@ class AgreementTemplate extends React.Component {
 
     const ownedTokens = ownershipByToken.map(tokenOwnership => {
       const token = Object.keys(tokenOwnership);
-      return tokenOwnership[token].includes(this.state.parameters["Company EthAddress"]) ? token[0] : null;
+      return tokenOwnership[token].includes(
+        this.state.parameters["Company EthAddress"]
+      )
+        ? token[0]
+        : null;
     });
     return ownedTokens;
   };
@@ -302,7 +311,8 @@ class AgreementTemplate extends React.Component {
       previewHTML,
       loading,
       success,
-      ipfsHash
+      ipfsHash,
+      ipfsLoading
     } = this.state;
     if (!executionResult) return <Loader active />;
     return (
@@ -321,6 +331,19 @@ class AgreementTemplate extends React.Component {
           <Button primary loading={loading} onClick={this.onSubmit}>
             Submit
           </Button>
+          <Button
+            content="Upload to IPFS"
+            labelPosition="left"
+            icon="file"
+            loading={ipfsLoading}
+            onClick={() => this.fileInputRef.current.click()}
+          />
+          <input
+            ref={this.fileInputRef}
+            type="file"
+            hidden
+            onChange={this.fileChange}
+          />
         </div>
 
         <Message
