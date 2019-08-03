@@ -9,10 +9,15 @@ import {
 } from "semantic-ui-react";
 import "semantic-ui-css/semantic.min.css";
 import "openlaw-elements/dist/openlaw-elements.min.css";
+import bs58 from "bs58";
 import OpenLawForm from "openlaw-elements";
 import AgreementPreview from "./AgreementPreview";
 import pcTokenJSON from "../contracts/ProofClaim.json";
-import { getTokenContracts, getBytes32FromIpfsHash, getIpfsHashFromBytes32 } from "../utils/helpers";
+import {
+  getTokenContracts,
+  getBytes32FromIpfsHash,
+  getIpfsHashFromBytes32
+} from "../utils/helpers";
 import IPFS from "ipfs-http-client";
 require("dotenv").config();
 const ipfs = new IPFS({
@@ -185,12 +190,12 @@ class AgreementTemplate extends React.Component {
     this.setState(
       {
         loading: true,
-        progress: 30,
+        progress: 20,
         progressMessage: "Uploading to OpenLaw..."
       },
       async () => {
         try {
-          const { accounts, contract } = this.props;
+          const { accounts, contract, web3 } = this.props;
           const token = await apiClient.login(
             openLawConfig.userName,
             openLawConfig.password
@@ -198,6 +203,12 @@ class AgreementTemplate extends React.Component {
           document.getElementById("progress").scrollIntoView({
             behavior: "smooth"
           });
+
+///
+
+////
+
+
           const OPENLAW_JWT = token.headers.openlaw_jwt;
 
           //add Open Law params to be uploaded
@@ -211,7 +222,7 @@ class AgreementTemplate extends React.Component {
           await apiClient.sendContract([], [], contractId);
 
           await this.setState({
-            progress: 60,
+            progress: 40,
             progressMessage:
               "Contract Uploaded! Please check your e-mail to sign"
           });
@@ -220,20 +231,33 @@ class AgreementTemplate extends React.Component {
             const contractStatus = await apiClient.loadContractStatus(
               contractId
             );
-            const completed = Object.keys(contractStatus.signatures)
+
+            const signed = Object.keys(contractStatus.signatures)
               .map(curr => contractStatus.signatures[curr].done)
               .every(status => status);
 
-            if (completed) {
+            signed
+              ? this.setState({
+                  progress: 60,
+                  progressMessage: "Contract Signed! Creating your token..."
+                })
+              : null;
+
+            const created = signed
+              ? contractStatus.ethereumCalls[0].calls[0].status ===
+                "the transaction has been added to the chain and successfully executed"
+              : null;
+
+            if (signed && created) {
               await this.setState({
-                progress: 90,
+                progress: 80,
                 progressMessage: "Contract Signed! Uploading to IPFS..."
               });
               clearInterval(this.timer);
               this.timer = null;
               const pdfURL = process.env.URL + "/contract/pdf/" + contractId;
 
-              console.log(pdfURL);
+              console.log("PDF URL:", pdfURL);
               const res = await fetch(pdfURL, {
                 method: "get",
                 headers: new Headers({
@@ -246,8 +270,9 @@ class AgreementTemplate extends React.Component {
               reader.readAsArrayBuffer(blob);
               reader.onloadend = async () => {
                 const buffer = await Buffer.from(reader.result);
-                const ipfsHash = await ipfs.add(buffer);
-                console.log("IPFS Hash: ", ipfsHash[0].hash);
+                const ipfsHashArray = await ipfs.add(buffer);
+                const ipfsHash = ipfsHashArray[0].hash;
+                console.log("IPFS Hash: ", ipfsHash);
 
                 const tokenContracts = await getTokenContracts(
                   accounts,
@@ -255,11 +280,41 @@ class AgreementTemplate extends React.Component {
                 );
                 const ownedTokens = await this.getOwnedTokens(tokenContracts);
                 // Array of tokens owned by account[0]
-                const newToken = ownedTokens.pop();
+                console.log(ownedTokens);
+                const newToken = ownedTokens
+                  .filter(x => x != null)
+                  .slice(-1)[0];
                 console.log("created token:", newToken);
 
-                const successMessage =
-                  <p>Success! Contract uploaded to IPFS{" "}<a target="_blank" href={`http://ipfs.infura.io/ipfs/${ipfsHash[0].hash}`}><b>here</b></a></p>
+                const instance = new web3.eth.Contract(
+                  pcTokenJSON.abi,
+                  newToken
+                );
+
+                console.log(instance);
+                await instance.methods
+                  .setIPFSHash(getBytes32FromIpfsHash(ipfsHash))
+                  .send({ from: accounts[0], gas: 3000000 });
+
+                const returnedIPFSBytes32 = await instance.methods
+                  .getIPFSHash()
+                  .call({ from: accounts[0], gas: 3000000 });
+
+                const returnedIPFSHash = getIpfsHashFromBytes32(
+                  returnedIPFSBytes32
+                );
+    
+                const successMessage = (
+                  <span>
+                    Success! Contract uploaded to IPFS{" "}
+                    <a
+                      target="_blank"
+                      href={`http://ipfs.infura.io/ipfs/${ipfsHash}`}
+                    >
+                      <b>here</b>
+                    </a>
+                  </span>
+                );
 
                 await this.setState({
                   loading: false,
@@ -278,17 +333,6 @@ class AgreementTemplate extends React.Component {
         }
       }
     );
-  };
-
-  convertToBuffer = async reader => {
-    this.setState({ ipfsLoading: true }, async () => {
-      //file is converted to a buffer for upload to IPFS
-      const buffer = await Buffer.from(reader.result);
-      //set this buffer -using es6 syntax
-      const ipfsRes = await ipfs.add(buffer);
-      console.log(ipfsRes[0].hash);
-      this.setState({ ipfsLoading: false });
-    });
   };
 
   getOwnedTokens = async tokenContracts => {

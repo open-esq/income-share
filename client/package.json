@@ -23,6 +23,7 @@
     "@drizzle-utils/get-web3": "^0.2.0",
     "acorn": "^6.1.1",
     "blob-to-buffer": "^1.2.8",
+    "bs58": "^4.0.1",
     "dotenv": "^8.0.0",
     "file-saver": "^2.0.2",
     "html-react-parser": "^0.7.0",

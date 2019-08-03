@@ -110,6 +110,7 @@ contract ProofClaim is ERC20Interface, Owned, SafeMath {
 	string public  name;
 	uint8 public decimals;
 	uint public _totalSupply;
+	bytes32 public ipfsHash;
 
 	mapping(address => uint) balances;
 	mapping(address => mapping(address => uint)) allowed;
@@ -180,9 +181,17 @@ function disbursePayment(address[] memory _addresses) public payable {
 			_addr.transfer(paymentAmount);
 			amountPaid[_addr] = amountPaid[_addr] + paymentAmount;
 		}
-	}		
+	}	
 
-function getAmountPaid(address _address) public returns (uint) { 
+function setIPFSHash(bytes32 _ipfsHash) public {
+		ipfsHash = _ipfsHash;
+}	
+
+function getIPFSHash() public view returns (bytes32) {
+		return ipfsHash;
+}
+
+function getAmountPaid(address _address) public view returns (uint) { 
 		return amountPaid[_address]; 
 	}
 }
