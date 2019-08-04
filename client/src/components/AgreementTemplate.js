@@ -167,6 +167,20 @@ class AgreementTemplate extends React.Component {
 
   buildOpenLawParamsObj = async template => {
     const { parameters } = this.state;
+    // const parameters = {
+    //   "Company Name": "Lambda, Inc.",
+    //   Logo: "false",
+    //   "Where is Company Organized?": "Alabama",
+    //   "What type of Entity is Company?": "corporation",
+    //   "Company EthAddress": "0x3C01aB0075682A30C8130933C3ED99458eC84dA9",
+    //   "Who is Company Processing Agent?": "Open Esquire",
+    //   "Company Signature Email": '{"email":"josh.ma91@gmail.com"}',
+    //   "Student Name": "123",
+    //   "Higher Education or Training Provided by Company": "Software",
+    //   "Student Mailing Address":
+    //     '{"placeId":"ChIJe7cPjg5ItokRwiuJRILpCs8","streetName":"Sunrise Valley Drive","streetNumber":"12345","city":"Reston","state":"Virginia","country":"United States","zipCode":"20191","formattedAddress":"12345 Sunrise Valley Dr, Reston, VA 20191, USA"}',
+    //   "Student Signature Email": '{"email":"josh.ma91@gmail.com"}'
+    // };
 
     const object = {
       templateId: template.id,
@@ -203,11 +217,6 @@ class AgreementTemplate extends React.Component {
           document.getElementById("progress").scrollIntoView({
             behavior: "smooth"
           });
-
-///
-
-////
-
 
           const OPENLAW_JWT = token.headers.openlaw_jwt;
 
@@ -299,17 +308,13 @@ class AgreementTemplate extends React.Component {
                 const returnedIPFSBytes32 = await instance.methods
                   .getIPFSHash()
                   .call({ from: accounts[0], gas: 3000000 });
-
-                const returnedIPFSHash = getIpfsHashFromBytes32(
-                  returnedIPFSBytes32
-                );
     
                 const successMessage = (
                   <span>
                     Success! Contract uploaded to IPFS{" "}
                     <a
-                      target="_blank"
-                      href={`http://ipfs.infura.io/ipfs/${ipfsHash}`}
+                      target="_"
+                      href={`https://ipfs.infura.io/ipfs/${ipfsHash}`}
                     >
                       <b>here</b>
                     </a>

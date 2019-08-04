@@ -20,7 +20,8 @@ export default class OwnedTokens extends React.Component {
   setActiveToken = (token, i) => {
     const activeToken = {
       address: Object.keys(token)[0],
-      amountReceived: Object.values(token)[0].amountReceived
+      amountReceived: Object.values(token)[0].amountReceived,
+      ipfsHash: Object.values(token)[0].ipfsHash
     };
     const activeKey = i;
     this.setState({ activeToken, activeKey });
@@ -86,22 +87,25 @@ export default class OwnedTokens extends React.Component {
               </Table.Header>
               <Table.Body>
                 {ownedTokenBalances.map((token, i) => {
-                  if(token) return (
-                    <Table.Row
-                      style={activeKey == i ? { fontWeight: "bold" } : null}
-                      key={i}
-                    >
-                      <Table.Cell>
-                        <span
-                          className="fake-link"
-                          onClick={() => this.setActiveToken(token, i)}
-                        >
-                          {Object.keys(token)[0]}
-                        </span>
-                      </Table.Cell>
-                      <Table.Cell>{web3.utils.fromWei(Object.values(token)[0].balance)}</Table.Cell>
-                    </Table.Row>
-                  );
+                  if (token)
+                    return (
+                      <Table.Row
+                        style={activeKey == i ? { fontWeight: "bold" } : null}
+                        key={i}
+                      >
+                        <Table.Cell>
+                          <span
+                            className="fake-link"
+                            onClick={() => this.setActiveToken(token, i)}
+                          >
+                            {Object.keys(token)[0]}
+                          </span>
+                        </Table.Cell>
+                        <Table.Cell>
+                          {web3.utils.fromWei(Object.values(token)[0].balance)}
+                        </Table.Cell>
+                      </Table.Row>
+                    );
                 })}
               </Table.Body>
             </Table>
@@ -130,12 +134,17 @@ export default class OwnedTokens extends React.Component {
                     <label>Student Name</label>
                     <input disabled value="Joshua Ma" />
                   </Form.Field>
+
                   <Form.Field name="ethPaid" width={16}>
                     <label>ETH Paid to You</label>
                     <input
                       disabled
                       value={web3.utils.fromWei(activeToken.amountReceived)}
                     />
+                  </Form.Field>
+                  <Form.Field name="ipfsHash" width={16}>
+                    {console.log(activeToken)}
+                    <a href={`https://ipfs.infura.io/ipfs/${activeToken.ipfsHash}`} target="_">Agreement PDF on IPFS</a>
                   </Form.Field>
                   <Button>Manage Pending Assignment</Button>
                 </Form>
