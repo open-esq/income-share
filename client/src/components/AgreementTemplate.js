@@ -165,21 +165,21 @@ class AgreementTemplate extends React.Component {
   };
 
   buildOpenLawParamsObj = async template => {
-    // const { parameters } = this.state;
-    const parameters = {
-      "Company Name": "Lambda, Inc.",
-      Logo: "false",
-      "Where is Company Organized?": "Alabama",
-      "What type of Entity is Company?": "corporation",
-      "Company EthAddress": "0xf290f3d843826d00f8176182fd76550535f6dbb4",
-      "Who is Company Processing Agent?": "Open Esquire",
-      "Company Signature Email": '{"email":"josh.ma91@gmail.com"}',
-      "Student Name": "123",
-      "Higher Education or Training Provided by Company": "Software",
-      "Student Mailing Address":
-        '{"placeId":"ChIJe7cPjg5ItokRwiuJRILpCs8","streetName":"Sunrise Valley Drive","streetNumber":"12345","city":"Reston","state":"Virginia","country":"United States","zipCode":"20191","formattedAddress":"12345 Sunrise Valley Dr, Reston, VA 20191, USA"}',
-      "Student Signature Email": '{"email":"josh.ma91@gmail.com"}'
-    };
+    const { parameters } = this.state;
+    // const parameters = {
+    //   "Company Name": "Lambda, Inc.",
+    //   Logo: "false",
+    //   "Where is Company Organized?": "Alabama",
+    //   "What type of Entity is Company?": "corporation",
+    //   "Company EthAddress": "0xf290f3d843826d00f8176182fd76550535f6dbb4",
+    //   "Who is Company Processing Agent?": "Open Esquire",
+    //   "Company Signature Email": '{"email":"josh.ma91@gmail.com"}',
+    //   "Student Name": "123",
+    //   "Higher Education or Training Provided by Company": "Software",
+    //   "Student Mailing Address":
+    //     '{"placeId":"ChIJe7cPjg5ItokRwiuJRILpCs8","streetName":"Sunrise Valley Drive","streetNumber":"12345","city":"Reston","state":"Virginia","country":"United States","zipCode":"20191","formattedAddress":"12345 Sunrise Valley Dr, Reston, VA 20191, USA"}',
+    //   "Student Signature Email": '{"email":"josh.ma91@gmail.com"}'
+    // };
 
     const object = {
       templateId: template.id,
@@ -283,7 +283,7 @@ class AgreementTemplate extends React.Component {
                 console.log("IPFS Hash: ", ipfsHash);
                 await this.setState({
                   progress: 90,
-                  progressMessage: "PDF uploaded! Please sign transaction to update your token smart contract"
+                  progressMessage: "contract uploaded! Please sign transaction to update your token"
                 });
 
                 const tokenContracts = await getTokenContracts(
@@ -309,7 +309,7 @@ class AgreementTemplate extends React.Component {
 
                 const successMessage = (
                   <span>
-                    Success! Contract uploaded to IPFS{" "}
+                    Success! See your contract{" "}
                     <a
                       target="_"
                       href={`https://ipfs.infura.io/ipfs/${ipfsHash}`}
