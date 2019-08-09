@@ -110,11 +110,8 @@ contract ProofClaim is ERC20Interface, Owned, SafeMath {
 	string public  name;
 	uint8 public decimals;
 	uint public _totalSupply;
-<<<<<<< Updated upstream
-=======
 	bytes32 public ipfsHash;
 	string public contractID;
->>>>>>> Stashed changes
 
 	mapping(address => uint) balances;
 	mapping(address => mapping(address => uint)) allowed;
@@ -187,9 +184,6 @@ function disbursePayment(address[] memory _addresses) public payable {
 		}
 	}		
 
-<<<<<<< Updated upstream
-function getAmountPaid(address _address) public returns (uint) { 
-=======
 function setIPFSHash(bytes32 _ipfsHash) public {
 		ipfsHash = _ipfsHash;
 }	
@@ -207,7 +201,6 @@ function getContractID() public view returns (string memory) {
 }
 
 function getAmountPaid(address _address) public view returns (uint) { 
->>>>>>> Stashed changes
 		return amountPaid[_address]; 
 	}
 }
