@@ -65,7 +65,7 @@ class Manage extends React.Component {
           .getContractID()
           .call({ from: accounts[0], gas: 300000 });
 
-        const {parameters} = await apiClient.getContract(olContractID)
+        const { parameters } = olContractID ? await apiClient.getContract(olContractID) : {}
         console.log(parameters)
 
         const ipfsHash = getIpfsHashFromBytes32(ipfsBytes32);

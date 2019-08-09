@@ -24,7 +24,6 @@ export default class OwnedTokens extends React.Component {
       ipfsHash: Object.values(token)[0].ipfsHash,
       parameters: Object.values(token)[0].parameters
     };
-    console.log(activeToken)
     const activeKey = i;
     this.setState({ activeToken, activeKey });
   };
@@ -129,12 +128,26 @@ export default class OwnedTokens extends React.Component {
                   </span>
                   <Form.Field name="companyName" width={16}>
                     <label>Company Name</label>
-                    <input disabled value={activeToken.parameters["Company Name"]} />
+                    <input
+                      disabled
+                      value={
+                        activeToken.parameters
+                          ? activeToken.parameters["Company Name"]
+                          : `Undefined`
+                      }
+                    />
                   </Form.Field>
 
                   <Form.Field name="studentName" width={16}>
                     <label>Student Name</label>
-                    <input disabled value={activeToken.parameters["Student Name"]}/>
+                    <input
+                      disabled
+                      value={
+                        activeToken.parameters
+                          ? activeToken.parameters["Student Name"]
+                          : `Undefined`
+                      }
+                    />
                   </Form.Field>
 
                   <Form.Field name="ethPaid" width={16}>
@@ -146,7 +159,14 @@ export default class OwnedTokens extends React.Component {
                   </Form.Field>
                   <Form.Field name="ipfsHash" width={16}>
                     {console.log(activeToken)}
-                    <a href={`https://ipfs.infura.io/ipfs/${activeToken.ipfsHash}`} target="_">Agreement PDF on IPFS</a>
+                    <a
+                      href={`https://ipfs.infura.io/ipfs/${
+                        activeToken.ipfsHash
+                      }`}
+                      target="_"
+                    >
+                      Agreement PDF on IPFS
+                    </a>
                   </Form.Field>
                   <Button>Manage Pending Assignment</Button>
                 </Form>
