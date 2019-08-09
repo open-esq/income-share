@@ -62,7 +62,6 @@ class AgreementTemplate extends React.Component {
     const apiClient = new APIClient(openLawConfig.server);
 
     console.log(openLawConfig.userName);
-    //const { web3, accounts, contract } = this.props;
     //create an instance of the API client with url as parameter
     apiClient
       .login(openLawConfig.userName, openLawConfig.password)
@@ -166,21 +165,21 @@ class AgreementTemplate extends React.Component {
   };
 
   buildOpenLawParamsObj = async template => {
-    const { parameters } = this.state;
-    // const parameters = {
-    //   "Company Name": "Lambda, Inc.",
-    //   Logo: "false",
-    //   "Where is Company Organized?": "Alabama",
-    //   "What type of Entity is Company?": "corporation",
-    //   "Company EthAddress": "0x3C01aB0075682A30C8130933C3ED99458eC84dA9",
-    //   "Who is Company Processing Agent?": "Open Esquire",
-    //   "Company Signature Email": '{"email":"josh.ma91@gmail.com"}',
-    //   "Student Name": "123",
-    //   "Higher Education or Training Provided by Company": "Software",
-    //   "Student Mailing Address":
-    //     '{"placeId":"ChIJe7cPjg5ItokRwiuJRILpCs8","streetName":"Sunrise Valley Drive","streetNumber":"12345","city":"Reston","state":"Virginia","country":"United States","zipCode":"20191","formattedAddress":"12345 Sunrise Valley Dr, Reston, VA 20191, USA"}',
-    //   "Student Signature Email": '{"email":"josh.ma91@gmail.com"}'
-    // };
+    // const { parameters } = this.state;
+    const parameters = {
+      "Company Name": "Lambda, Inc.",
+      Logo: "false",
+      "Where is Company Organized?": "Alabama",
+      "What type of Entity is Company?": "corporation",
+      "Company EthAddress": "0xf290f3d843826d00f8176182fd76550535f6dbb4",
+      "Who is Company Processing Agent?": "Open Esquire",
+      "Company Signature Email": '{"email":"josh.ma91@gmail.com"}',
+      "Student Name": "123",
+      "Higher Education or Training Provided by Company": "Software",
+      "Student Mailing Address":
+        '{"placeId":"ChIJe7cPjg5ItokRwiuJRILpCs8","streetName":"Sunrise Valley Drive","streetNumber":"12345","city":"Reston","state":"Virginia","country":"United States","zipCode":"20191","formattedAddress":"12345 Sunrise Valley Dr, Reston, VA 20191, USA"}',
+      "Student Signature Email": '{"email":"josh.ma91@gmail.com"}'
+    };
 
     const object = {
       templateId: template.id,
@@ -282,6 +281,10 @@ class AgreementTemplate extends React.Component {
                 const ipfsHashArray = await ipfs.add(buffer);
                 const ipfsHash = ipfsHashArray[0].hash;
                 console.log("IPFS Hash: ", ipfsHash);
+                await this.setState({
+                  progress: 90,
+                  progressMessage: "PDF uploaded! Please sign transaction to update your token smart contract"
+                });
 
                 const tokenContracts = await getTokenContracts(
                   accounts,
@@ -300,15 +303,10 @@ class AgreementTemplate extends React.Component {
                   newToken
                 );
 
-                console.log(instance);
                 await instance.methods
-                  .setIPFSHash(getBytes32FromIpfsHash(ipfsHash))
+                  .setIPFSHashAndContract(getBytes32FromIpfsHash(ipfsHash), contractId)
                   .send({ from: accounts[0], gas: 3000000 });
 
-                const returnedIPFSBytes32 = await instance.methods
-                  .getIPFSHash()
-                  .call({ from: accounts[0], gas: 3000000 });
-    
                 const successMessage = (
                   <span>
                     Success! Contract uploaded to IPFS{" "}

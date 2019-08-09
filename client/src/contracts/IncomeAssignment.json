@@ -9684,7 +9684,7 @@
     }
   },
   "schemaVersion": "3.0.11",
-  "updatedAt": "2019-08-01T17:00:28.532Z",
+  "updatedAt": "2019-08-09T20:28:17.875Z",
   "devdoc": {
     "methods": {
       "executeAssignment(address,uint256)": {

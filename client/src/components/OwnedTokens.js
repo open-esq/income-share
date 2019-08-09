@@ -21,8 +21,10 @@ export default class OwnedTokens extends React.Component {
     const activeToken = {
       address: Object.keys(token)[0],
       amountReceived: Object.values(token)[0].amountReceived,
-      ipfsHash: Object.values(token)[0].ipfsHash
+      ipfsHash: Object.values(token)[0].ipfsHash,
+      parameters: Object.values(token)[0].parameters
     };
+    console.log(activeToken)
     const activeKey = i;
     this.setState({ activeToken, activeKey });
   };
@@ -127,12 +129,12 @@ export default class OwnedTokens extends React.Component {
                   </span>
                   <Form.Field name="companyName" width={16}>
                     <label>Company Name</label>
-                    <input disabled value="Lambda Inc." />
+                    <input disabled value={activeToken.parameters["Company Name"]} />
                   </Form.Field>
 
                   <Form.Field name="studentName" width={16}>
                     <label>Student Name</label>
-                    <input disabled value="Joshua Ma" />
+                    <input disabled value={activeToken.parameters["Student Name"]}/>
                   </Form.Field>
 
                   <Form.Field name="ethPaid" width={16}>
@@ -148,11 +150,6 @@ export default class OwnedTokens extends React.Component {
                   </Form.Field>
                   <Button>Manage Pending Assignment</Button>
                 </Form>
-                Emulate OpenLaw Functions (TestRPC Only!)
-                <Button onClick={this.createAssignment}>
-                  {" "}
-                  Create Assignment
-                </Button>
               </Segment>
             ) : null}
           </Grid.Column>

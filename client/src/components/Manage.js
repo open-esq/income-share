@@ -1,5 +1,6 @@
 import React from "react";
 import { Container, Loader, Tab } from "semantic-ui-react";
+import { APIClient, Openlaw } from "openlaw";
 import "semantic-ui-css/semantic.min.css";
 import Web3Container from "../utils/Web3Container";
 import MasterPOCContract from "../contracts/MasterPOC.json";
@@ -15,6 +16,18 @@ class Manage extends React.Component {
   componentDidMount = async () => {
     const { web3, accounts, contract } = this.props;
 
+    const openLawConfig = {
+      server: process.env.URL,
+      userName: process.env.OPENLAW_USER,
+      password: process.env.OPENLAW_PASSWORD
+    };
+
+    const apiClient = new APIClient(openLawConfig.server);
+
+    apiClient
+      .login(openLawConfig.userName, openLawConfig.password)
+      .then(console.log);
+
     console.log(contract);
     const tokenContracts = await getTokenContracts(accounts, contract);
 
@@ -24,13 +37,13 @@ class Manage extends React.Component {
     // Array of tokens owned by account[0]
     console.log("acct0 owned tokens:", ownedTokens);
 
-    const ownedTokenBalances = await this.getOwnedTokenBalances(ownedTokens);
+    const ownedTokenBalances = await this.getOwnedTokenBalances(ownedTokens, apiClient);
 
     console.log("owned token balances:", ownedTokenBalances);
     this.setState({ ownedTokenBalances, tokenContracts });
   };
 
-  getOwnedTokenBalances = async ownedTokens => {
+  getOwnedTokenBalances = async (ownedTokens, apiClient) => {
     const { web3, accounts } = this.props;
     const ownedTokenBalancesPromises = ownedTokens.map(async tokenAddr => {
       if (tokenAddr) {
@@ -48,9 +61,18 @@ class Manage extends React.Component {
           .getIPFSHash()
           .call({ from: accounts[0], gas: 300000 });
 
+        const olContractID = await instance.methods
+          .getContractID()
+          .call({ from: accounts[0], gas: 300000 });
+
+        const {parameters} = await apiClient.getContract(olContractID)
+        console.log(parameters)
+
         const ipfsHash = getIpfsHashFromBytes32(ipfsBytes32);
 
-        return { [tokenAddr]: { balance, amountReceived, ipfsHash } };
+        return {
+          [tokenAddr]: { balance, amountReceived, ipfsHash, parameters }
+        };
       }
     });
 
