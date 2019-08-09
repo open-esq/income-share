@@ -111,6 +111,7 @@ contract ProofClaim is ERC20Interface, Owned, SafeMath {
 	uint8 public decimals;
 	uint public _totalSupply;
 	bytes32 public ipfsHash;
+	string public contractID;
 
 	mapping(address => uint) balances;
 	mapping(address => mapping(address => uint)) allowed;
@@ -189,6 +190,14 @@ function setIPFSHash(bytes32 _ipfsHash) public {
 
 function getIPFSHash() public view returns (bytes32) {
 		return ipfsHash;
+}
+
+function setContractID(string memory _contractID) public {
+		contractID = _contractID;
+}	
+
+function getContractID() public view returns (string memory) {
+		return contractID;
 }
 
 function getAmountPaid(address _address) public view returns (uint) { 
