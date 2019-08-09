@@ -9679,12 +9679,12 @@
     "5777": {
       "events": {},
       "links": {},
-      "address": "0x40bf322BB91723427fE13Af74a9935a7db0C1D15",
-      "transactionHash": "0x502458faa1c9fd56bb28ec4f8a70d22a43cc6ec39102e8502652da1693385965"
+      "address": "0x472CfBB79A0F1BE121AC0A76CEA0592d875FF290",
+      "transactionHash": "0xe36db9e9ec46ced1611bfa61b08a65f8254e419c38f890ea504274fb1092b79f"
     }
   },
-  "schemaVersion": "3.0.10",
-  "updatedAt": "2019-06-07T17:50:31.822Z",
+  "schemaVersion": "3.0.11",
+  "updatedAt": "2019-08-01T17:00:28.532Z",
   "devdoc": {
     "methods": {
       "executeAssignment(address,uint256)": {
