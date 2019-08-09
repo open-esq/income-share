@@ -7,7 +7,7 @@ import IncomeAssignmentContract from "../contracts/IncomeAssignment.json";
 import pcTokenJSON from "../contracts/ProofClaim.json";
 import OwnedTokens from "./OwnedTokens";
 import Assignments from "./Assignments";
-import { getTokenContracts } from "../utils/helpers";
+import { getTokenContracts, getIpfsHashFromBytes32 } from "../utils/helpers";
 
 class Manage extends React.Component {
   state = { ownedTokenBalances: [], tokenContracts: [] };
@@ -43,7 +43,14 @@ class Manage extends React.Component {
           .getAmountPaid(accounts[0])
           .call({ from: accounts[0], gas: 300000 });
         console.log("amount received", amountReceived);
-        return { [tokenAddr]: { balance, amountReceived } };
+
+        const ipfsBytes32 = await instance.methods
+          .getIPFSHash()
+          .call({ from: accounts[0], gas: 300000 });
+
+        const ipfsHash = getIpfsHashFromBytes32(ipfsBytes32);
+
+        return { [tokenAddr]: { balance, amountReceived, ipfsHash } };
       }
     });
 

@@ -182,7 +182,7 @@ function disbursePayment(address[] memory _addresses) public payable {
 			_addr.transfer(paymentAmount);
 			amountPaid[_addr] = amountPaid[_addr] + paymentAmount;
 		}
-	}		
+	}	
 
 function setIPFSHash(bytes32 _ipfsHash) public {
 		ipfsHash = _ipfsHash;
